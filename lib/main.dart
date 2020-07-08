@@ -42,7 +42,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Maps sample here'),
+          title: Text('Buffalo Map of Fun Stuff'),
           backgroundColor: Colors.green[700],
         ),
 
