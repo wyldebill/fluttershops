@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
 void main() {
   runApp(MyApp());
@@ -17,8 +18,10 @@ class _MyAppState extends State<MyApp> {
 
   final Set<Marker> _markers = {};
   static const LatLng _center = const LatLng(45.1719084, -93.8746941);
+  String _mapStyle;
 
   void _onMapCreated(GoogleMapController controller) {
+    controller.setMapStyle(_mapStyle);
     _controller.complete(controller);
   }
 
@@ -34,6 +37,11 @@ class _MyAppState extends State<MyApp> {
         infoWindow: InfoWindow(
             title: 'Hayes Public House', snippet: 'Try the Cliodhana'),
         icon: BitmapDescriptor.defaultMarker));
+
+    rootBundle.loadString('assets/mapstyle/minimal.json').then((string) {
+      _mapStyle = string;
+    });
+
     super.initState();
   }
 
