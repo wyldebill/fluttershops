@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:location_permissions/location_permissions.dart';
@@ -9,13 +10,23 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatefulWidget {
-  // This widget is the root of your application.
+class MyApp extends StatelessWidget {
   @override
-  _MyAppState createState() => _MyAppState();
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: "Buffalo Retail Group",
+      home: HomeApp(),
+    );
+  }
 }
 
-class _MyAppState extends State<MyApp> {
+class HomeApp extends StatefulWidget {
+  // This widget is the root of your application.
+  @override
+  _HomeAppState createState() => _HomeAppState();
+}
+
+class _HomeAppState extends State<HomeApp> {
   // i have to figure out the Completer(), Future and .complete() relationship soon!
   Completer<GoogleMapController> _controller = Completer();
 
@@ -25,47 +36,19 @@ class _MyAppState extends State<MyApp> {
   static const LatLng _center = const LatLng(45.1719084, -93.8746941);
   String _mapStyle;
 
-  void _onMapCreated(GoogleMapController controller) {
+  void _onMapCreated(GoogleMapController controller) async {
     controller.setMapStyle(_mapStyle);
     _controller.complete(controller);
 
     // let's do some checkups here
     // is the device location service enabled?
-    _checkDeviceLocationServiceStatus();
-  }
-
-  void  _checkDeviceLocationServiceStatus() {
-    
-
-    ServiceStatus status =  LocationPermissions().checkServiceStatus();
-      if (status == ServiceStatus.disabled) {
-        print("DEBUG: NO DEVICE LOCATION SERVICES FOUND. POP SETTINGS?");
-         LocationPermissions().shouldShowRequestPermissionRationale(
-            permissionLevel: LocationPermissionLevel.locationWhenInUse);
-      
-      }
-      if (status == ServiceStatus.enabled) {
-        print("DEBUG: WE ARE GOOD TO GO.  DEVICE LOCATION SERVICES ENABLED!!");
-      }
-
-      // not applicable, this device doesn't have location services? it's a TV?
-      // unknown, we cannot get info on device location services at all
-
-      
-   
-  }
-
-  @override
-  void initState() {
-    // _getThingsOnStartup().then((value){
-    //   print('Async done');
-    // });
+    await _checkDeviceLocationServiceStatus();
 
     // check for location services permissions for this app.
     // and ask for them if we
     // don't have them yet, or
     // we had them and the user then revoked them from us
-    LocationPermissions()
+    await LocationPermissions()
         .requestPermissions(
             permissionLevel: LocationPermissionLevel.locationWhenInUse)
         .then((PermissionStatus status) {
@@ -74,12 +57,67 @@ class _MyAppState extends State<MyApp> {
             'DEBUG YOURE THE BOSS BUT THIS APP ISNT MUCH GOOD WITHOUT LOCATION');
       }
     });
+  }
+
+  void _showAlertDialog() {
+    // set up the button
+    Widget okButton = FlatButton(
+      child: Text('Ok'),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text('Device Location Service disabled'),
+      content: Text('You need to enable Location Services on this device'),
+      actions: [
+        okButton,
+      ],
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  void _markerTapped()
+  {
+    
+  }
+  void _checkDeviceLocationServiceStatus() async {
+    ServiceStatus status = await LocationPermissions().checkServiceStatus();
+    if (status == ServiceStatus.disabled) {
+      print("SERVICESTATUS: NO DEVICE LOCATION SERVICES FOUND. POP SETTINGS?");
+      await LocationPermissions().shouldShowRequestPermissionRationale(
+          permissionLevel: LocationPermissionLevel.locationWhenInUse);
+      _showAlertDialog();
+    }
+    if (status == ServiceStatus.enabled) {
+      print(
+          "SERVICESTATUS: WE ARE GOOD TO GO.  DEVICE LOCATION SERVICES ENABLED!!");
+    }
+
+    // not applicable, this device doesn't have location services? it's a TV?
+    // unknown, we cannot get info on device location services at all
+  }
+
+  @override
+  void initState() {
+    // _getThingsOnStartup().then((value){
+    //   print('Async done');
+    // });
 
     _markers.add(Marker(
         markerId: MarkerId('HayesPublicHouse'),
         position: LatLng(45.170712, -93.874553),
         infoWindow: InfoWindow(
             title: 'Hayes Public House', snippet: 'Try the Cliodhana'),
+            onTap: _markerTapped(),
         icon: BitmapDescriptor.defaultMarker));
 
     _markers.add(Marker(
