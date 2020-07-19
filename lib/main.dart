@@ -1,13 +1,33 @@
 import 'dart:async';
-import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:location_permissions/location_permissions.dart';
 
 void main() {
   runApp(MyApp());
+}
+
+// blank mostly widget to test navigation and the back button
+class SecondRoute extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Second Route"),
+      ),
+      body: Center(
+        child: RaisedButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Text('Go back!'),
+        ),
+      ),
+    );
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -27,6 +47,8 @@ class HomeApp extends StatefulWidget {
 }
 
 class _HomeAppState extends State<HomeApp> {
+  BuildContext _myBuildContext;
+
   // i have to figure out the Completer(), Future and .complete() relationship soon!
   Completer<GoogleMapController> _controller = Completer();
 
@@ -37,7 +59,7 @@ class _HomeAppState extends State<HomeApp> {
   String _mapStyle;
 
   void _onMapCreated(GoogleMapController controller) async {
-    controller.setMapStyle(_mapStyle);
+    //controller.setMapStyle(_mapStyle);
     _controller.complete(controller);
 
     // let's do some checkups here
@@ -59,19 +81,19 @@ class _HomeAppState extends State<HomeApp> {
     });
   }
 
-  void _showAlertDialog() {
+  void _showAlertDialog(String message) {
     // set up the button
     Widget okButton = FlatButton(
       child: Text('Ok'),
       onPressed: () {
-        Navigator.pop(context);
+        Navigator.pop(_myBuildContext);
       },
     );
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Text('Device Location Service disabled'),
-      content: Text('You need to enable Location Services on this device'),
+      title: Text(message),
+      content: Text(message),
       actions: [
         okButton,
       ],
@@ -85,17 +107,13 @@ class _HomeAppState extends State<HomeApp> {
     );
   }
 
-  void _markerTapped()
-  {
-    
-  }
-  void _checkDeviceLocationServiceStatus() async {
+  Future _checkDeviceLocationServiceStatus() async {
     ServiceStatus status = await LocationPermissions().checkServiceStatus();
     if (status == ServiceStatus.disabled) {
       print("SERVICESTATUS: NO DEVICE LOCATION SERVICES FOUND. POP SETTINGS?");
       await LocationPermissions().shouldShowRequestPermissionRationale(
           permissionLevel: LocationPermissionLevel.locationWhenInUse);
-      _showAlertDialog();
+      _showAlertDialog('Turn on LocationServices on your device');
     }
     if (status == ServiceStatus.enabled) {
       print(
@@ -116,8 +134,15 @@ class _HomeAppState extends State<HomeApp> {
         markerId: MarkerId('HayesPublicHouse'),
         position: LatLng(45.170712, -93.874553),
         infoWindow: InfoWindow(
-            title: 'Hayes Public House', snippet: 'Try the Cliodhana'),
-            onTap: _markerTapped(),
+            title: 'Hayes Public House',
+            snippet: 'Try the Cliodhana',
+            onTap: () {
+              Navigator.push(_myBuildContext,
+                  MaterialPageRoute(builder: (context) => SecondRoute()));
+            }),
+        onTap: () {
+          print('Hayes was tapped!!!!');
+        },
         icon: BitmapDescriptor.defaultMarker));
 
     _markers.add(Marker(
@@ -143,20 +168,22 @@ class _HomeAppState extends State<HomeApp> {
         icon: BitmapDescriptor.defaultMarker));
 
     // i have a custom leaned out map style. no distracting features, minimal.
-    rootBundle.loadString('assets/mapstyle/minimal.json').then((string) {
+    /*    rootBundle.loadString('assets/mapstyle/minimal.json').then((string) {
       _mapStyle = string;
-    });
+    }); */
 
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    _myBuildContext = context;
+
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
           title: Text('Buffalo Map of Fun Stuff'),
-          backgroundColor: Colors.green[700],
+          //backgroundColor: Colors.green[700],
         ),
 
         //what the hell, why doesn't mylocationenabled/button work???
