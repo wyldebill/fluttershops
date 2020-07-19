@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:location_permissions/location_permissions.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,15 +16,43 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  // i have to figure out the Completer(), Future and .complete() relationship soon!
   Completer<GoogleMapController> _controller = Completer();
 
   final Set<Marker> _markers = {};
+
+  // for now, static start location of Buffalo.
   static const LatLng _center = const LatLng(45.1719084, -93.8746941);
   String _mapStyle;
 
   void _onMapCreated(GoogleMapController controller) {
     controller.setMapStyle(_mapStyle);
     _controller.complete(controller);
+
+    // let's do some checkups here
+    // is the device location service enabled?
+    _checkDeviceLocationServiceStatus();
+  }
+
+  void  _checkDeviceLocationServiceStatus() {
+    
+
+    ServiceStatus status =  LocationPermissions().checkServiceStatus();
+      if (status == ServiceStatus.disabled) {
+        print("DEBUG: NO DEVICE LOCATION SERVICES FOUND. POP SETTINGS?");
+         LocationPermissions().shouldShowRequestPermissionRationale(
+            permissionLevel: LocationPermissionLevel.locationWhenInUse);
+      
+      }
+      if (status == ServiceStatus.enabled) {
+        print("DEBUG: WE ARE GOOD TO GO.  DEVICE LOCATION SERVICES ENABLED!!");
+      }
+
+      // not applicable, this device doesn't have location services? it's a TV?
+      // unknown, we cannot get info on device location services at all
+
+      
+   
   }
 
   @override
@@ -31,6 +61,20 @@ class _MyAppState extends State<MyApp> {
     //   print('Async done');
     // });
 
+    // check for location services permissions for this app.
+    // and ask for them if we
+    // don't have them yet, or
+    // we had them and the user then revoked them from us
+    LocationPermissions()
+        .requestPermissions(
+            permissionLevel: LocationPermissionLevel.locationWhenInUse)
+        .then((PermissionStatus status) {
+      if (status == PermissionStatus.denied) {
+        print(
+            'DEBUG YOURE THE BOSS BUT THIS APP ISNT MUCH GOOD WITHOUT LOCATION');
+      }
+    });
+
     _markers.add(Marker(
         markerId: MarkerId('HayesPublicHouse'),
         position: LatLng(45.170712, -93.874553),
@@ -38,6 +82,29 @@ class _MyAppState extends State<MyApp> {
             title: 'Hayes Public House', snippet: 'Try the Cliodhana'),
         icon: BitmapDescriptor.defaultMarker));
 
+    _markers.add(Marker(
+        markerId: MarkerId('Biggs and Co.'),
+        position: LatLng(45.172144, -93.874352),
+        infoWindow: InfoWindow(
+            title: 'Biggs and Company',
+            snippet: 'Rustic Industrial and Custom Designs'),
+        icon: BitmapDescriptor.defaultMarker));
+
+    _markers.add(Marker(
+        markerId: MarkerId('A Wreath of Franklin'),
+        position: LatLng(45.172138, -93.875827),
+        infoWindow:
+            InfoWindow(title: 'A Wreath of Franklin', snippet: 'Apparell'),
+        icon: BitmapDescriptor.defaultMarker));
+
+    _markers.add(Marker(
+        markerId: MarkerId('Buffalo Rock Winery'),
+        position: LatLng(45.117736, -93.795735),
+        infoWindow:
+            InfoWindow(title: 'Buffalo Rock Winery', snippet: 'Frappes'),
+        icon: BitmapDescriptor.defaultMarker));
+
+    // i have a custom leaned out map style. no distracting features, minimal.
     rootBundle.loadString('assets/mapstyle/minimal.json').then((string) {
       _mapStyle = string;
     });
@@ -55,6 +122,7 @@ class _MyAppState extends State<MyApp> {
         ),
 
         //what the hell, why doesn't mylocationenabled/button work???
+        // because emulator.  try a real device and it works???
         //http://flutterdevs.com/blog/google-maps-in-flutter/
         body: GoogleMap(
           myLocationButtonEnabled: true,
@@ -63,7 +131,7 @@ class _MyAppState extends State<MyApp> {
           markers: Set<Marker>.of(_markers),
           initialCameraPosition: CameraPosition(
             target: _center,
-            zoom: 18.0,
+            zoom: 10.0,
           ),
         ),
       ),

@@ -9,11 +9,11 @@
 
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="mapstesting"
+        android:label="Buffalo Retail Group"
         android:icon="@mipmap/ic_launcher">
 
         <meta-data android:name="com.google.android.geo.API_KEY"
-                   android:value="yourekeynotmine"
+                   android:value="x"
                    />
 
         <activity
