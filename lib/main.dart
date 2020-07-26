@@ -59,7 +59,7 @@ class _HomeAppState extends State<HomeApp> {
   String _mapStyle;
 
   void _onMapCreated(GoogleMapController controller) async {
-    //controller.setMapStyle(_mapStyle);
+    controller.setMapStyle(_mapStyle);
     _controller.complete(controller);
 
     // let's do some checkups here
@@ -134,7 +134,7 @@ class _HomeAppState extends State<HomeApp> {
         markerId: MarkerId('HayesPublicHouse'),
         position: LatLng(45.170712, -93.874553),
         infoWindow: InfoWindow(
-            title: 'Hayes Public House',
+            title: 'Hayes Public House!!!!!',
             snippet: 'Try the Cliodhana',
             onTap: () {
               Navigator.push(_myBuildContext,
@@ -168,9 +168,9 @@ class _HomeAppState extends State<HomeApp> {
         icon: BitmapDescriptor.defaultMarker));
 
     // i have a custom leaned out map style. no distracting features, minimal.
-    /*    rootBundle.loadString('assets/mapstyle/minimal.json').then((string) {
+    rootBundle.loadString('assets/mapstyle/minimal.json').then((string) {
       _mapStyle = string;
-    }); */
+    });
 
     super.initState();
   }
