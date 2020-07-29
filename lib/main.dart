@@ -35,7 +35,28 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Buffalo Retail Group",
-      home: HomeApp(),
+      home: DefaultTabController(
+        length: 3,
+        child: Scaffold(
+          appBar: AppBar(
+            bottom: TabBar(
+              tabs: [
+                Tab(icon: Icon(Icons.directions_car)),
+                Tab(icon: Icon(Icons.directions_transit)),
+                Tab(icon: Icon(Icons.directions_bike)),
+              ],
+            ),
+          ),
+          body: TabBarView(
+            physics: NeverScrollableScrollPhysics(),
+            children: [
+              HomeApp(),
+              Icon(Icons.directions_transit),
+              Icon(Icons.directions_bike),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
@@ -179,26 +200,17 @@ class _HomeAppState extends State<HomeApp> {
   Widget build(BuildContext context) {
     _myBuildContext = context;
 
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Buffalo Map of Fun Stuff'),
-          //backgroundColor: Colors.green[700],
-        ),
-
-        //what the hell, why doesn't mylocationenabled/button work???
-        // because emulator.  try a real device and it works???
-        //http://flutterdevs.com/blog/google-maps-in-flutter/
-        body: GoogleMap(
-          myLocationButtonEnabled: true,
-          myLocationEnabled: true,
-          onMapCreated: _onMapCreated,
-          markers: Set<Marker>.of(_markers),
-          initialCameraPosition: CameraPosition(
-            target: _center,
-            zoom: 10.0,
-          ),
-        ),
+    //what the hell, why doesn't mylocationenabled/button work???
+    // because emulator.  try a real device and it works???
+    //http://flutterdevs.com/blog/google-maps-in-flutter/
+    return GoogleMap(
+      myLocationButtonEnabled: true,
+      myLocationEnabled: true,
+      onMapCreated: _onMapCreated,
+      markers: Set<Marker>.of(_markers),
+      initialCameraPosition: CameraPosition(
+        target: _center,
+        zoom: 10.0,
       ),
     );
   }
