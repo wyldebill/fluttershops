@@ -16,7 +16,7 @@ class SecondRoute extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Second Route"),
+        title: Text("Store Detail here"),
       ),
       body: Center(
         child: RaisedButton(
@@ -34,16 +34,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Buffalo Retail Group",
+      title: "Buffalo",
       home: DefaultTabController(
-        length: 3,
+        length: 2,
         child: Scaffold(
           appBar: AppBar(
             bottom: TabBar(
               tabs: [
-                Tab(icon: Icon(Icons.directions_car)),
-                Tab(icon: Icon(Icons.directions_transit)),
-                Tab(icon: Icon(Icons.directions_bike)),
+                Tab(icon: Icon(Icons.map)),
+                Tab(icon: Icon(Icons.list)),
               ],
             ),
           ),
@@ -52,7 +51,6 @@ class MyApp extends StatelessWidget {
             children: [
               HomeApp(),
               Icon(Icons.directions_transit),
-              Icon(Icons.directions_bike),
             ],
           ),
         ),
@@ -155,8 +153,8 @@ class _HomeAppState extends State<HomeApp> {
         markerId: MarkerId('HayesPublicHouse'),
         position: LatLng(45.170712, -93.874553),
         infoWindow: InfoWindow(
-            title: 'Hayes Public House!!!!!',
-            snippet: 'Try the Cliodhana',
+            title: 'Hayes',
+            snippet: 'Try the Cliodhana!',
             onTap: () {
               Navigator.push(_myBuildContext,
                   MaterialPageRoute(builder: (context) => SecondRoute()));
