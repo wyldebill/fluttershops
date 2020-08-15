@@ -11,6 +11,13 @@ buildscript {
     }
 }
 
+defaultConfig {
+    // Other values set here
+    resValue "string", "facebook_app_id", "$System.env.FACEBOOK_ID"
+    manifestPlaceholders = [api_key: "$System.env.API_KEY"]
+}
+
+
 allprojects {
     repositories {
         google()
