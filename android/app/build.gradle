@@ -63,13 +63,17 @@ android {
 
 
     file(rootProject.file('key.properties')).with { propFile ->
-            if (propFile.canRead()) {
+            if (!propFile.canRead()) {
+                println (googleMapApiKey)
+
                 print("using properties file to set manifest placeholder api_key")
                 manifestPlaceholders = [api_key: keystoreProperties['api_key_android']]
+                 
             }
             else {
                 print("using environment variable to set manifest placeholder api_key")
-                 manifestPlaceholders = [api_key: googleMapApiKey]
+                manifestPlaceholders = [api_key: googleMapApiKey]
+                
             }
         }
 
