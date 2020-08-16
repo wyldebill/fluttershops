@@ -21,7 +21,9 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
+def googleMapApiKey = System.getenv("DriverData")// leaving this since it works locally? what refreshes env variables?
 
+def googleMapApiKey = System.getenv("API_KEY_ANDROID")
 
 
 def keystoreProperties = new Properties()
@@ -57,24 +59,42 @@ android {
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
           // Other values set here
-    resValue "string", "facebook_app_id", "$System.env.FACEBOOK_ID"
-    manifestPlaceholders = [api_key: "$System.env.API_KEY"]
-    }
+        resValue "string", "facebook_app_id", "$System.env.FACEBOOK_ID"
+
+
+    file(rootProject.file('key.properties')).with { propFile ->
+            if (propFile.canRead()) {
+                print("using properties file to set manifest placeholder api_key")
+                manifestPlaceholders = [api_key: keystoreProperties['api_key_android']]
+            }
+            else {
+                print("using environment variable to set manifest placeholder api_key")
+                 manifestPlaceholders = [api_key: googleMapApiKey]
+            }
+        }
+
+
+    
+     }
 
      signingConfigs {
         file(rootProject.file('key.properties')).with { propFile ->
             if (propFile.canRead()) {
-        release {
-            keyAlias keystoreProperties['keyAlias']
-            keyPassword keystoreProperties['keyPassword']
-            storeFile file(keystoreProperties['storeFile'])
-            storePassword keystoreProperties['storePassword']
-        }}
+                print("signing with local properties file")
+                release {
+                    keyAlias keystoreProperties['keyAlias']
+                    keyPassword keystoreProperties['keyPassword']
+                    storeFile file(keystoreProperties['storeFile'])
+                    storePassword keystoreProperties['storePassword']
+                }
+            }
             else {
-                print('not signed')
+                print('not signed, CI/CD will need to sign')
             }
         }
     }
+
+
     buildTypes {
         release {
             file(rootProject.file('key.properties')).with { propFile ->
