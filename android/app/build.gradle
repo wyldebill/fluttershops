@@ -21,7 +21,7 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
-def googleMapApiKey = System.getenv("DriverData")// leaving this since it works locally? what refreshes env variables?
+//def googleMapApiKey = System.getenv("DriverData")// leaving this since it works locally? what refreshes env variables?
 
 def googleMapApiKey = System.getenv("API_KEY_ANDROID")
 
