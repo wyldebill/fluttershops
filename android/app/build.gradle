@@ -21,6 +21,21 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
+//def googleMapApiKey = System.getenv("DriverData")// leaving this since it works locally? what refreshes env variables?
+
+def googleMapApiKey = System.getenv("API_KEY_ANDROID")
+
+
+def keystoreProperties = new Properties()
+
+def keystorePropertiesFile = rootProject.file('key.properties')
+
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
+
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
@@ -43,24 +58,72 @@ android {
         targetSdkVersion 28
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
-    }
-    signingConfigs {
-        release {
-            storeFile rootProject.file("app/android.keystore")
-            storePassword System.getenv("APPCENTER_KEYSTORE_PASSWORD")
-            keyAlias System.getenv("APPCENTER_KEY_ALIAS")
-            keyPassword System.getenv("APPCENTER_KEY_PASSWORD")
+          // Other values set here
+        resValue "string", "facebook_app_id", "$System.env.FACEBOOK_ID"
+
+
+    file(rootProject.file('key.properties')).with { propFile ->
+            if (!propFile.canRead()) {
+                println (googleMapApiKey)
+
+                print("using properties file to set manifest placeholder api_key")
+                manifestPlaceholders = [api_key: keystoreProperties['api_key_android']]
+                 
+            }
+            else {
+                print("using environment variable to set manifest placeholder api_key")
+                manifestPlaceholders = [api_key: googleMapApiKey]
+                
+            }
+        }
+
+
+    
+     }
+
+     signingConfigs {
+        file(rootProject.file('key.properties')).with { propFile ->
+            if (propFile.canRead()) {
+                print("signing with local properties file")
+                release {
+                    keyAlias keystoreProperties['keyAlias']
+                    keyPassword keystoreProperties['keyPassword']
+                    storeFile file(keystoreProperties['storeFile'])
+                    storePassword keystoreProperties['storePassword']
+                }
+            }
+            else {
+                print('not signed, CI/CD will need to sign')
+            }
         }
     }
 
+
     buildTypes {
         release {
+            file(rootProject.file('key.properties')).with { propFile ->
+                if (propFile.canRead()) {
+                    // because we can read the keystore
+                    // we are building locally
+                    // so sign locally
+                    // otherwise build an unsigned apk for later signing by the CI/CD provider
+                    signingConfig signingConfigs.release
+                }
+            }
+
+            applicationVariants.all { variant ->
+                variant.outputs.all { output ->
+                    output.outputFileName = "app-release.apk"
+                }
+            }
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.release
+            // signingConfig signingConfigs.release
         }
     }
 }
+
+
 
 flutter {
     source '../..'
