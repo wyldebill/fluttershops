@@ -12,13 +12,7 @@ buildscript {
 }
 
 
-android {
-  //...
- defaultConfig {
-     // Other values set here
-     resValue "string", "maps_api_key", "$System.env.MAPS_API_KEY"
- }
-}
+
 
 allprojects {
     repositories {
