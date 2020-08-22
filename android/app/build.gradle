@@ -23,7 +23,7 @@ if (flutterVersionName == null) {
 
 //def googleMapApiKey = System.getenv("DriverData")// leaving this since it works locally? what refreshes env variables?
 
-def googleMapApiKey = System.getenv("API_KEY_ANDROID")
+//def googleMapApiKey = System.getenv("MAP_API_KEY")
 
 
 def keystoreProperties = new Properties()
@@ -62,23 +62,10 @@ android {
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
           // Other values set here
-        resValue "string", "facebook_app_id", "$System.env.FACEBOOK_ID"
+        //resValue "string", "facebook_app_id", "$System.env.FACEBOOK_ID"
 
 
-    file(rootProject.file('key.properties')).with { propFile ->
-            if (!propFile.canRead()) {
-                println (googleMapApiKey)
-
-                print("using properties file to set manifest placeholder api_key")
-                manifestPlaceholders = [api_key: keystoreProperties['api_key_android']]
-                 
-            }
-            else {
-                print("using environment variable to set manifest placeholder api_key")
-                manifestPlaceholders = [api_key: googleMapApiKey]
-                
-            }
-        }
+   
 
 
     
