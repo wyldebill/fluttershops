@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:location_permissions/location_permissions.dart';
+import 'package:mapstesting/allstores.dart';
 import 'package:mapstesting/secondroute.dart';
 
 void main() {
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
             children: [
               // each tab needs an entry here
               HomeApp(), // map
-              Icon(Icons.library_books), // listview
+              AllStores(), // listview
             ],
           ),
         ),
@@ -48,7 +49,7 @@ class HomeApp extends StatefulWidget {
   _HomeAppState createState() => _HomeAppState();
 }
 
-class _HomeAppState extends State<HomeApp> {
+class _HomeAppState extends State<HomeApp> with AutomaticKeepAliveClientMixin {
   BuildContext _myBuildContext;
 
   // i have to figure out the Completer(), Future and .complete() relationship soon!
@@ -59,6 +60,9 @@ class _HomeAppState extends State<HomeApp> {
   // for now, static start location of Buffalo.
   static const LatLng _center = const LatLng(45.1719084, -93.8746941);
   String _mapStyle;
+
+  @override
+  bool get wantKeepAlive => true;
 
   void _onMapCreated(GoogleMapController controller) async {
     controller.setMapStyle(_mapStyle);
