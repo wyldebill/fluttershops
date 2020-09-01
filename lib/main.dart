@@ -53,7 +53,7 @@ class _HomeAppState extends State<HomeApp> with AutomaticKeepAliveClientMixin {
   BuildContext _myBuildContext;
 
   // i have to figure out the Completer(), Future and .complete() relationship soon!
-  //Completer<GoogleMapController> _controller = Completer();
+  Completer<GoogleMapController> _controller = Completer();
 
   final Set<Marker> _markers = {};
 
@@ -66,7 +66,7 @@ class _HomeAppState extends State<HomeApp> with AutomaticKeepAliveClientMixin {
 
   void _onMapCreated(GoogleMapController controller) async {
     controller.setMapStyle(_mapStyle);
-    //_controller.complete(controller);
+    _controller.complete(controller);
 
     // let's do some checkups here
     // is the device location service enabled?
