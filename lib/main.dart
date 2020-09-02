@@ -53,8 +53,8 @@ class _HomeAppState extends State<HomeApp> with AutomaticKeepAliveClientMixin {
   BuildContext _myBuildContext;
 
   // i have to figure out the Completer(), Future and .complete() relationship soon!
-  Completer<GoogleMapController> _controller = Completer();
-
+  //Completer<GoogleMapController> _controller = Completer();
+  GoogleMapController _controller;
   final Set<Marker> _markers = {};
 
   // for now, static start location of Buffalo.
@@ -66,7 +66,9 @@ class _HomeAppState extends State<HomeApp> with AutomaticKeepAliveClientMixin {
 
   void _onMapCreated(GoogleMapController controller) {
     controller.setMapStyle(_mapStyle);
-    _controller.complete(controller);
+    _controller = controller;
+
+    //_controller.complete(controller);
   }
 
   void _showAlertDialog(String message) {
