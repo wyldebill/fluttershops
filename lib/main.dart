@@ -49,7 +49,9 @@ class HomeApp extends StatefulWidget {
   _HomeAppState createState() => _HomeAppState();
 }
 
-class _HomeAppState extends State<HomeApp> with AutomaticKeepAliveClientMixin {
+class _HomeAppState extends State<HomeApp>
+    with AutomaticKeepAliveClientMixin //,// WidgetsBindingObserver
+{
   BuildContext _myBuildContext;
 
   // i have to figure out the Completer(), Future and .complete() relationship soon!
@@ -97,24 +99,24 @@ class _HomeAppState extends State<HomeApp> with AutomaticKeepAliveClientMixin {
     );
   }
 
-  Future _checkDeviceLocationServiceStatus() async {
-    ServiceStatus status = await LocationPermissions().checkServiceStatus();
+  // Future _checkDeviceLocationServiceStatus() async {
+  //   ServiceStatus status = await LocationPermissions().checkServiceStatus();
 
-    if (status == ServiceStatus.disabled) {
-      print("SERVICESTATUS: NO DEVICE LOCATION SERVICES FOUND. POP SETTINGS?");
-      await LocationPermissions().shouldShowRequestPermissionRationale(
-          permissionLevel: LocationPermissionLevel.locationWhenInUse);
-      _showAlertDialog('Turn on LocationServices on your device');
-    }
+  //   if (status == ServiceStatus.disabled) {
+  //     print("SERVICESTATUS: NO DEVICE LOCATION SERVICES FOUND. POP SETTINGS?");
+  //     await LocationPermissions().shouldShowRequestPermissionRationale(
+  //         permissionLevel: LocationPermissionLevel.locationWhenInUse);
+  //_showAlertDialog('Turn on LocationServices on your device');
+  //}
 
-    if (status == ServiceStatus.enabled) {
-      print(
-          "SERVICESTATUS: WE ARE GOOD TO GO.  DEVICE LOCATION SERVICES ENABLED!!");
-    }
+  // if (status == ServiceStatus.enabled) {
+  //   print(
+  //       "SERVICESTATUS: WE ARE GOOD TO GO.  DEVICE LOCATION SERVICES ENABLED!!");
+  // }
 
-    // not applicable, this device doesn't have location services? it's a TV?
-    // unknown, we cannot get info on device location services at all
-  }
+  // not applicable, this device doesn't have location services? it's a TV?
+  // unknown, we cannot get info on device location services at all
+  //}
 
   @override
   void initState() {
@@ -123,21 +125,21 @@ class _HomeAppState extends State<HomeApp> with AutomaticKeepAliveClientMixin {
     // });
     // let's do some checkups here
     // is the device location service enabled?
-    _checkDeviceLocationServiceStatus().then((value) => null);
+    //_checkDeviceLocationServiceStatus().then((value) => null);
 
     // check for location services permissions for this app.
     // and ask for them if we
     // don't have them yet, or
     // we had them and the user then revoked them from us
-    LocationPermissions()
-        .requestPermissions(
-            permissionLevel: LocationPermissionLevel.locationWhenInUse)
-        .then((PermissionStatus status) {
-      if (status == PermissionStatus.denied) {
-        print(
-            'DEBUG YOURE THE BOSS BUT THIS APP ISNT MUCH GOOD WITHOUT LOCATION');
-      }
-    });
+    // LocationPermissions()
+    //     .requestPermissions(
+    //         permissionLevel: LocationPermissionLevel.locationWhenInUse)
+    //     .then((PermissionStatus status) {
+    //   if (status == PermissionStatus.denied) {
+    //     print(
+    //         'DEBUG YOURE THE BOSS BUT THIS APP ISNT MUCH GOOD WITHOUT LOCATION');
+    //   }
+    // });
 
     _markers.add(Marker(
         markerId: MarkerId('RitzyReplay'),
