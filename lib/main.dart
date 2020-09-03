@@ -32,9 +32,9 @@ class MyApp extends StatelessWidget {
           body: TabBarView(
             physics: NeverScrollableScrollPhysics(),
             children: [
+              AllStores(), // listview
               // each tab needs an entry here
               HomeApp(), // map
-              AllStores(), // listview
             ],
           ),
         ),
