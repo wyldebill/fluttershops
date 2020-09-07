@@ -17,6 +17,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Buffalo", //?? what is this even for?
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
       home: DefaultTabController(
         length: 2,
         child: Scaffold(
@@ -53,6 +56,8 @@ class _HomeAppState extends State<HomeApp>
     with AutomaticKeepAliveClientMixin //,// WidgetsBindingObserver
 {
   BuildContext _myBuildContext;
+
+  List<bool> _selection = List.generate(1, (_) => false);
 
   // i have to figure out the Completer(), Future and .complete() relationship soon!
   //Completer<GoogleMapController> _controller = Completer();
@@ -389,13 +394,25 @@ class _HomeAppState extends State<HomeApp>
         padding: const EdgeInsets.all(15.0),
         child: Align(
           alignment: Alignment.topLeft,
-          child: FloatingActionButton(
+          child: ToggleButtons(
+            children: <Widget>[
+              Icon(Icons.ac_unit),
+            ],
+            onPressed: (int index) {
+              setState(() {
+                _selection[index] = !_selection[index];
+              });
+            },
+            isSelected: _selection,
+          ),
+
+          /*FloatingActionButton(
             // the toggle for only showing stores open right NOW
             onPressed: () => filterStoreMarkersToOnlyWhatsOpen(),
             materialTapTargetSize: MaterialTapTargetSize.padded,
             backgroundColor: Colors.green,
             child: const Icon(Icons.schedule, size: 36.0),
-          ),
+          ),*/
         ),
       ),
     ]);
