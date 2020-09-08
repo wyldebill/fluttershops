@@ -1,165 +1,17 @@
-import 'dart:async';
+/*import 'dart:async';
 import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:location_permissions/location_permissions.dart';
-import 'package:mapstesting/SplashScreen.dart';
 import 'package:mapstesting/allstores.dart';
 import 'package:mapstesting/secondroute.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class zMyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "Buffalo", //?? what is this even for?
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: DefaultTabController(
-        length: 2,
-        child: Scaffold(
-          appBar: AppBar(
-            title: new Text('Buffalo Retail Group'),
-            bottom: TabBar(
-              tabs: [
-                Tab(icon: Icon(Icons.map)),
-                Tab(icon: Icon(Icons.list)),
-              ],
-            ),
-          ),
-          body: TabBarView(
-            physics: NeverScrollableScrollPhysics(),
-            children: [
-              // each tab needs an entry here
-              AllStores(), // listview
-
-              HomeApp(), // map
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class HomeApp extends StatefulWidget {
-  // This widget is the root of your application.
-  @override
-  _HomeAppState createState() => _HomeAppState();
-}
-
-class _HomeAppState extends State<HomeApp>
-    with
-        AutomaticKeepAliveClientMixin //  this will preserve state in each tab. somehow
-// WidgetsBindingObserver
-{
-  BuildContext _myBuildContext;
-
-  List<bool> _selection = List.generate(1, (_) => false);
-
-  // i have to figure out the Completer(), Future and .complete() relationship soon!
-  //Completer<GoogleMapController> _controller = Completer();
-  GoogleMapController _controller;
+class MarkersData {
   final Set<Marker> _markers = {};
 
-  // for now, static start location of Buffalo.
-  static const LatLng _center = const LatLng(45.1719084, -93.8746941);
-  String _mapStyle;
-
-  @override
-  bool get wantKeepAlive => true;
-
-  void _onMapCreated(GoogleMapController controller) {
-    controller.setMapStyle(_mapStyle);
-    _controller = controller;
-
-    //_controller.complete(controller);
-  }
-
-  void _showAlertDialog(String message) {
-    // set up the button
-    Widget okButton = FlatButton(
-      child: Text('Ok'),
-      onPressed: () {
-        Navigator.pop(_myBuildContext);
-      },
-    );
-
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text(message),
-      content: Text(message),
-      actions: [
-        okButton,
-      ],
-    );
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
-
-  // check for location services at the device level.  ie is the gps radio switched on?
-  Future _checkDeviceLocationServiceStatus() async {
-    ServiceStatus status = await LocationPermissions().checkServiceStatus();
-
-    // location services for the device (and all apps) is switched off
-    if (status == ServiceStatus.disabled) {
-      // if on android, show a dialog asking why we want location services enabled?
-      if (Platform.isAndroid) {
-        await LocationPermissions().shouldShowRequestPermissionRationale(
-            permissionLevel: LocationPermissionLevel.locationWhenInUse);
-      } else {
-        // _showAlertDialog('Turn on LocationServices on your device');
-        bool isOpened = await LocationPermissions().openAppSettings();
-      }
-    }
-
-    if (status == ServiceStatus.enabled) {}
-
-    // not applicable, this device doesn't have location services? it's a TV?
-    // unknown, we cannot get info on device location services at all
-    if (status == ServiceStatus.unknown) {}
-  }
-
-  @override
-  void initState() {
-
-    // _getThingsOnStartup().then((value){
-    //   print('Async done');
-    // });
-
-    // let's do some checkups here
-    // is the device location service enabled?
-    _checkDeviceLocationServiceStatus().then((value) => null);
-
-    // check for location services permissions for this app.
-    // and ask for them if we
-    // don't have them yet, or
-    LocationPermissions()
-        .requestPermissions(
-            permissionLevel: LocationPermissionLevel.locationWhenInUse)
-        .then((PermissionStatus status) {
-      if (status == PermissionStatus.denied) {
-        _showAlertDialog(
-            'This app needs Location Services/Location permission to work.');
-        //bool isOpened = await LocationPermissions().openAppSettings();
-        // Future<bool> settingsOpened = LocationPermissions().openAppSettings();
-        // settingsOpened.then((resp) {
-        // don't need to do anything?
-        //});
-      }
-    });
-
+  void setupMarkers() {
     _markers.add(Marker(
         markerId: MarkerId('RitzyReplay'),
         position: LatLng(45.171706, -93.874609),
@@ -185,7 +37,8 @@ class _HomeAppState extends State<HomeApp>
               Navigator.push(_myBuildContext,
                   MaterialPageRoute(builder: (context) => SecondRoute()));
             }),
-        icon: BitmapDescriptor.defaultMarker));
+        icon:
+            BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen)));
 
     _markers.add(Marker(
         markerId: MarkerId('A Wreath of Franklin'),
@@ -354,80 +207,6 @@ class _HomeAppState extends State<HomeApp>
                   MaterialPageRoute(builder: (context) => SecondRoute()));
             }),
         icon: BitmapDescriptor.defaultMarker));
-
-    // i have a custom leaned out map style. no distracting features, minimal.
-    rootBundle.loadString('assets/mapstyle/minimal.json').then((string) {
-      _mapStyle = string;
-    });
-
-    super.initState();
-  }
-
-  void filterStoreMarkersToOnlyWhatsOpen() {
-    Set<Marker> markersToRemove = {};
-
-    for (Marker marker in _markers) {
-      // for now, I'll just turn off all but 3 markers.
-      // later I'll put info in the Marker itself with store opening date/times
-      if ((marker.markerId.value == 'She') ||
-          (marker.markerId.value == 'Now and Again') ||
-          (marker.markerId.value == 'A Wreath of Franklin')) {
-        print('keeping this one' + marker.markerId.value);
-      } else {
-        markersToRemove.add(marker);
-      }
-    }
-    setState(() {
-      //Marker markerToRemove = _markers.first;
-      markersToRemove.forEach((element) {
-        _markers.remove(element);
-      });
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    _myBuildContext = context;
-
-    //what the hell, why doesn't mylocationenabled/button work???
-    // because emulator.  try a real device and it works???
-    //http://flutterdevs.com/blog/google-maps-in-flutter/
-    return Stack(children: <Widget>[
-      GoogleMap(
-        myLocationButtonEnabled: true,
-        myLocationEnabled: true,
-        onMapCreated: _onMapCreated,
-        markers: Set<Marker>.of(_markers),
-        initialCameraPosition: CameraPosition(
-          target: _center,
-          zoom: 10.0,
-        ),
-      ),
-      Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Align(
-          alignment: Alignment.topLeft,
-          child: ToggleButtons(
-            children: <Widget>[
-              Icon(Icons.remove_shopping_cart),
-            ],
-            onPressed: (int index) {
-              setState(() {
-                _selection[index] = !_selection[index];
-              });
-            },
-            isSelected: _selection,
-          ),
-
-          /*FloatingActionButton(
-            // the toggle for only showing stores open right NOW
-            onPressed: () => filterStoreMarkersToOnlyWhatsOpen(),
-            materialTapTargetSize: MaterialTapTargetSize.padded,
-            //backgroundColor: Colors.green,
-            child: const Icon(Icons.schedule, size: 36.0),
-          ),*/
-        ),
-      ),
-    ]);
   }
 }
+*/
