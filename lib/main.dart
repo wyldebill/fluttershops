@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:location_permissions/location_permissions.dart';
+import 'package:mapstesting/SplashScreen.dart';
 import 'package:mapstesting/allstores.dart';
 import 'package:mapstesting/secondroute.dart';
 
@@ -12,7 +13,7 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class zMyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -125,6 +126,7 @@ class _HomeAppState extends State<HomeApp>
 
   @override
   void initState() {
+
     // _getThingsOnStartup().then((value){
     //   print('Async done');
     // });
@@ -396,7 +398,7 @@ class _HomeAppState extends State<HomeApp>
           alignment: Alignment.topLeft,
           child: ToggleButtons(
             children: <Widget>[
-              Icon(Icons.ac_unit),
+              Icon(Icons.remove_shopping_cart),
             ],
             onPressed: (int index) {
               setState(() {

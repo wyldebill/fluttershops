@@ -13,10 +13,10 @@ class SecondRoute extends StatelessWidget {
           width: 400,
           height: 600,
           child: Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15.0),
-            ),
-            color: Colors.grey,
+            //shape: RoundedRectangleBorder(
+            //borderRadius: BorderRadius.circular(15.0),
+            //),
+            //color: Colors.grey,
             elevation: 10,
             child: Column(
               mainAxisSize: MainAxisSize.min,
