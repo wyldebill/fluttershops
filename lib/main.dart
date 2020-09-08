@@ -67,6 +67,7 @@ class _HomeAppState extends State<HomeApp>
   //Completer<GoogleMapController> _controller = Completer();
   GoogleMapController _controller;
   final Set<Marker> _markers = {};
+  Set<Marker> _originalMarkers = {};
 
   // for now, static start location of Buffalo.
   static const LatLng _center = const LatLng(45.1719084, -93.8746941);
@@ -119,8 +120,8 @@ class _HomeAppState extends State<HomeApp>
         await LocationPermissions().shouldShowRequestPermissionRationale(
             permissionLevel: LocationPermissionLevel.locationWhenInUse);
       } else {
-        // _showAlertDialog('Turn on LocationServices on your device');
-        bool isOpened = await LocationPermissions().openAppSettings();
+        _showAlertDialog('Turn on LocationServices on your device');
+        //bool isOpened = await LocationPermissions().openAppSettings();
       }
     }
 
@@ -133,7 +134,6 @@ class _HomeAppState extends State<HomeApp>
 
   @override
   void initState() {
-
     // _getThingsOnStartup().then((value){
     //   print('Async done');
     // });
@@ -355,6 +355,11 @@ class _HomeAppState extends State<HomeApp>
             }),
         icon: BitmapDescriptor.defaultMarker));
 
+    // copy the set of markers, so we can restore all of them later.
+    _markers.forEach((element) {
+      _originalMarkers.add(element);
+    });
+
     // i have a custom leaned out map style. no distracting features, minimal.
     rootBundle.loadString('assets/mapstyle/minimal.json').then((string) {
       _mapStyle = string;
@@ -363,26 +368,35 @@ class _HomeAppState extends State<HomeApp>
     super.initState();
   }
 
-  void filterStoreMarkersToOnlyWhatsOpen() {
+  void filterStoreMarkersToOnlyWhatsOpen(bool filterClosedShops) {
     Set<Marker> markersToRemove = {};
 
-    for (Marker marker in _markers) {
-      // for now, I'll just turn off all but 3 markers.
-      // later I'll put info in the Marker itself with store opening date/times
-      if ((marker.markerId.value == 'She') ||
-          (marker.markerId.value == 'Now and Again') ||
-          (marker.markerId.value == 'A Wreath of Franklin')) {
-        print('keeping this one' + marker.markerId.value);
-      } else {
-        markersToRemove.add(marker);
+    if (filterClosedShops == true) {
+      for (Marker marker in _markers) {
+        // for now, I'll just turn off all but 3 markers.
+        // later I'll put info in the Marker itself with store opening date/times
+        if ((marker.markerId.value == 'She') ||
+            (marker.markerId.value == 'Now and Again') ||
+            (marker.markerId.value == 'A Wreath of Franklin')) {
+          print('keeping this one' + marker.markerId.value);
+        } else {
+          markersToRemove.add(marker);
+        }
       }
-    }
-    setState(() {
-      //Marker markerToRemove = _markers.first;
-      markersToRemove.forEach((element) {
-        _markers.remove(element);
+      setState(() {
+        //Marker markerToRemove = _markers.first;
+        markersToRemove.forEach((element) {
+          _markers.remove(element);
+        });
       });
-    });
+    } else {
+      setState(() {
+        _markers.clear();
+        _originalMarkers.forEach((shopMarker) {
+          _markers.add(shopMarker);
+        });
+      });
+    }
   }
 
   @override
@@ -414,6 +428,11 @@ class _HomeAppState extends State<HomeApp>
             onPressed: (int index) {
               setState(() {
                 _selection[index] = !_selection[index];
+                if (_selection[index] == true) {
+                  filterStoreMarkersToOnlyWhatsOpen(true);
+                } else {
+                  filterStoreMarkersToOnlyWhatsOpen(false);
+                }
               });
             },
             isSelected: _selection,
