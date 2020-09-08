@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -32,8 +32,9 @@ class MyApp extends StatelessWidget {
           body: TabBarView(
             physics: NeverScrollableScrollPhysics(),
             children: [
-              AllStores(), // listview
               // each tab needs an entry here
+              AllStores(), // listview
+
               HomeApp(), // map
             ],
           ),
@@ -50,7 +51,9 @@ class HomeApp extends StatefulWidget {
 }
 
 class _HomeAppState extends State<HomeApp>
-    with AutomaticKeepAliveClientMixin //,// WidgetsBindingObserver
+    with
+        AutomaticKeepAliveClientMixin //  this will preserve state in each tab. somehow
+// WidgetsBindingObserver
 {
   BuildContext _myBuildContext;
 
@@ -99,47 +102,56 @@ class _HomeAppState extends State<HomeApp>
     );
   }
 
-  // Future _checkDeviceLocationServiceStatus() async {
-  //   ServiceStatus status = await LocationPermissions().checkServiceStatus();
+  // check for location services at the device level.  ie is the gps radio switched on?
+  Future _checkDeviceLocationServiceStatus() async {
+    ServiceStatus status = await LocationPermissions().checkServiceStatus();
 
-  //   if (status == ServiceStatus.disabled) {
-  //     print("SERVICESTATUS: NO DEVICE LOCATION SERVICES FOUND. POP SETTINGS?");
-  //     await LocationPermissions().shouldShowRequestPermissionRationale(
-  //         permissionLevel: LocationPermissionLevel.locationWhenInUse);
-  //_showAlertDialog('Turn on LocationServices on your device');
-  //}
+    // location services for the device (and all apps) is switched off
+    if (status == ServiceStatus.disabled) {
+      // if on android, show a dialog asking why we want location services enabled?
+      if (Platform.isAndroid) {
+        await LocationPermissions().shouldShowRequestPermissionRationale(
+            permissionLevel: LocationPermissionLevel.locationWhenInUse);
+      } else {
+        // _showAlertDialog('Turn on LocationServices on your device');
+        bool isOpened = await LocationPermissions().openAppSettings();
+      }
+    }
 
-  // if (status == ServiceStatus.enabled) {
-  //   print(
-  //       "SERVICESTATUS: WE ARE GOOD TO GO.  DEVICE LOCATION SERVICES ENABLED!!");
-  // }
+    if (status == ServiceStatus.enabled) {}
 
-  // not applicable, this device doesn't have location services? it's a TV?
-  // unknown, we cannot get info on device location services at all
-  //}
+    // not applicable, this device doesn't have location services? it's a TV?
+    // unknown, we cannot get info on device location services at all
+    if (status == ServiceStatus.unknown) {}
+  }
 
   @override
   void initState() {
     // _getThingsOnStartup().then((value){
     //   print('Async done');
     // });
+
     // let's do some checkups here
     // is the device location service enabled?
-    //_checkDeviceLocationServiceStatus().then((value) => null);
+    _checkDeviceLocationServiceStatus().then((value) => null);
 
     // check for location services permissions for this app.
     // and ask for them if we
     // don't have them yet, or
-    // we had them and the user then revoked them from us
-    // LocationPermissions()
-    //     .requestPermissions(
-    //         permissionLevel: LocationPermissionLevel.locationWhenInUse)
-    //     .then((PermissionStatus status) {
-    //   if (status == PermissionStatus.denied) {
-    //     print(
-    //         'DEBUG YOURE THE BOSS BUT THIS APP ISNT MUCH GOOD WITHOUT LOCATION');
-    //   }
-    // });
+    LocationPermissions()
+        .requestPermissions(
+            permissionLevel: LocationPermissionLevel.locationWhenInUse)
+        .then((PermissionStatus status) {
+      if (status == PermissionStatus.denied) {
+        _showAlertDialog(
+            'This app needs Location Services/Location permission to work.');
+        //bool isOpened = await LocationPermissions().openAppSettings();
+        // Future<bool> settingsOpened = LocationPermissions().openAppSettings();
+        // settingsOpened.then((resp) {
+        // don't need to do anything?
+        //});
+      }
+    });
 
     _markers.add(Marker(
         markerId: MarkerId('RitzyReplay'),
@@ -166,8 +178,7 @@ class _HomeAppState extends State<HomeApp>
               Navigator.push(_myBuildContext,
                   MaterialPageRoute(builder: (context) => SecondRoute()));
             }),
-        icon:
-            BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen)));
+        icon: BitmapDescriptor.defaultMarker));
 
     _markers.add(Marker(
         markerId: MarkerId('A Wreath of Franklin'),
@@ -393,7 +404,7 @@ class _HomeAppState extends State<HomeApp>
             // the toggle for only showing stores open right NOW
             onPressed: () => filterStoreMarkersToOnlyWhatsOpen(),
             materialTapTargetSize: MaterialTapTargetSize.padded,
-            backgroundColor: Colors.green,
+            //backgroundColor: Colors.green,
             child: const Icon(Icons.schedule, size: 36.0),
           ),
         ),
