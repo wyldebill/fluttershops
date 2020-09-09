@@ -140,25 +140,27 @@ class _HomeAppState extends State<HomeApp>
 
     // let's do some checkups here
     // is the device location service enabled?
-    _checkDeviceLocationServiceStatus().then((value) => null);
+    //_checkDeviceLocationServiceStatus().then((value) => null);
 
     // check for location services permissions for this app.
-    // and ask for them if we
-    // don't have them yet, or
-    LocationPermissions()
-        .requestPermissions(
-            permissionLevel: LocationPermissionLevel.locationWhenInUse)
-        .then((PermissionStatus status) {
-      if (status == PermissionStatus.denied) {
-        _showAlertDialog(
-            'This app needs Location Services/Location permission to work.');
-        //bool isOpened = await LocationPermissions().openAppSettings();
-        // Future<bool> settingsOpened = LocationPermissions().openAppSettings();
-        // settingsOpened.then((resp) {
-        // don't need to do anything?
-        //});
-      }
-    });
+    // // and ask for them if we
+    // // don't have them yet, or
+
+    // LocationPermissions()
+    //     .requestPermissions(
+    //         permissionLevel: LocationPermissionLevel.locationWhenInUse)
+    //     .then((PermissionStatus status) {
+    //   if (status == PermissionStatus.denied) {
+    //     _showAlertDialog(
+    //         'This app needs Location Services/Location permission to work.');
+
+    //bool isOpened = await LocationPermissions().openAppSettings();
+    // Future<bool> settingsOpened = LocationPermissions().openAppSettings();
+    // settingsOpened.then((resp) {
+    // don't need to do anything?
+    //});
+    //}
+    // });
 
     _markers.add(Marker(
         markerId: MarkerId('RitzyReplay'),
