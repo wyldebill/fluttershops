@@ -28,8 +28,8 @@ class zMyApp extends StatelessWidget {
             title: new Text('Buffalo Retail Group'),
             bottom: TabBar(
               tabs: [
-                Tab(icon: Icon(Icons.map)),
                 Tab(icon: Icon(Icons.list)),
+                Tab(icon: Icon(Icons.map)),
               ],
             ),
           ),
