@@ -3,8 +3,8 @@
         "name": "Biggs and Company",
         "tagline": "Rustic Industrial furniture and custom designed home decor",
         "distance": "145ft",
-        "latitude": "134.345",
-        "longitude": "-45.847",
+        "latitude": "45.172144",
+        "longitude": "-93.874352",
         "description": "Welcome to Biggs and Company",
         "website": "www.biggsandcompany.com",
         "phone": "320-402-2009",
@@ -35,14 +35,86 @@
 
     },
     {
-        "id": "storeid",
-        "name": "Jute Twine and Burlap",
+        "id": "A Wreath of Franklin",
+        "name": "A Wreath of Franklin",
         "tagline": "Home decor",
         "distance": "145ft",
-        "latitude": "134.345",
-        "longitude": "-45.847",
-        "description": "Welcome to JTB",
-        "website": "www.jtb.com",
+        "latitude": "45.172253",
+        "longitude": "-93.875635",
+        "description": "A Wreath of Franklin",
+        "website": "www.wreathfanklin.com",
+        "phone": "999-999-9999",
+        "daysOfTheWeekStoreIsOpen": [{
+            "monday": "false",
+            "tuesday": "false",
+            "wednesday": "false",
+            "thursday": "true",
+            "friday": "true",
+            "saturday": "true",
+            "sunday": "true"
+        }],
+        "mondayOpenTime": "2012-04-23T18:25:43.511Z",
+        "tuesdayOpenTime": "2012-04-23T18:25:43.511Z",
+        "wednesdayOpenTime": "2012-04-23T18:25:43.511Z",
+        "thursdayOpenTime": "2012-04-23T18:25:43.511Z",
+        "fridayOpenTime": "2012-04-23T18:25:43.511Z",
+        "saturdayOpenTime": "2012-04-23T18:25:43.511Z",
+        "sundayOpenTime": "2012-04-23T18:25:43.511Z",
+        "mondayCloseTime": "2012-04-23T18:25:43.511Z",
+        "tuesdayCloseTime": "2012-04-23T18:25:43.511Z",
+        "wednesdayCloseTime": "2012-04-23T18:25:43.511Z",
+        "thursdayCloseTime": "2012-04-23T18:25:43.511Z",
+        "fridayCloseTime": "2012-04-23T18:25:43.511Z",
+        "saturdayCloseTime": "2012-04-23T18:25:43.511Z",
+        "sundayCloseTime": "2012-04-23T18:25:43.511Z"
+
+
+    },
+    {
+        "id": "Buffalo Rock Winery",
+        "name": "Buffalo Rock Winery",
+        "tagline": "Home decor",
+        "distance": "145ft",
+        "latitude": "45.117736",
+        "longitude": "-93.795735",
+        "description": "Buffalo Rock Winery",
+        "website": "www.buffalorock.com",
+        "phone": "999-999-9999",
+        "daysOfTheWeekStoreIsOpen": [{
+            "monday": "false",
+            "tuesday": "false",
+            "wednesday": "false",
+            "thursday": "true",
+            "friday": "true",
+            "saturday": "true",
+            "sunday": "true"
+        }],
+        "mondayOpenTime": "2012-04-23T18:25:43.511Z",
+        "tuesdayOpenTime": "2012-04-23T18:25:43.511Z",
+        "wednesdayOpenTime": "2012-04-23T18:25:43.511Z",
+        "thursdayOpenTime": "2012-04-23T18:25:43.511Z",
+        "fridayOpenTime": "2012-04-23T18:25:43.511Z",
+        "saturdayOpenTime": "2012-04-23T18:25:43.511Z",
+        "sundayOpenTime": "2012-04-23T18:25:43.511Z",
+        "mondayCloseTime": "2012-04-23T18:25:43.511Z",
+        "tuesdayCloseTime": "2012-04-23T18:25:43.511Z",
+        "wednesdayCloseTime": "2012-04-23T18:25:43.511Z",
+        "thursdayCloseTime": "2012-04-23T18:25:43.511Z",
+        "fridayCloseTime": "2012-04-23T18:25:43.511Z",
+        "saturdayCloseTime": "2012-04-23T18:25:43.511Z",
+        "sundayCloseTime": "2012-04-23T18:25:43.511Z"
+
+
+    },
+    {
+        "id": "Now and Again",
+        "name": "Now and Again",
+        "tagline": "Home decor",
+        "distance": "145ft",
+        "latitude": "45.172950",
+        "longitude": "45.172950",
+        "description": "Welcome to Now and Again",
+        "website": "www.nowagain.com",
         "phone": "999-999-9999",
         "daysOfTheWeekStoreIsOpen": [{
             "monday": "false",
@@ -70,4 +142,5 @@
 
 
     }
+
 ]
