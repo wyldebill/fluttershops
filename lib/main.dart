@@ -10,7 +10,7 @@ import 'package:mapstesting/allstores.dart';
 import 'package:mapstesting/secondroute.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(SplashScreenWidget());
 }
 
 class zMyApp extends StatelessWidget {
@@ -49,18 +49,19 @@ class zMyApp extends StatelessWidget {
 }
 
 class HomeApp extends StatefulWidget {
-  // This widget is the root of your application.
+
   @override
   _HomeAppState createState() => _HomeAppState();
 }
 
 class _HomeAppState extends State<HomeApp>
     with
-        AutomaticKeepAliveClientMixin //  this will preserve state in each tab. somehow
-// WidgetsBindingObserver
+        AutomaticKeepAliveClientMixin //  this will preserve state in each tab. somehow WidgetsBindingObserver
 {
   BuildContext _myBuildContext;
 
+  // this tracks the state of the show/hide closed stores button on top of the map.
+  // the list is 1 item long, so 1 button.  a ToggleButton. i don't like this much, too disconnected
   List<bool> _selection = List.generate(1, (_) => false);
 
   // i have to figure out the Completer(), Future and .complete() relationship soon!
@@ -215,7 +216,7 @@ class _HomeAppState extends State<HomeApp>
 
     _markers.add(Marker(
         markerId: MarkerId('Now and Again'),
-        position: LatLng(45.172950, -93.874602),
+        position: LatLng(45.172950, 45.172950),
         infoWindow: InfoWindow(
             title: 'Now and Again',
             snippet: 'Decor',
@@ -226,7 +227,7 @@ class _HomeAppState extends State<HomeApp>
         icon: BitmapDescriptor.defaultMarker));
 
     _markers.add(Marker(
-        markerId: MarkerId('Second Hand Rose'),
+        markerId: MarkerId('  `'),
         position: LatLng(45.178439, -93.872743),
         infoWindow: InfoWindow(
             title: 'Second Hand Rose',

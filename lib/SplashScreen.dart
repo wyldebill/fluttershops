@@ -5,7 +5,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:mapstesting/storeInfo.dart';
 import 'dart:convert';
 
-class MyApp extends StatelessWidget {
+class SplashScreenWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -13,18 +13,19 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(),
+      home: SplashScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
+// TODO: I don't think this needs to be stateful?
+class SplashScreen extends StatefulWidget {
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _SplashScreenState createState() => _SplashScreenState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
@@ -46,7 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return await rootBundle.loadString('assets/storeInfoDataJSON.json');
   }
 
-  // load the list of json format stores and deserialze to a list of storeinfo
+  // debugging:  load the list of json format stores and deserialze to a list of storeinfo
   Future loadStore() async {
     String jsonString = await _loadAStoresAsset();
     final jsonResponse = json.decode(jsonString);
@@ -54,18 +55,18 @@ class _MyHomePageState extends State<MyHomePage> {
     //StoreInfo store = new StoreInfo.fromJson(jsonResponse);
 
     DateTime parsedDt = (listOfStores.stores[1].mondayOpenTime);
-    DateTime rightNow = DateTime.now();
-    print(rightNow.weekday);
+    //DateTime rightNow = DateTime.now();
+    //print(rightNow.weekday);
 
-    print(parsedDt.year); // 4
-    print(parsedDt.weekday); // 4
-    print(parsedDt.month); // 4
-    print(parsedDt.day); // 2
-    print(parsedDt.hour); // 15
-    print(parsedDt.minute); // 21
-    print(parsedDt.second); // 49
+    // print(parsedDt.year); // 4
+    // print(parsedDt.weekday); // 4
+    // print(parsedDt.month); // 4
+    // print(parsedDt.day); // 2
+    // print(parsedDt.hour); // 15
+    // print(parsedDt.minute); // 21
+    // print(parsedDt.second); // 49
 
-    print(listOfStores.stores[1].name);
+    //print(listOfStores.stores[1].name);
   }
 
   @override
