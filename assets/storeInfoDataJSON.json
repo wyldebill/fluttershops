@@ -103,8 +103,6 @@
         "fridayCloseTime": "2012-04-23T18:25:43.511Z",
         "saturdayCloseTime": "2012-04-23T18:25:43.511Z",
         "sundayCloseTime": "2012-04-23T18:25:43.511Z"
-
-
     },
     {
         "id": "Now and Again",
@@ -112,7 +110,7 @@
         "tagline": "Home decor",
         "distance": "145ft",
         "latitude": "45.172950",
-        "longitude": "45.172950",
+        "longitude": "-93.874645",
         "description": "Welcome to Now and Again",
         "website": "www.nowagain.com",
         "phone": "999-999-9999",

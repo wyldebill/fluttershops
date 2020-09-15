@@ -1,12 +1,18 @@
 // blank mostly widget to test navigation and the back button
 import 'package:flutter/material.dart';
+import 'package:mapstesting/storeInfo.dart';
 
-class SecondRoute extends StatelessWidget {
+class StoreDetail extends StatelessWidget {
+  StoreInfo _storeDetail;
+  StoreDetail(StoreInfo store) {
+    _storeDetail = store;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Store Details"),
+        title: Text(_storeDetail.name),
       ),
       body: Center(
         child: Container(
@@ -23,10 +29,9 @@ class SecondRoute extends StatelessWidget {
               children: <Widget>[
                 const ListTile(
                   leading: Icon(Icons.store, size: 70),
-                  title:
-                      Text('Store Name', style: TextStyle(color: Colors.white)),
-                  subtitle:
-                      Text('-decor-', style: TextStyle(color: Colors.white)),
+                  title: Text('store name here'),
+                  subtitle: Text('store tagline',
+                      style: TextStyle(color: Colors.white)),
                 ),
                 // ButtonTheme.bar(
                 //   child: ButtonBar(

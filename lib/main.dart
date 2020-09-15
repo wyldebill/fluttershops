@@ -1,13 +1,16 @@
 import 'dart:async';
 import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
-
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:location_permissions/location_permissions.dart';
 import 'package:mapstesting/SplashScreen.dart';
 import 'package:mapstesting/allstores.dart';
-import 'package:mapstesting/secondroute.dart';
+import 'package:mapstesting/StoreDetail.dart';
+import 'package:mapstesting/storeInfo.dart';
+import 'dart:convert';
+
+import 'package:mapstesting/storemodel.dart';
 
 void main() {
   runApp(SplashScreenWidget());
@@ -49,7 +52,6 @@ class zMyApp extends StatelessWidget {
 }
 
 class HomeApp extends StatefulWidget {
-
   @override
   _HomeAppState createState() => _HomeAppState();
 }
@@ -63,6 +65,8 @@ class _HomeAppState extends State<HomeApp>
   // this tracks the state of the show/hide closed stores button on top of the map.
   // the list is 1 item long, so 1 button.  a ToggleButton. i don't like this much, too disconnected
   List<bool> _selection = List.generate(1, (_) => false);
+
+  List<StoreInfo> listOfStores;
 
   // i have to figure out the Completer(), Future and .complete() relationship soon!
   //Completer<GoogleMapController> _controller = Completer();
@@ -135,6 +139,32 @@ class _HomeAppState extends State<HomeApp>
 
   @override
   void initState() {
+    loadStore().then((value) {
+      listOfStores = value.stores;
+      setState(() {
+        listOfStores.forEach((StoreInfo store) {
+          _markers.add(Marker(
+              markerId: MarkerId(store.id),
+              position: LatLng(
+                  double.parse(store.latitude), double.parse(store.longitude)),
+              infoWindow: InfoWindow(
+                  title: store.name,
+                  snippet: store.tagline,
+                  onTap: () {
+                    Navigator.push(
+                        _myBuildContext,
+                        MaterialPageRoute(
+                            builder: (context) => StoreDetail(store)));
+                  }),
+              icon: BitmapDescriptor.defaultMarker));
+        });
+      });
+
+      // copy the set of markers, so we can restore all of them later.
+      _markers.forEach((element) {
+        _originalMarkers.add(element);
+      });
+    });
     // _getThingsOnStartup().then((value){
     //   print('Async done');
     // });
@@ -163,206 +193,6 @@ class _HomeAppState extends State<HomeApp>
     //}
     // });
 
-    _markers.add(Marker(
-        markerId: MarkerId('RitzyReplay'),
-        position: LatLng(45.171706, -93.874609),
-        infoWindow: InfoWindow(
-            title: 'Ritzy Replay',
-            snippet: 'Clothing',
-            onTap: () {
-              Navigator.push(_myBuildContext,
-                  MaterialPageRoute(builder: (context) => SecondRoute()));
-            }),
-        onTap: () {
-          print(' tapped on marker !!!!');
-        },
-        icon: BitmapDescriptor.defaultMarker));
-
-    _markers.add(Marker(
-        markerId: MarkerId('Biggs and Co.'),
-        position: LatLng(45.172144, -93.874352),
-        infoWindow: InfoWindow(
-            title: 'Biggs and Company',
-            snippet: 'Decor',
-            onTap: () {
-              Navigator.push(_myBuildContext,
-                  MaterialPageRoute(builder: (context) => SecondRoute()));
-            }),
-        icon: BitmapDescriptor.defaultMarker));
-
-    _markers.add(Marker(
-        markerId: MarkerId('A Wreath of Franklin'),
-        position: LatLng(45.172253, -93.875635),
-        infoWindow: InfoWindow(
-            title: 'A Wreath of Franklin',
-            snippet: 'Apparel',
-            onTap: () {
-              Navigator.push(_myBuildContext,
-                  MaterialPageRoute(builder: (context) => SecondRoute()));
-            }),
-        icon: BitmapDescriptor.defaultMarker));
-
-    _markers.add(Marker(
-        markerId: MarkerId('Buffalo Rock Winery'),
-        position: LatLng(45.117736, -93.795735),
-        infoWindow: InfoWindow(
-            title: 'Buffalo Rock Winery',
-            snippet: 'Wine',
-            onTap: () {
-              Navigator.push(_myBuildContext,
-                  MaterialPageRoute(builder: (context) => SecondRoute()));
-            }),
-        icon: BitmapDescriptor.defaultMarker));
-
-    _markers.add(Marker(
-        markerId: MarkerId('Now and Again'),
-        position: LatLng(45.172950, 45.172950),
-        infoWindow: InfoWindow(
-            title: 'Now and Again',
-            snippet: 'Decor',
-            onTap: () {
-              Navigator.push(_myBuildContext,
-                  MaterialPageRoute(builder: (context) => SecondRoute()));
-            }),
-        icon: BitmapDescriptor.defaultMarker));
-
-    _markers.add(Marker(
-        markerId: MarkerId('  `'),
-        position: LatLng(45.178439, -93.872743),
-        infoWindow: InfoWindow(
-            title: 'Second Hand Rose',
-            snippet: 'Apparel',
-            onTap: () {
-              Navigator.push(_myBuildContext,
-                  MaterialPageRoute(builder: (context) => SecondRoute()));
-            }),
-        icon: BitmapDescriptor.defaultMarker));
-
-    _markers.add(Marker(
-        markerId: MarkerId('JTB Home Furniture and Decor'),
-        position: LatLng(45.172950, -93.875904),
-        infoWindow: InfoWindow(
-            title: 'JTB Home Furniture and Decor',
-            snippet: 'Decor',
-            onTap: () {
-              Navigator.push(_myBuildContext,
-                  MaterialPageRoute(builder: (context) => SecondRoute()));
-            }),
-        icon: BitmapDescriptor.defaultMarker));
-
-    _markers.add(Marker(
-        markerId: MarkerId('SHE'),
-        position: LatLng(45.172177, -93.876115),
-        infoWindow: InfoWindow(
-            title: 'SHE',
-            snippet: 'Decor',
-            onTap: () {
-              Navigator.push(_myBuildContext,
-                  MaterialPageRoute(builder: (context) => SecondRoute()));
-            }),
-        icon: BitmapDescriptor.defaultMarker));
-
-    _markers.add(Marker(
-        markerId: MarkerId('The Porch in Buffalo'),
-        position: LatLng(45.173125, -93.875940),
-        infoWindow: InfoWindow(
-            title: 'The Porch in Buffalo',
-            snippet: 'Decor',
-            onTap: () {
-              Navigator.push(_myBuildContext,
-                  MaterialPageRoute(builder: (context) => SecondRoute()));
-            }),
-        icon: BitmapDescriptor.defaultMarker));
-
-    _markers.add(Marker(
-        markerId: MarkerId('The Rustic Arbor'),
-        position: LatLng(45.172677, -93.876039),
-        infoWindow: InfoWindow(
-            title: 'The Rustic Arbor',
-            snippet: 'Decor',
-            onTap: () {
-              Navigator.push(_myBuildContext,
-                  MaterialPageRoute(builder: (context) => SecondRoute()));
-            }),
-        icon: BitmapDescriptor.defaultMarker));
-
-    _markers.add(Marker(
-        markerId: MarkerId('What' 's the Scoop'),
-        position: LatLng(45.172143, -93.875460),
-        infoWindow: InfoWindow(
-            title: 'What' 's the Scoop',
-            snippet: 'Food',
-            onTap: () {
-              Navigator.push(_myBuildContext,
-                  MaterialPageRoute(builder: (context) => SecondRoute()));
-            }),
-        icon: BitmapDescriptor.defaultMarker));
-
-    _markers.add(Marker(
-        markerId: MarkerId('Harlows House'),
-        position: LatLng(45.172802, -93.874704),
-        infoWindow: InfoWindow(
-            title: 'Harlows House',
-            snippet: 'Decor',
-            onTap: () {
-              Navigator.push(_myBuildContext,
-                  MaterialPageRoute(builder: (context) => SecondRoute()));
-            }),
-        icon: BitmapDescriptor.defaultMarker));
-
-    _markers.add(Marker(
-        markerId: MarkerId('Lillians'),
-        position: LatLng(45.172683, -93.875803),
-        infoWindow: InfoWindow(
-            title: 'Lillians',
-            snippet: 'Clothing',
-            onTap: () {
-              Navigator.push(_myBuildContext,
-                  MaterialPageRoute(builder: (context) => SecondRoute()));
-            }),
-        icon: BitmapDescriptor.defaultMarker));
-
-    _markers.add(Marker(
-        markerId: MarkerId('Evelyn' 's'),
-        position: LatLng(45.172666, -93.876034),
-        infoWindow: InfoWindow(
-            title: 'Evelyn' 's',
-            snippet: 'Wine',
-            onTap: () {
-              Navigator.push(_myBuildContext,
-                  MaterialPageRoute(builder: (context) => SecondRoute()));
-            }),
-        icon: BitmapDescriptor.defaultMarker));
-
-    _markers.add(Marker(
-        markerId: MarkerId('Behind the Picket Fence'),
-        position: LatLng(45.172865, -93.876104),
-        infoWindow: InfoWindow(
-            title: 'Behind the Picket Fence',
-            snippet: 'Decor',
-            onTap: () {
-              Navigator.push(_myBuildContext,
-                  MaterialPageRoute(builder: (context) => SecondRoute()));
-            }),
-        icon: BitmapDescriptor.defaultMarker));
-
-    _markers.add(Marker(
-        markerId: MarkerId('This and That'),
-        position: LatLng(45.178114, -93.873020),
-        infoWindow: InfoWindow(
-            title: 'This and That',
-            snippet: 'Decor',
-            onTap: () {
-              Navigator.push(_myBuildContext,
-                  MaterialPageRoute(builder: (context) => SecondRoute()));
-            }),
-        icon: BitmapDescriptor.defaultMarker));
-
-    // copy the set of markers, so we can restore all of them later.
-    _markers.forEach((element) {
-      _originalMarkers.add(element);
-    });
-
     // i have a custom leaned out map style. no distracting features, minimal.
     rootBundle.loadString('assets/mapstyle/minimal.json').then((string) {
       _mapStyle = string;
@@ -371,15 +201,48 @@ class _HomeAppState extends State<HomeApp>
     super.initState();
   }
 
+  // read the list of stores json in the assets folder
+  Future<String> _loadAStoresAsset() async {
+    return await rootBundle.loadString('assets/storeInfoDataJSON.json');
+  }
+
+  // debugging:  load the list of json format stores and deserialze to a list of storeinfo
+  Future<StoresList> loadStore() async {
+    String jsonString = await _loadAStoresAsset();
+    final jsonResponse = json.decode(jsonString);
+    StoresList listOfStores = StoresList.fromJson(jsonResponse);
+    return listOfStores;
+    //StoreInfo store = new StoreInfo.fromJson(jsonResponse);
+
+    //DateTime parsedDt = (listOfStores.stores[1].mondayOpenTime);
+    //DateTime rightNow = DateTime.now();
+    //print(rightNow.weekday);
+
+    // print(parsedDt.year); // 4
+    // print(parsedDt.weekday); // 4
+    // print(parsedDt.month); // 4
+    // print(parsedDt.day); // 2
+    // print(parsedDt.hour); // 15
+    // print(parsedDt.minute); // 21
+    // print(parsedDt.second); // 49
+
+    //print(listOfStores.stores[1].name);
+  }
+
   void filterStoreMarkersToOnlyWhatsOpen(bool filterClosedShops) {
     Set<Marker> markersToRemove = {};
 
     if (filterClosedShops == true) {
       for (Marker marker in _markers) {
+        // TODO:  need to figure out how to look at the store list
+        //        find the day/hours of operation
+        //        compare that to the current time, Datetime.now()
+        //        if the current day isn't in the days open of the store, remove it right it away
+        //           the current day is open, then check against the open and close time and use the datetime.before() and after()
+
         // for now, I'll just turn off all but 3 markers.
         // later I'll put info in the Marker itself with store opening date/times
-        if ((marker.markerId.value == 'She') ||
-            (marker.markerId.value == 'Now and Again') ||
+        if ((marker.markerId.value == 'Now and Again') ||
             (marker.markerId.value == 'A Wreath of Franklin')) {
           print('keeping this one' + marker.markerId.value);
         } else {
@@ -394,6 +257,7 @@ class _HomeAppState extends State<HomeApp>
       });
     } else {
       setState(() {
+        print('putting them all back now');
         _markers.clear();
         _originalMarkers.forEach((shopMarker) {
           _markers.add(shopMarker);

@@ -7,21 +7,20 @@ import 'dart:convert';
 class StoresList {
   final List<StoreInfo> stores;
 
+ 
   StoresList({
     this.stores,
   });
 
-   factory StoresList.fromJson(List<dynamic> json) {
-
+  factory StoresList.fromJson(List<dynamic> json) {
     // we know the list of stores in the json is an array, a list<>
     // so create a new one here to hold it eventually
     List<StoreInfo> newStoresList = new List<StoreInfo>();
 
     // now for each store in the array of stores, call the StoreInfo.fromJson
     // to hyrdrate a StoreInfo object...
-    // then call to list on the results 
+    // then call to list on the results
     newStoresList = json.map((s) => StoreInfo.fromJson(s)).toList();
-
 
     // the StoresList is really a thin wrapper around a list<> of StoreInfo
     return new StoresList(
@@ -30,65 +29,64 @@ class StoresList {
   }
 }
 
-
 StoreInfo storeInfoFromJson(String str) => StoreInfo.fromJson(json.decode(str));
 
 String storeInfoToJson(StoreInfo data) => json.encode(data.toJson());
 
 class StoreInfo {
-    StoreInfo({
-        this.id,
-        this.name,
-        this.tagline,
-        this.distance,
-        this.latitude,
-        this.longitude,
-        this.description,
-        this.website,
-        this.phone,
-        this.daysOfTheWeekStoreIsOpen,
-        this.mondayOpenTime,
-        this.tuesdayOpenTime,
-        this.wednesdayOpenTime,
-        this.thursdayOpenTime,
-        this.fridayOpenTime,
-        this.saturdayOpenTime,
-        this.sundayOpenTime,
-        this.mondayCloseTime,
-        this.tuesdayCloseTime,
-        this.wednesdayCloseTime,
-        this.thursdayCloseTime,
-        this.fridayCloseTime,
-        this.saturdayCloseTime,
-        this.sundayCloseTime,
-    });
+  StoreInfo({
+    this.id,
+    this.name,
+    this.tagline,
+    this.distance,
+    this.latitude,
+    this.longitude,
+    this.description,
+    this.website,
+    this.phone,
+    this.daysOfTheWeekStoreIsOpen,
+    this.mondayOpenTime,
+    this.tuesdayOpenTime,
+    this.wednesdayOpenTime,
+    this.thursdayOpenTime,
+    this.fridayOpenTime,
+    this.saturdayOpenTime,
+    this.sundayOpenTime,
+    this.mondayCloseTime,
+    this.tuesdayCloseTime,
+    this.wednesdayCloseTime,
+    this.thursdayCloseTime,
+    this.fridayCloseTime,
+    this.saturdayCloseTime,
+    this.sundayCloseTime,
+  });
 
-    String id;
-    String name;
-    String tagline;
-    String distance;
-    String latitude;
-    String longitude;
-    String description;
-    String website;
-    String phone;
-    List<DaysOfTheWeekStoreIsOpen> daysOfTheWeekStoreIsOpen;
-    DateTime mondayOpenTime;
-    DateTime tuesdayOpenTime;
-    DateTime wednesdayOpenTime;
-    DateTime thursdayOpenTime;
-    DateTime fridayOpenTime;
-    DateTime saturdayOpenTime;
-    DateTime sundayOpenTime;
-    DateTime mondayCloseTime;
-    DateTime tuesdayCloseTime;
-    DateTime wednesdayCloseTime;
-    DateTime thursdayCloseTime;
-    DateTime fridayCloseTime;
-    DateTime saturdayCloseTime;
-    DateTime sundayCloseTime;
+  String id;
+  String name;
+  String tagline;
+  String distance;
+  String latitude;
+  String longitude;
+  String description;
+  String website;
+  String phone;
+  List<DaysOfTheWeekStoreIsOpen> daysOfTheWeekStoreIsOpen;
+  DateTime mondayOpenTime;
+  DateTime tuesdayOpenTime;
+  DateTime wednesdayOpenTime;
+  DateTime thursdayOpenTime;
+  DateTime fridayOpenTime;
+  DateTime saturdayOpenTime;
+  DateTime sundayOpenTime;
+  DateTime mondayCloseTime;
+  DateTime tuesdayCloseTime;
+  DateTime wednesdayCloseTime;
+  DateTime thursdayCloseTime;
+  DateTime fridayCloseTime;
+  DateTime saturdayCloseTime;
+  DateTime sundayCloseTime;
 
-    factory StoreInfo.fromJson(Map<String, dynamic> json) => StoreInfo(
+  factory StoreInfo.fromJson(Map<String, dynamic> json) => StoreInfo(
         id: json["id"],
         name: json["name"],
         tagline: json["tagline"],
@@ -98,7 +96,9 @@ class StoreInfo {
         description: json["description"],
         website: json["website"],
         phone: json["phone"],
-        daysOfTheWeekStoreIsOpen: List<DaysOfTheWeekStoreIsOpen>.from(json["daysOfTheWeekStoreIsOpen"].map((x) => DaysOfTheWeekStoreIsOpen.fromJson(x))),
+        daysOfTheWeekStoreIsOpen: List<DaysOfTheWeekStoreIsOpen>.from(
+            json["daysOfTheWeekStoreIsOpen"]
+                .map((x) => DaysOfTheWeekStoreIsOpen.fromJson(x))),
         mondayOpenTime: DateTime.parse(json["mondayOpenTime"]),
         tuesdayOpenTime: DateTime.parse(json["tuesdayOpenTime"]),
         wednesdayOpenTime: DateTime.parse(json["wednesdayOpenTime"]),
@@ -113,9 +113,9 @@ class StoreInfo {
         fridayCloseTime: DateTime.parse(json["fridayCloseTime"]),
         saturdayCloseTime: DateTime.parse(json["saturdayCloseTime"]),
         sundayCloseTime: DateTime.parse(json["sundayCloseTime"]),
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
         "tagline": tagline,
@@ -125,7 +125,8 @@ class StoreInfo {
         "description": description,
         "website": website,
         "phone": phone,
-        "daysOfTheWeekStoreIsOpen": List<dynamic>.from(daysOfTheWeekStoreIsOpen.map((x) => x.toJson())),
+        "daysOfTheWeekStoreIsOpen":
+            List<dynamic>.from(daysOfTheWeekStoreIsOpen.map((x) => x.toJson())),
         "mondayOpenTime": mondayOpenTime.toIso8601String(),
         "tuesdayOpenTime": tuesdayOpenTime.toIso8601String(),
         "wednesdayOpenTime": wednesdayOpenTime.toIso8601String(),
@@ -140,29 +141,30 @@ class StoreInfo {
         "fridayCloseTime": fridayCloseTime.toIso8601String(),
         "saturdayCloseTime": saturdayCloseTime.toIso8601String(),
         "sundayCloseTime": sundayCloseTime.toIso8601String(),
-    };
+      };
 }
 
 class DaysOfTheWeekStoreIsOpen {
-    DaysOfTheWeekStoreIsOpen({
-        this.monday,
-        this.tuesday,
-        this.wednesday,
-        this.thursday,
-        this.friday,
-        this.saturday,
-        this.sunday,
-    });
+  DaysOfTheWeekStoreIsOpen({
+    this.monday,
+    this.tuesday,
+    this.wednesday,
+    this.thursday,
+    this.friday,
+    this.saturday,
+    this.sunday,
+  });
 
-    String monday;
-    String tuesday;
-    String wednesday;
-    String thursday;
-    String friday;
-    String saturday;
-    String sunday;
+  String monday;
+  String tuesday;
+  String wednesday;
+  String thursday;
+  String friday;
+  String saturday;
+  String sunday;
 
-    factory DaysOfTheWeekStoreIsOpen.fromJson(Map<String, dynamic> json) => DaysOfTheWeekStoreIsOpen(
+  factory DaysOfTheWeekStoreIsOpen.fromJson(Map<String, dynamic> json) =>
+      DaysOfTheWeekStoreIsOpen(
         monday: json["monday"],
         tuesday: json["tuesday"],
         wednesday: json["wednesday"],
@@ -170,9 +172,9 @@ class DaysOfTheWeekStoreIsOpen {
         friday: json["friday"],
         saturday: json["saturday"],
         sunday: json["sunday"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "monday": monday,
         "tuesday": tuesday,
         "wednesday": wednesday,
@@ -180,5 +182,5 @@ class DaysOfTheWeekStoreIsOpen {
         "friday": friday,
         "saturday": saturday,
         "sunday": sunday,
-    };
+      };
 }
