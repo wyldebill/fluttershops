@@ -241,6 +241,76 @@ class _HomeAppState extends State<HomeApp>
         //        if the current day isn't in the days open of the store, remove it right it away
         //           the current day is open, then check against the open and close time and use the datetime.before() and after()
 
+        // find the store in the list that matches this marker's id...
+        int index = listOfStores
+            .indexWhere((element) => element.id == marker.markerId.value);
+
+        StoreInfo storeToEvaluateForOpenOrClosed = listOfStores[index];
+
+        DateTime rightNow = DateTime.now();
+        int dayOfTheWeekNow = rightNow.weekday;
+
+        // TODO: fix this mess later
+        if (dayOfTheWeekNow == 1) // monday
+        {
+          if (storeToEvaluateForOpenOrClosed.mondayOpenTime.toString() != "") {
+            // this store has a monday open time, get it and compare to time right now
+
+            //DateTime mondayOpen = storeToEvaluateForOpenOrClosed.mondayOpenTime;
+            TimeOfDay mondayCloseTime = TimeOfDay.fromDateTime(
+                storeToEvaluateForOpenOrClosed.mondayCloseTime);
+            TimeOfDay mondayOpenTime = TimeOfDay.fromDateTime(
+                storeToEvaluateForOpenOrClosed.mondayOpenTime);
+
+            TimeOfDay timeNow = TimeOfDay.fromDateTime(rightNow);
+
+            if ((toDouble(mondayOpenTime) <= toDouble(timeNow)) &&
+                ((toDouble(mondayCloseTime) >= toDouble(timeNow)))) {
+              // we are open!
+            } else {
+              // we are closed.  exit loop for this store.
+              markersToRemove.add(marker);
+              continue;
+            }
+          }
+        }
+
+        if (dayOfTheWeekNow == 2) // tuesday
+        {
+          if (storeToEvaluateForOpenOrClosed.tuesdayOpenTime.toString() != "") {
+            // this store has a monday open time, get it and compare to time right now
+
+            //DateTime mondayOpen = storeToEvaluateForOpenOrClosed.mondayOpenTime;
+            TimeOfDay tuesdayCloseTime = TimeOfDay.fromDateTime(
+                storeToEvaluateForOpenOrClosed.tuesdayCloseTime);
+            TimeOfDay tuesdayOpenTime = TimeOfDay.fromDateTime(
+                storeToEvaluateForOpenOrClosed.tuesdayOpenTime);
+
+            TimeOfDay timeNow = TimeOfDay.fromDateTime(rightNow);
+
+            if ((toDouble(tuesdayOpenTime) <= toDouble(timeNow)) &&
+                ((toDouble(tuesdayCloseTime) >= toDouble(timeNow)))) {
+              // store is open!
+            } else {
+              // store is closed.  exit loop for this store.
+              markersToRemove.add(marker);
+              continue;
+            }
+          }
+        }
+
+        //DateTime parsedDt = (listOfStores.stores[1].mondayOpenTime);
+        //DateTime rightNow = DateTime.now();
+        //print(rightNow.weekday);
+
+        // print(parsedDt.year); // 4
+        // print(parsedDt.weekday); // 4
+        // print(parsedDt.month); // 4
+        // print(parsedDt.day); // 2
+        // print(parsedDt.hour); // 15
+        // print(parsedDt.minute); // 21
+        // print(parsedDt.second); // 49
+
         // for now, I'll just turn off all but 3 markers.
         // later I'll put info in the Marker itself with store opening date/times
         if ((marker.markerId.value == 'Now and Again') ||
@@ -250,6 +320,9 @@ class _HomeAppState extends State<HomeApp>
           markersToRemove.add(marker);
         }
       }
+
+      // now i have the list of markers to remove from the map.
+      // loop over them and call .remove() for each one from the maps set of markers.
       setState(() {
         //Marker markerToRemove = _markers.first;
         markersToRemove.forEach((element) {
@@ -257,6 +330,7 @@ class _HomeAppState extends State<HomeApp>
         });
       });
     } else {
+      // restore the markers to the copy of markers i made earlier.
       setState(() {
         print('putting them all back now');
         _markers.clear();
@@ -266,6 +340,8 @@ class _HomeAppState extends State<HomeApp>
       });
     }
   }
+
+  double toDouble(TimeOfDay myTime) => myTime.hour + myTime.minute / 60.0;
 
   @override
   Widget build(BuildContext context) {
