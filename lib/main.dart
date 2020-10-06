@@ -57,8 +57,9 @@ class HomeApp extends StatefulWidget {
 }
 
 class _HomeAppState extends State<HomeApp>
-    with
-        AutomaticKeepAliveClientMixin //  this will preserve state in each tab. somehow WidgetsBindingObserver
+    with AutomaticKeepAliveClientMixin //  this will preserve state in each tab.
+// WidgetsBindingObserver, detects foreground/backgrounding of app.  https://medium.com/flutter-community/flutter-lifecycle-for-android-and-ios-developers-8f532307e0c7
+
 {
   BuildContext _myBuildContext;
 
