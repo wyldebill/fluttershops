@@ -40,7 +40,7 @@ class zMyApp extends StatelessWidget {
             physics: NeverScrollableScrollPhysics(),
             children: [
               // each tab needs an entry here
-              AllStores(), // listview
+              AllStores2(), // listview
 
               HomeApp(), // map
             ],
@@ -140,6 +140,8 @@ class _HomeAppState extends State<HomeApp>
 
   @override
   void initState() {
+    super.initState();
+
     loadStore().then((value) {
       listOfStores = value.stores;
       setState(() {
@@ -198,8 +200,6 @@ class _HomeAppState extends State<HomeApp>
     rootBundle.loadString('assets/mapstyle/minimal.json').then((string) {
       _mapStyle = string;
     });
-
-    super.initState();
   }
 
   // read the list of stores json in the assets folder

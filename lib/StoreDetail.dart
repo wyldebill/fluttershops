@@ -27,12 +27,24 @@ class StoreDetail extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                const ListTile(
-                  leading: Icon(Icons.store, size: 70),
-                  title: Text('store name here'),
-                  subtitle: Text('store tagline',
-                      style: TextStyle(color: Colors.white)),
-                ),
+                //const ListTile(
+                //leading: Icon(Icons.store, size: 70),
+                // title: Text(_storeDetail.name),
+                Text(_storeDetail.name),
+                Text('Distance: ' + _storeDetail.distance),
+                Text('latitude:' + _storeDetail.latitude),
+                Text('longitude:' + _storeDetail.longitude),
+                Text('Monday open:' +
+                    _storeDetail.mondayOpenTime.hour.toString() +
+                    ':' +
+                    _storeDetail.mondayOpenTime.minute.toString()),
+                Text('Monday close: ' +
+                    _storeDetail.mondayCloseTime.hour.toString() +
+                    ':' +
+                    _storeDetail.mondayCloseTime.minute.toString()),
+                //subtitle: Text('store tagline',
+                //   style: TextStyle(color: Colors.white)),
+                //),
                 // ButtonTheme.bar(
                 //   child: ButtonBar(
                 //     children: <Widget>[
