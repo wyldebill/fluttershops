@@ -38,10 +38,12 @@ class _StoreListState extends State<AllStores2>
   Widget build(BuildContext context) {
     return ListView.builder(
         padding: const EdgeInsets.all(10),
-        itemCount: listOfStores.length,
+        itemCount: listOfStores.length,  // this listview has a static number of items in it
         itemBuilder: (BuildContext context, int index) {
           StoreInfo storeToShow = listOfStores[index];
-          return ListTile(
+          
+          // build the tile in the listview
+          return ListTile(    
               title: Text('${listOfStores[index].name}'),
               trailing: Icon(Icons.keyboard_arrow_right),
               onTap: () {
