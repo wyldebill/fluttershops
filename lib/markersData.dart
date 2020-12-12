@@ -1,3 +1,6 @@
+// not using this since data was moved to json file.
+// json file is maginally better than hardcode right?
+
 /*import 'dart:async';
 import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
