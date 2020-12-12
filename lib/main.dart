@@ -14,16 +14,12 @@ import 'package:mapstesting/storemodel.dart';
 
 // main is the starting method that flutter looks for when loading your app
 void main() {
-  
   // poor mans splashscreen, is there a better way to do this in flutter?
   runApp(SplashScreenWidget());
-
 }
-
 
 // this the main app, loaded after the splash screen is completed.
 class zMyApp extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     // material app has a title and home property
@@ -46,7 +42,6 @@ class zMyApp extends StatelessWidget {
               ],
             ),
           ),
-
           body: TabBarView(
             physics: NeverScrollableScrollPhysics(),
             children: [
@@ -61,7 +56,6 @@ class zMyApp extends StatelessWidget {
     );
   }
 }
-
 
 // homeapp is the 'map' view part of this app. it hosts a google map display with markers
 class HomeApp extends StatefulWidget {
@@ -97,7 +91,8 @@ class _HomeAppState extends State<HomeApp>
   bool get wantKeepAlive => true;
 
   void _onMapCreated(GoogleMapController controller) {
-    controller.setMapStyle(_mapStyle);  // this sets up the 'stripped down' google map. only minimum amount of detail on the map (dentist office won't show up)
+    controller.setMapStyle(
+        _mapStyle); // this sets up the 'stripped down' google map. only minimum amount of detail on the map (dentist office won't show up)
     _controller = controller;
 
     //_controller.complete(controller);
@@ -137,10 +132,8 @@ class _HomeAppState extends State<HomeApp>
 
     // location services for the device (and all apps) is switched off
     if (status == ServiceStatus.disabled) {
-
       // if on android, show a dialog asking why we want location services enabled?
       if (Platform.isAndroid) {
-
         await LocationPermissions().shouldShowRequestPermissionRationale(
             permissionLevel: LocationPermissionLevel.locationWhenInUse);
       } else {
@@ -155,32 +148,30 @@ class _HomeAppState extends State<HomeApp>
 
     // not applicable, this device doesn't have location services? it's a TV?
     // unknown, we cannot get info on device location services at all
-    if (status == ServiceStatus.unknown) {
-
-    }
+    if (status == ServiceStatus.unknown) {}
   }
 
   @override
   void initState() {
     super.initState();
 
-    loadStore().then((value) {  // TODO: is loadstore also called in the splashscreen.dart code?? remove it from splashscreen?
+    loadStore().then((value) {
+      // TODO: is loadstore also called in the splashscreen.dart code?? remove it from splashscreen?
       listOfStores = value.stores;
-
 
       // flutter will be tracking changes to the state, which is the listOfStores, and redraw dependent widgets when it detects changes.
       setState(() {
         listOfStores.forEach((StoreInfo store) {
-
           _markers.add(Marker(
               markerId: MarkerId(store.id),
               position: LatLng(
                   double.parse(store.latitude), double.parse(store.longitude)),
-
-              infoWindow: InfoWindow(   // infowindow is what is displayed when user taps a marker on the map
+              infoWindow: InfoWindow(
+                  // infowindow is what is displayed when user taps a marker on the map
                   title: store.name,
                   snippet: store.tagline,
-                  onTap: () {          // tapping the infowindow will navigate to the detail page for the marker/store
+                  onTap: () {
+                    // tapping the infowindow will navigate to the detail page for the marker/store
                     Navigator.push(
                         _myBuildContext,
                         MaterialPageRoute(
@@ -276,7 +267,7 @@ class _HomeAppState extends State<HomeApp>
         int index = listOfStores
             .indexWhere((element) => element.id == marker.markerId.value);
 
-        // use the id to get the StoreInfo 
+        // use the id to get the StoreInfo
         StoreInfo storeToEvaluateForOpenOrClosed = listOfStores[index];
 
         // get the time and day of the week right now
@@ -284,10 +275,9 @@ class _HomeAppState extends State<HomeApp>
         int dayOfTheWeekNow = rightNow.weekday;
 
         // TODO: fix this mess later
-        // if it's monday (which is enum == 1, tuesday is == 2...) today, 
+        // if it's monday (which is enum == 1, tuesday is == 2...) today,
         // then look for open and close info for monday on the StoreInfo object
         if (dayOfTheWeekNow == 1) {
-
           if (storeToEvaluateForOpenOrClosed.mondayOpenTime.toString() != "") {
             // this store has a monday open time, get it and compare to time right now
 
@@ -296,7 +286,7 @@ class _HomeAppState extends State<HomeApp>
                 storeToEvaluateForOpenOrClosed.mondayOpenTime);
             TimeOfDay mondayCloseTime = TimeOfDay.fromDateTime(
                 storeToEvaluateForOpenOrClosed.mondayCloseTime);
-          
+
             // what time is now, according to the device?
             TimeOfDay timeNow = TimeOfDay.fromDateTime(rightNow);
 
@@ -325,11 +315,133 @@ class _HomeAppState extends State<HomeApp>
             TimeOfDay tuesdayCloseTime = TimeOfDay.fromDateTime(
                 storeToEvaluateForOpenOrClosed.tuesdayCloseTime);
 
-
             TimeOfDay timeNow = TimeOfDay.fromDateTime(rightNow);
 
             if ((toDouble(tuesdayOpenTime) <= toDouble(timeNow)) &&
                 ((toDouble(tuesdayCloseTime) >= toDouble(timeNow)))) {
+              // store is open!
+            } else {
+              // store is closed.  add marker to list of markers to remove and exit loop for this store.
+              markersToRemove.add(marker);
+              continue;
+            }
+          }
+        }
+
+        if (dayOfTheWeekNow == 3) // wed
+        {
+          if (storeToEvaluateForOpenOrClosed.wednesdayOpenTime.toString() !=
+              "") {
+            // this store has a monday open time, get it and compare to time right now
+
+            //DateTime mondayOpen = storeToEvaluateForOpenOrClosed.mondayOpenTime;
+            TimeOfDay wednesdayOpenTime = TimeOfDay.fromDateTime(
+                storeToEvaluateForOpenOrClosed.tuesdayOpenTime);
+            TimeOfDay wednesdayCloseTime = TimeOfDay.fromDateTime(
+                storeToEvaluateForOpenOrClosed.tuesdayCloseTime);
+
+            TimeOfDay timeNow = TimeOfDay.fromDateTime(rightNow);
+
+            if ((toDouble(wednesdayOpenTime) <= toDouble(timeNow)) &&
+                ((toDouble(wednesdayCloseTime) >= toDouble(timeNow)))) {
+              // store is open!
+            } else {
+              // store is closed.  add marker to list of markers to remove and exit loop for this store.
+              markersToRemove.add(marker);
+              continue;
+            }
+          }
+        }
+
+        if (dayOfTheWeekNow == 4) // thursday
+        {
+          if (storeToEvaluateForOpenOrClosed.thursdayOpenTime.toString() !=
+              "") {
+            // this store has a monday open time, get it and compare to time right now
+
+            //DateTime mondayOpen = storeToEvaluateForOpenOrClosed.mondayOpenTime;
+            TimeOfDay thursdayOpenTime = TimeOfDay.fromDateTime(
+                storeToEvaluateForOpenOrClosed.tuesdayOpenTime);
+            TimeOfDay thursdayCloseTime = TimeOfDay.fromDateTime(
+                storeToEvaluateForOpenOrClosed.tuesdayCloseTime);
+
+            TimeOfDay timeNow = TimeOfDay.fromDateTime(rightNow);
+
+            if ((toDouble(thursdayOpenTime) <= toDouble(timeNow)) &&
+                ((toDouble(thursdayCloseTime) >= toDouble(timeNow)))) {
+              // store is open!
+            } else {
+              // store is closed.  add marker to list of markers to remove and exit loop for this store.
+              markersToRemove.add(marker);
+              continue;
+            }
+          }
+        }
+
+        if (dayOfTheWeekNow == 5) // friday
+        {
+          if (storeToEvaluateForOpenOrClosed.fridayOpenTime.toString() != "") {
+            // this store has a monday open time, get it and compare to time right now
+
+            //DateTime mondayOpen = storeToEvaluateForOpenOrClosed.mondayOpenTime;
+            TimeOfDay fridayOpenTime = TimeOfDay.fromDateTime(
+                storeToEvaluateForOpenOrClosed.tuesdayOpenTime);
+            TimeOfDay fridayCloseTime = TimeOfDay.fromDateTime(
+                storeToEvaluateForOpenOrClosed.tuesdayCloseTime);
+
+            TimeOfDay timeNow = TimeOfDay.fromDateTime(rightNow);
+
+            if ((toDouble(fridayOpenTime) <= toDouble(timeNow)) &&
+                ((toDouble(fridayCloseTime) >= toDouble(timeNow)))) {
+              // store is open!
+            } else {
+              // store is closed.  add marker to list of markers to remove and exit loop for this store.
+              markersToRemove.add(marker);
+              continue;
+            }
+          }
+        }
+
+        if (dayOfTheWeekNow == 6) // saturday
+        {
+          if (storeToEvaluateForOpenOrClosed.saturdayOpenTime.toString() !=
+              "") {
+            // this store has a monday open time, get it and compare to time right now
+
+            //DateTime mondayOpen = storeToEvaluateForOpenOrClosed.mondayOpenTime;
+            TimeOfDay saturdayOpenTime = TimeOfDay.fromDateTime(
+                storeToEvaluateForOpenOrClosed.tuesdayOpenTime);
+            TimeOfDay saturdayCloseTime = TimeOfDay.fromDateTime(
+                storeToEvaluateForOpenOrClosed.tuesdayCloseTime);
+
+            TimeOfDay timeNow = TimeOfDay.fromDateTime(rightNow);
+
+            if ((toDouble(saturdayOpenTime) <= toDouble(timeNow)) &&
+                ((toDouble(saturdayCloseTime) >= toDouble(timeNow)))) {
+              // store is open!
+            } else {
+              // store is closed.  add marker to list of markers to remove and exit loop for this store.
+              markersToRemove.add(marker);
+              continue;
+            }
+          }
+        }
+
+        if (dayOfTheWeekNow == 7) // sunday
+        {
+          if (storeToEvaluateForOpenOrClosed.sundayOpenTime.toString() != "") {
+            // this store has a monday open time, get it and compare to time right now
+
+            //DateTime mondayOpen = storeToEvaluateForOpenOrClosed.mondayOpenTime;
+            TimeOfDay sundayOpenTime = TimeOfDay.fromDateTime(
+                storeToEvaluateForOpenOrClosed.tuesdayOpenTime);
+            TimeOfDay sundayCloseTime = TimeOfDay.fromDateTime(
+                storeToEvaluateForOpenOrClosed.tuesdayCloseTime);
+
+            TimeOfDay timeNow = TimeOfDay.fromDateTime(rightNow);
+
+            if ((toDouble(sundayOpenTime) <= toDouble(timeNow)) &&
+                ((toDouble(sundayCloseTime) >= toDouble(timeNow)))) {
               // store is open!
             } else {
               // store is closed.  add marker to list of markers to remove and exit loop for this store.
@@ -351,33 +463,31 @@ class _HomeAppState extends State<HomeApp>
         // print(parsedDt.minute); // 21
         // print(parsedDt.second); // 49
 
-        // no .  ignore this 
+
         // for now, I'll just turn off all but 3 markers.
         // later I'll put info in the Marker itself with store opening date/times
-        // if ((marker.markerId.value == 'Now and Again') ||
-        //     (marker.markerId.value == 'A Wreath of Franklin')) {
-        //   print('keeping this one' + marker.markerId.value);
-        // } else {
-        //   markersToRemove.add(marker);
-        // }
+        // *****************************************************************************************
+        // so I can test showing/hiding markers. remove this later
+        // *****************************************************************************
+        if ((marker.markerId.value == 'Now and Again') ||
+            (marker.markerId.value == 'A Wreath of Franklin')) {
+          print('keeping this one' + marker.markerId.value);
+        } else {
+          markersToRemove.add(marker);
+        }
       }
-
 
       // remove the markers in the markersToRemove list from the markers list...
       // this is done inside of setState() so flutter will repaint the wiget (the map) with only the markers we didn't remove
-      // which is the stores that are open!  
+      // which is the stores that are open!
       setState(() {
-       
         markersToRemove.forEach((element) {
           _markers.remove(element);
         });
       });
-
-    } 
-    else {
+    } else {
       // user wants to see all stores even those that are closed right now.  this is the defaul state of the map markers.
       setState(() {
-
         _markers.clear();
         _originalMarkers.forEach((shopMarker) {
           _markers.add(shopMarker);
@@ -396,19 +506,21 @@ class _HomeAppState extends State<HomeApp>
     // because emulator.  try a real device and it works???
     //http://flutterdevs.com/blog/google-maps-in-flutter/
     return Stack(children: <Widget>[
-
       GoogleMap(
-        myLocationButtonEnabled: true,   // the target-looking button that puts the blue dot on the map indicating your position
-        myLocationEnabled: true,         // the permission to find your location, different than the button above!
+        myLocationButtonEnabled:
+            true, // the target-looking button that puts the blue dot on the map indicating your position
+        myLocationEnabled:
+            true, // the permission to find your location, different than the button above!
         onMapCreated: _onMapCreated,
-        markers: Set<Marker>.of(_markers),  // the red dots indicating buffalo retail group stores on the map
+        markers: Set<Marker>.of(
+            _markers), // the red dots indicating buffalo retail group stores on the map
         initialCameraPosition: CameraPosition(
           target: _center,
           zoom: 10.0,
         ),
       ),
 
-      // TODO: i don't understand layout yet. not messing with this since it works. but i'm just putting the 'show me open/closed stores' button on top 
+      // TODO: i don't understand layout yet. not messing with this since it works. but i'm just putting the 'show me open/closed stores' button on top
       // of the map widget
       Padding(
         padding: const EdgeInsets.all(15.0),
@@ -416,17 +528,15 @@ class _HomeAppState extends State<HomeApp>
           alignment: Alignment.topLeft,
           child: ToggleButtons(
             children: <Widget>[
-              Icon(Icons.remove_shopping_cart),  // just one toggle button...
+              Icon(Icons.remove_shopping_cart), // just one toggle button...
             ],
             onPressed: (int index) {
-
               // if you press it, we change the state of the button and that calls filterstoremarkerstoonly~.
               // TODO: test this without wrapping in a setstate as filterstoremarkerstoonly~ will call setstate itself.
               setState(() {
-
                 // toggle the button visually to on or off...
                 _selection[index] = !_selection[index];
-                
+
                 if (_selection[index] == true) {
                   filterStoreMarkersToOnlyWhatsOpen(true);
                 } else {
