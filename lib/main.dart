@@ -12,18 +12,28 @@ import 'dart:convert';
 
 import 'package:mapstesting/storemodel.dart';
 
+// main is the starting method that flutter looks for when loading your app
 void main() {
+  
+  // poor mans splashscreen, is there a better way to do this in flutter?
   runApp(SplashScreenWidget());
+
 }
 
+
+// this the main app, loaded after the splash screen is completed.
 class zMyApp extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
+    // material app has a title and home property
     return MaterialApp(
       title: "Buffalo", //?? what is this even for?
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+
+      // we will have 2 options in this app. the map display and the listview display
       home: DefaultTabController(
         length: 2,
         child: Scaffold(
@@ -36,6 +46,7 @@ class zMyApp extends StatelessWidget {
               ],
             ),
           ),
+
           body: TabBarView(
             physics: NeverScrollableScrollPhysics(),
             children: [
@@ -51,6 +62,8 @@ class zMyApp extends StatelessWidget {
   }
 }
 
+
+// homeapp is the 'map' view part of this app. it hosts a google map display with markers
 class HomeApp extends StatefulWidget {
   @override
   _HomeAppState createState() => _HomeAppState();
@@ -65,17 +78,18 @@ class _HomeAppState extends State<HomeApp>
 
   // this tracks the state of the show/hide closed stores button on top of the map.
   // the list is 1 item long, so 1 button.  a ToggleButton. i don't like this much, too disconnected
+  // really only tracks is the button 'selected' and only showing open stores, or not.
   List<bool> _selection = List.generate(1, (_) => false);
 
   List<StoreInfo> listOfStores;
 
-  // i have to figure out the Completer(), Future and .complete() relationship soon!
+  // TODO: i have to figure out the Completer(), Future and .complete() relationship soon!
   //Completer<GoogleMapController> _controller = Completer();
   GoogleMapController _controller;
   final Set<Marker> _markers = {};
   Set<Marker> _originalMarkers = {};
 
-  // for now, static start location of Buffalo.
+  // TODO: for now, static start location of Buffalo.
   static const LatLng _center = const LatLng(45.1719084, -93.8746941);
   String _mapStyle;
 
@@ -83,12 +97,13 @@ class _HomeAppState extends State<HomeApp>
   bool get wantKeepAlive => true;
 
   void _onMapCreated(GoogleMapController controller) {
-    controller.setMapStyle(_mapStyle);
+    controller.setMapStyle(_mapStyle);  // this sets up the 'stripped down' google map. only minimum amount of detail on the map (dentist office won't show up)
     _controller = controller;
 
     //_controller.complete(controller);
   }
 
+  // using this dialog to tell user about gps, location services status. they may need to turn it on manually.
   void _showAlertDialog(String message) {
     // set up the button
     Widget okButton = FlatButton(
@@ -115,14 +130,17 @@ class _HomeAppState extends State<HomeApp>
     );
   }
 
-  // check for location services at the device level.  ie is the gps radio switched on?
+  // check for location services at the **device** level.  ie is the gps radio switched on?
+  // TODO: right now this is not being used, I am ass-uming that we have the permssions/gps stuff we need.  but, they could turn it off on us....
   Future _checkDeviceLocationServiceStatus() async {
     ServiceStatus status = await LocationPermissions().checkServiceStatus();
 
     // location services for the device (and all apps) is switched off
     if (status == ServiceStatus.disabled) {
+
       // if on android, show a dialog asking why we want location services enabled?
       if (Platform.isAndroid) {
+
         await LocationPermissions().shouldShowRequestPermissionRationale(
             permissionLevel: LocationPermissionLevel.locationWhenInUse);
       } else {
@@ -131,29 +149,38 @@ class _HomeAppState extends State<HomeApp>
       }
     }
 
-    if (status == ServiceStatus.enabled) {}
+    if (status == ServiceStatus.enabled) {
+      // TODO: I think this could be removed - we have locationservices?
+    }
 
     // not applicable, this device doesn't have location services? it's a TV?
     // unknown, we cannot get info on device location services at all
-    if (status == ServiceStatus.unknown) {}
+    if (status == ServiceStatus.unknown) {
+
+    }
   }
 
   @override
   void initState() {
     super.initState();
 
-    loadStore().then((value) {
+    loadStore().then((value) {  // TODO: is loadstore also called in the splashscreen.dart code?? remove it from splashscreen?
       listOfStores = value.stores;
+
+
+      // flutter will be tracking changes to the state, which is the listOfStores, and redraw dependent widgets when it detects changes.
       setState(() {
         listOfStores.forEach((StoreInfo store) {
+
           _markers.add(Marker(
               markerId: MarkerId(store.id),
               position: LatLng(
                   double.parse(store.latitude), double.parse(store.longitude)),
-              infoWindow: InfoWindow(
+
+              infoWindow: InfoWindow(   // infowindow is what is displayed when user taps a marker on the map
                   title: store.name,
                   snippet: store.tagline,
-                  onTap: () {
+                  onTap: () {          // tapping the infowindow will navigate to the detail page for the marker/store
                     Navigator.push(
                         _myBuildContext,
                         MaterialPageRoute(
@@ -164,10 +191,12 @@ class _HomeAppState extends State<HomeApp>
       });
 
       // copy the set of markers, so we can restore all of them later.
+      // TODO: i don't like this much either, is there a better way?
       _markers.forEach((element) {
         _originalMarkers.add(element);
       });
     });
+
     // _getThingsOnStartup().then((value){
     //   print('Async done');
     // });
@@ -197,6 +226,7 @@ class _HomeAppState extends State<HomeApp>
     // });
 
     // i have a custom leaned out map style. no distracting features, minimal.
+    // onmapcreated will use this string to set the google map detail.
     rootBundle.loadString('assets/mapstyle/minimal.json').then((string) {
       _mapStyle = string;
     });
@@ -230,6 +260,7 @@ class _HomeAppState extends State<HomeApp>
     //print(listOfStores.stores[1].name);
   }
 
+  // pressing the shopping cart button on the ui, causes this method to be called
   void filterStoreMarkersToOnlyWhatsOpen(bool filterClosedShops) {
     Set<Marker> markersToRemove = {};
 
@@ -241,34 +272,42 @@ class _HomeAppState extends State<HomeApp>
         //        if the current day isn't in the days open of the store, remove it right it away
         //           the current day is open, then check against the open and close time and use the datetime.before() and after()
 
-        // find the store in the list that matches this marker's id...
+        // find the store in the listOfStores and get it's id
         int index = listOfStores
             .indexWhere((element) => element.id == marker.markerId.value);
 
+        // use the id to get the StoreInfo 
         StoreInfo storeToEvaluateForOpenOrClosed = listOfStores[index];
 
+        // get the time and day of the week right now
         DateTime rightNow = DateTime.now();
         int dayOfTheWeekNow = rightNow.weekday;
 
         // TODO: fix this mess later
-        if (dayOfTheWeekNow == 1) // monday
-        {
+        // if it's monday (which is enum == 1, tuesday is == 2...) today, 
+        // then look for open and close info for monday on the StoreInfo object
+        if (dayOfTheWeekNow == 1) {
+
           if (storeToEvaluateForOpenOrClosed.mondayOpenTime.toString() != "") {
             // this store has a monday open time, get it and compare to time right now
 
-            //DateTime mondayOpen = storeToEvaluateForOpenOrClosed.mondayOpenTime;
-            TimeOfDay mondayCloseTime = TimeOfDay.fromDateTime(
-                storeToEvaluateForOpenOrClosed.mondayCloseTime);
+            // what time does this store open and close on mondays...
             TimeOfDay mondayOpenTime = TimeOfDay.fromDateTime(
                 storeToEvaluateForOpenOrClosed.mondayOpenTime);
-
+            TimeOfDay mondayCloseTime = TimeOfDay.fromDateTime(
+                storeToEvaluateForOpenOrClosed.mondayCloseTime);
+          
+            // what time is now, according to the device?
             TimeOfDay timeNow = TimeOfDay.fromDateTime(rightNow);
 
+            // if the timenow is **after the time the store opens...
+            // and if the time now is **before the time the store closes...
             if ((toDouble(mondayOpenTime) <= toDouble(timeNow)) &&
                 ((toDouble(mondayCloseTime) >= toDouble(timeNow)))) {
               // we are open!
             } else {
-              // we are closed.  exit loop for this store.
+              // we are closed.  add this store marker to the list of markers to remove from the map and...
+              // exit loop for this store marker, and try the next one...
               markersToRemove.add(marker);
               continue;
             }
@@ -281,10 +320,11 @@ class _HomeAppState extends State<HomeApp>
             // this store has a monday open time, get it and compare to time right now
 
             //DateTime mondayOpen = storeToEvaluateForOpenOrClosed.mondayOpenTime;
-            TimeOfDay tuesdayCloseTime = TimeOfDay.fromDateTime(
-                storeToEvaluateForOpenOrClosed.tuesdayCloseTime);
             TimeOfDay tuesdayOpenTime = TimeOfDay.fromDateTime(
                 storeToEvaluateForOpenOrClosed.tuesdayOpenTime);
+            TimeOfDay tuesdayCloseTime = TimeOfDay.fromDateTime(
+                storeToEvaluateForOpenOrClosed.tuesdayCloseTime);
+
 
             TimeOfDay timeNow = TimeOfDay.fromDateTime(rightNow);
 
@@ -292,7 +332,7 @@ class _HomeAppState extends State<HomeApp>
                 ((toDouble(tuesdayCloseTime) >= toDouble(timeNow)))) {
               // store is open!
             } else {
-              // store is closed.  exit loop for this store.
+              // store is closed.  add marker to list of markers to remove and exit loop for this store.
               markersToRemove.add(marker);
               continue;
             }
@@ -311,28 +351,33 @@ class _HomeAppState extends State<HomeApp>
         // print(parsedDt.minute); // 21
         // print(parsedDt.second); // 49
 
+        // no .  ignore this 
         // for now, I'll just turn off all but 3 markers.
         // later I'll put info in the Marker itself with store opening date/times
-        if ((marker.markerId.value == 'Now and Again') ||
-            (marker.markerId.value == 'A Wreath of Franklin')) {
-          print('keeping this one' + marker.markerId.value);
-        } else {
-          markersToRemove.add(marker);
-        }
+        // if ((marker.markerId.value == 'Now and Again') ||
+        //     (marker.markerId.value == 'A Wreath of Franklin')) {
+        //   print('keeping this one' + marker.markerId.value);
+        // } else {
+        //   markersToRemove.add(marker);
+        // }
       }
 
-      // now i have the list of markers to remove from the map.
-      // loop over them and call .remove() for each one from the maps set of markers.
+
+      // remove the markers in the markersToRemove list from the markers list...
+      // this is done inside of setState() so flutter will repaint the wiget (the map) with only the markers we didn't remove
+      // which is the stores that are open!  
       setState(() {
-        //Marker markerToRemove = _markers.first;
+       
         markersToRemove.forEach((element) {
           _markers.remove(element);
         });
       });
-    } else {
-      // restore the markers to the copy of markers i made earlier.
+
+    } 
+    else {
+      // user wants to see all stores even those that are closed right now.  this is the defaul state of the map markers.
       setState(() {
-        print('putting them all back now');
+
         _markers.clear();
         _originalMarkers.forEach((shopMarker) {
           _markers.add(shopMarker);
@@ -351,27 +396,37 @@ class _HomeAppState extends State<HomeApp>
     // because emulator.  try a real device and it works???
     //http://flutterdevs.com/blog/google-maps-in-flutter/
     return Stack(children: <Widget>[
+
       GoogleMap(
-        myLocationButtonEnabled: true,
-        myLocationEnabled: true,
+        myLocationButtonEnabled: true,   // the target-looking button that puts the blue dot on the map indicating your position
+        myLocationEnabled: true,         // the permission to find your location, different than the button above!
         onMapCreated: _onMapCreated,
-        markers: Set<Marker>.of(_markers),
+        markers: Set<Marker>.of(_markers),  // the red dots indicating buffalo retail group stores on the map
         initialCameraPosition: CameraPosition(
           target: _center,
           zoom: 10.0,
         ),
       ),
+
+      // TODO: i don't understand layout yet. not messing with this since it works. but i'm just putting the 'show me open/closed stores' button on top 
+      // of the map widget
       Padding(
         padding: const EdgeInsets.all(15.0),
         child: Align(
           alignment: Alignment.topLeft,
           child: ToggleButtons(
             children: <Widget>[
-              Icon(Icons.remove_shopping_cart),
+              Icon(Icons.remove_shopping_cart),  // just one toggle button...
             ],
             onPressed: (int index) {
+
+              // if you press it, we change the state of the button and that calls filterstoremarkerstoonly~.
+              // TODO: test this without wrapping in a setstate as filterstoremarkerstoonly~ will call setstate itself.
               setState(() {
+
+                // toggle the button visually to on or off...
                 _selection[index] = !_selection[index];
+                
                 if (_selection[index] == true) {
                   filterStoreMarkersToOnlyWhatsOpen(true);
                 } else {

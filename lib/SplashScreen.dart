@@ -5,6 +5,8 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:mapstesting/storeInfo.dart';
 import 'dart:convert';
 
+// using a full screen widget, that displays an image for (4) seconds and then loads another different widget. 
+// poor mans splash screen 
 class SplashScreenWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -30,12 +32,13 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
 
+    // TODO: I don't think I am handling this future/async correctly, call with await instead?
     loadStore().then((value) => null);
 
     // poor man splash screen
     // https://www.geeksforgeeks.org/splash-screen-in-flutter/
 
-    // display this widget, then after x seconds display the one in the navigator call below
+    // display this widget, then after x seconds display the main widget, zMyApp (terrible name), and let's get this party started eh?
     Timer(
         Duration(seconds: 4),
         () => Navigator.pushReplacement(
@@ -47,14 +50,26 @@ class _SplashScreenState extends State<SplashScreen> {
     return await rootBundle.loadString('assets/storeInfoDataJSON.json');
   }
 
-  // debugging:  load the list of json format stores and deserialze to a list of storeinfo
+  // debugging:  load the list of json format stores from a file in /assets? and deserialze to a list of storeinfo objects
   Future loadStore() async {
-    String jsonString = await _loadAStoresAsset();
-    final jsonResponse = json.decode(jsonString);
-    StoresList listOfStores = StoresList.fromJson(jsonResponse);
-    //StoreInfo store = new StoreInfo.fromJson(jsonResponse);
 
+    // load the data as a string
+    String jsonString = await _loadAStoresAsset();
+    
+    // decode (desrialize?) the data to a JSON object
+    final jsonResponse = json.decode(jsonString);
+
+    // manually parse the json and create the list of StoreInfo objects
+    StoresList listOfStores = StoresList.fromJson(jsonResponse);
+    
+
+
+
+
+    // man I hate parsing dates in any language....
     DateTime parsedDt = (listOfStores.stores[1].mondayOpenTime);
+    
+    // examples of date/time parsing in dart
     //DateTime rightNow = DateTime.now();
     //print(rightNow.weekday);
 
