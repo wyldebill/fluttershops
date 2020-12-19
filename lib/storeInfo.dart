@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
+
 class StoresList {
   final List<StoreInfo> stores;
 
@@ -45,6 +47,8 @@ class StoreInfo {
     this.phone,
     //this.daysOfTheWeekStoreIsOpen,
     this.mondayOpenTime,
+    this.mondayOpenTimeOnly,
+    this.mondayCloseTimeOnly,
     this.tuesdayOpenTime,
     this.wednesdayOpenTime,
     this.thursdayOpenTime,
@@ -70,6 +74,8 @@ class StoreInfo {
   String website;
   String phone;
   //List<DaysOfTheWeekStoreIsOpen> daysOfTheWeekStoreIsOpen;
+  TimeOfDay mondayOpenTimeOnly;
+  TimeOfDay mondayCloseTimeOnly;
   DateTime mondayOpenTime;
   DateTime tuesdayOpenTime;
   DateTime wednesdayOpenTime;
@@ -95,9 +101,18 @@ class StoreInfo {
         description: json["description"],
         website: json["website"],
         phone: json["phone"],
+        
         // daysOfTheWeekStoreIsOpen: List<DaysOfTheWeekStoreIsOpen>.from(
         //     json["daysOfTheWeekStoreIsOpen"]
         //         .map((x) => DaysOfTheWeekStoreIsOpen.fromJson(x))),
+        mondayOpenTimeOnly: TimeOfDay( hour: int.parse("${json["mondayHour"] ?? '0'}"
+        ), minute: int.parse("${json["mondayMinute"] ?? '0'}")
+          )
+          ,
+           mondayCloseTimeOnly: TimeOfDay( hour: int.parse("${json["mondayCloseHour"] ?? '0'}"
+        ), minute: int.parse("${json["mondayCloseMinute"] ?? '0'}")
+          )
+          ,
         mondayOpenTime:   DateTime.parse(json["mondayOpenTime"] ?? "2012-04-23T23:59:00.000Z"),
         tuesdayOpenTime: DateTime.parse(json["tuesdayOpenTime"] ?? "2012-04-23T23:59:00.000Z"),
         wednesdayOpenTime: DateTime.parse(json["wednesdayOpenTime"] ?? "2012-04-23T23:59:00.000Z"),
