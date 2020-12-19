@@ -10,8 +10,7 @@ class StoreDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
+    return Scaffold(
           backgroundColor: Colors.blue, // TODO: use themeing instead
           appBar: AppBar(
             title: Text(_storeDetail.name),
@@ -220,8 +219,8 @@ Text(
                 ],
               ),
             ),
-          )),
-    );
+          ));
+    
   }
 
   // @override
