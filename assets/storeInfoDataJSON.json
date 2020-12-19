@@ -8,8 +8,11 @@
         "description": "Welcome to Biggs and Company",
         "website": "www.biggsandcompany.com",
         "phone": "320-402-2009",
-
-        "mondayOpenTime": null,
+        "mondayHour": 7,
+        "mondayMinute" : 45,
+        "mondayCloseHour": 17,
+        "mondayCloseMinute" : 0,
+        "mondayOpenTimeOnly": "10:00:00.000Z",
         "tuesdayOpenTime": null,
         "wednesdayOpenTime": null,
         "thursdayOpenTime": "2012-04-23T10:00:00.000Z",
