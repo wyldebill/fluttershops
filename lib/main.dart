@@ -26,6 +26,7 @@ class zMyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.pink,
       ),
+      //colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.pink)),
 
       // we will have 2 options in this app. the map display and the listview display
       home: DefaultTabController(
