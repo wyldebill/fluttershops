@@ -45,8 +45,10 @@ class StoreInfo {
     this.description,
     this.website,
     this.phone,
+    this.mondayHour,
+    this.mondayMinute,
     //this.daysOfTheWeekStoreIsOpen,
-    this.mondayOpenTime,
+    // this.mondayOpenTime,
     this.mondayOpenTimeOnly,
     this.mondayCloseTimeOnly,
     this.tuesdayOpenTime,
@@ -74,6 +76,8 @@ class StoreInfo {
   String website;
   String phone;
   //List<DaysOfTheWeekStoreIsOpen> daysOfTheWeekStoreIsOpen;
+  int mondayHour;
+  int mondayMinute;
   TimeOfDay mondayOpenTimeOnly;
   TimeOfDay mondayCloseTimeOnly;
   DateTime mondayOpenTime;
@@ -101,32 +105,46 @@ class StoreInfo {
         description: json["description"],
         website: json["website"],
         phone: json["phone"],
-        
+
         // daysOfTheWeekStoreIsOpen: List<DaysOfTheWeekStoreIsOpen>.from(
         //     json["daysOfTheWeekStoreIsOpen"]
         //         .map((x) => DaysOfTheWeekStoreIsOpen.fromJson(x))),
-        mondayOpenTimeOnly: TimeOfDay( hour: int.parse("${json["mondayHour"] ?? '0'}"
-        ), minute: int.parse("${json["mondayMinute"] ?? '0'}")
-          )
-          ,
-           mondayCloseTimeOnly: TimeOfDay( hour: int.parse("${json["mondayCloseHour"] ?? '0'}"
-        ), minute: int.parse("${json["mondayCloseMinute"] ?? '0'}")
-          )
-          ,
-        mondayOpenTime:   DateTime.parse(json["mondayOpenTime"] ?? "2012-04-23T23:59:00.000Z"),
-        tuesdayOpenTime: DateTime.parse(json["tuesdayOpenTime"] ?? "2012-04-23T23:59:00.000Z"),
-        wednesdayOpenTime: DateTime.parse(json["wednesdayOpenTime"] ?? "2012-04-23T23:59:00.000Z"),
-        thursdayOpenTime: DateTime.parse(json["thursdayOpenTime"] ?? "2012-04-23T23:59:00.000Z"),
-        fridayOpenTime: DateTime.parse(json["fridayOpenTime"] ?? "2012-04-23T23:59:00.000Z"),
-        saturdayOpenTime: DateTime.parse(json["saturdayOpenTime"] ?? "2012-04-23T23:59:00.000Z"),
-        sundayOpenTime: DateTime.parse(json["sundayOpenTime"] ?? "2012-04-23T23:59:00.000Z"),
-        mondayCloseTime: DateTime.parse(json["mondayCloseTime"] ?? "2012-04-23T23:59:00.000Z"),
-        tuesdayCloseTime: DateTime.parse(json["tuesdayCloseTime"] ?? "2012-04-23T23:59:00.000Z"),
-        wednesdayCloseTime: DateTime.parse(json["wednesdayCloseTime"] ?? "2012-04-23T23:59:00.000Z"),
-        thursdayCloseTime: DateTime.parse(json["thursdayCloseTime"] ?? "2012-04-23T23:59:00.000Z"),
-        fridayCloseTime: DateTime.parse(json["fridayCloseTime"] ?? "2012-04-23T23:59:00.000Z"),
-        saturdayCloseTime: DateTime.parse(json["saturdayCloseTime"] ?? "2012-04-23T23:59:00.000Z"),
-        sundayCloseTime: DateTime.parse(json["sundayCloseTime"] ?? "2012-04-23T23:59:00.000Z"),
+        mondayOpenTimeOnly: TimeOfDay(
+            hour: int.parse("${json["mondayHour"] ?? '0'}"),
+            minute: int.parse("${json["mondayMinute"] ?? '0'}")),
+        mondayCloseTimeOnly: TimeOfDay(
+            hour: int.parse("${json["mondayCloseHour"] ?? '0'}"),
+            minute: int.parse("${json["mondayCloseMinute"] ?? '0'}")),
+        // mondayOpenTime: DateTime.parse(
+        //     json["mondayOpenTime"] ?? "2012-04-23T23:59:00.000Z"),
+        mondayHour: int.parse("${json["mondayHour"] ?? '0'}"),
+        mondayMinute: int.parse("${json["mondayMinute"] ?? '0'}"),
+        tuesdayOpenTime: DateTime.parse(
+            json["tuesdayOpenTime"] ?? "2012-04-23T23:59:00.000Z"),
+        wednesdayOpenTime: DateTime.parse(
+            json["wednesdayOpenTime"] ?? "2012-04-23T23:59:00.000Z"),
+        thursdayOpenTime: DateTime.parse(
+            json["thursdayOpenTime"] ?? "2012-04-23T23:59:00.000Z"),
+        fridayOpenTime: DateTime.parse(
+            json["fridayOpenTime"] ?? "2012-04-23T23:59:00.000Z"),
+        saturdayOpenTime: DateTime.parse(
+            json["saturdayOpenTime"] ?? "2012-04-23T23:59:00.000Z"),
+        sundayOpenTime: DateTime.parse(
+            json["sundayOpenTime"] ?? "2012-04-23T23:59:00.000Z"),
+        mondayCloseTime: DateTime.parse(
+            json["mondayCloseTime"] ?? "2012-04-23T23:59:00.000Z"),
+        tuesdayCloseTime: DateTime.parse(
+            json["tuesdayCloseTime"] ?? "2012-04-23T23:59:00.000Z"),
+        wednesdayCloseTime: DateTime.parse(
+            json["wednesdayCloseTime"] ?? "2012-04-23T23:59:00.000Z"),
+        thursdayCloseTime: DateTime.parse(
+            json["thursdayCloseTime"] ?? "2012-04-23T23:59:00.000Z"),
+        fridayCloseTime: DateTime.parse(
+            json["fridayCloseTime"] ?? "2012-04-23T23:59:00.000Z"),
+        saturdayCloseTime: DateTime.parse(
+            json["saturdayCloseTime"] ?? "2012-04-23T23:59:00.000Z"),
+        sundayCloseTime: DateTime.parse(
+            json["sundayCloseTime"] ?? "2012-04-23T23:59:00.000Z"),
       );
 
   Map<String, dynamic> toJson() => {

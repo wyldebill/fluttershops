@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:mapstesting/storeInfo.dart';
 
 class StoreDetail extends StatelessWidget {
@@ -11,216 +10,266 @@ class StoreDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-          backgroundColor: Colors.blue, // TODO: use themeing instead
-          appBar: AppBar(
-            title: Text(_storeDetail.name),
-          ),
-          body: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  // all the child widgets will be in a column
-                  Image.asset(
-                      // hero image of storefront
+        backgroundColor: Colors.white, // TODO: use themeing instead
+        appBar: AppBar(
+          title: Text(_storeDetail.name),
+        ),
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              //crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                // all the child widgets will be in a column
+                Image.asset(
+                  // hero image of storefront
 
-                      'assets/images/welcome.jpg',  
-                        
-                      
+                  'assets/images/logos/biggslogo.jpeg',
+                  fit: BoxFit.fitWidth,
+                  //width: double.infinity,
+                  height: 250,
+                ),
+
+                Container(
+                  // colored divider, pink. testing this
+                  width: double.infinity,
+                  //color: Colors.pink,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        _storeDetail.name,
+                        style: TextStyle(fontSize: 24, color: Colors.white),
+                      ),
+                      Text(
+                        _storeDetail.tagline,
+                        style: TextStyle(fontSize: 18, color: Colors.white),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 10),
+                Row(
+                  // i wanted 2 columns, storename and distance
+                  children: [
+                    Column(
+                      children: [
+                        Text(_storeDetail.name,
+                            style: TextStyle(
+                                //color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold)),
+                      ],
                     ),
-                  SizedBox(height: 10),
-                  Row(
-                    // i wanted 2 columns, storename and distance
-                    children: [
-                      Text(_storeDetail.name,
+                  ],
+                ),
+                Text(
+                  //store tag name
+                  _storeDetail.tagline,
+                  style: TextStyle(
+                      //color: Colors.white,
+                      fontSize: 15,
+                      fontWeight: FontWeight.normal),
+                ),
+                SizedBox(
+                  height: 10,
+                ), // poor mans separator
 
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold)),
-                      Text('                           175 Ft',
-                          textAlign: TextAlign.right,
-                          style: TextStyle(
-                            fontSize: 20,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold)),
+                ListTile(
+                    leading: Icon(Icons.web_rounded),
+                    title: Text(_storeDetail.website)),
+
+                ListTile(
+                  leading: Icon(Icons.face),
+                  //store facebook link
+                  title: Text('Facebook link ?'),
+                ),
+                ListTile(
+                  leading: Icon(Icons.phone_android),
+                  //store facebook link
+                  title: Text(_storeDetail.phone),
+                ),
+                Divider(),
+
+                Container(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Hours: ',
+                        style: TextStyle(
+                            //color: Colors.white,
+                            fontSize: 24,
+                            fontWeight: FontWeight.normal),
+                      ),
                     ],
                   ),
-                  Text(
-                    //store tag name
-                    _storeDetail.tagline,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.normal),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ), // poor mans separator
-
-                  Text(
-                    //store website
-                    _storeDetail.website,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.normal),
-                  ),
-                   Text(
-                    //store facebook link
-                    'Facebook link ?',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.normal),
-                  ),
-                  Divider(),
-
-Text(
-                    'Hours: ',
-                    
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Table(
-                    // border: TableBorder.all(),
-                    children: [
-                      TableRow(children: [
-                        Text('Monday',
-                            textAlign: TextAlign.left,
-                            style: TextStyle( color: Colors.white,
-                        fontSize: 15,fontWeight: FontWeight.normal)),
-                        Text(_storeDetail.mondayOpenTimeOnly.format(context),
-                            textAlign: TextAlign.left,
-                            style: TextStyle( color: Colors.white,
-                        fontSize: 15,fontWeight: FontWeight.normal)),
-                        Text(_storeDetail.mondayCloseTimeOnly.format(context),
-                            textAlign: TextAlign.left,
-                            style: TextStyle( color: Colors.white,
-                        fontSize: 15,fontWeight: FontWeight.normal))
-                      ]),
-                        TableRow(children: [
-                        Text('Monday',
-                            textAlign: TextAlign.left,
-                            style: TextStyle( color: Colors.white,
-                        fontSize: 15,fontWeight: FontWeight.normal)),
-                        Text(_storeDetail.mondayOpenTimeOnly.format(context),
-                            textAlign: TextAlign.left,
-                            style: TextStyle( color: Colors.white,
-                        fontSize: 15,fontWeight: FontWeight.normal)),
-                        Text(_storeDetail.mondayCloseTimeOnly.format(context),
-                            textAlign: TextAlign.left,
-                            style: TextStyle( color: Colors.white,
-                        fontSize: 15,fontWeight: FontWeight.normal))
-                      ]),
-                        TableRow(children: [
-                        Text('Monday',
-                            textAlign: TextAlign.left,
-                            style: TextStyle( color: Colors.white,
-                        fontSize: 15,fontWeight: FontWeight.normal)),
-                        Text(_storeDetail.mondayOpenTimeOnly.format(context),
-                            textAlign: TextAlign.left,
-                            style: TextStyle( color: Colors.white,
-                        fontSize: 15,fontWeight: FontWeight.normal)),
-                        Text(_storeDetail.mondayCloseTimeOnly.format(context),
-                            textAlign: TextAlign.left,
-                            style: TextStyle( color: Colors.white,
-                        fontSize: 15,fontWeight: FontWeight.normal))
-                      ]),
-                        TableRow(children: [
-                        Text('Monday',
-                            textAlign: TextAlign.left,
-                            style: TextStyle( color: Colors.white,
-                        fontSize: 15,fontWeight: FontWeight.normal)),
-                        Text(_storeDetail.mondayOpenTimeOnly.format(context),
-                            textAlign: TextAlign.left,
-                            style: TextStyle( color: Colors.white,
-                        fontSize: 15,fontWeight: FontWeight.normal)),
-                        Text(_storeDetail.mondayCloseTimeOnly.format(context),
-                            textAlign: TextAlign.left,
-                            style: TextStyle( color: Colors.white,
-                        fontSize: 15,fontWeight: FontWeight.normal))
-                      ]),
-                      // TableRow(children: [
-                      //   Text('Tuesday', textAlign: TextAlign.center),
-                      //   Text('open', textAlign: TextAlign.center),
-                      //   Text('close',
-                      //       textAlign: TextAlign.center,
-                      //       style: TextStyle(fontWeight: FontWeight.bold))
-                      // ]),
-                      // TableRow(children: [
-                      //   Text('Tuesday', textAlign: TextAlign.center),
-                      //   Text('open', textAlign: TextAlign.center),
-                      //   Text('close',
-                      //       textAlign: TextAlign.center,
-                      //       style: TextStyle(fontWeight: FontWeight.bold))
-                      // ]),
-                      // TableRow(children: [
-                      //   Text('Tuesday', textAlign: TextAlign.center),
-                      //   Text('open', textAlign: TextAlign.center),
-                      //   Text('close',
-                      //       textAlign: TextAlign.center,
-                      //       style: TextStyle(fontWeight: FontWeight.bold))
-                      // ]),
-                      // TableRow(children: [
-                      //   Text('Tuesday', textAlign: TextAlign.center),
-                      //   Text('open', textAlign: TextAlign.center),
-                      //   Text('close',
-                      //       textAlign: TextAlign.center,
-                      //       style: TextStyle(fontWeight: FontWeight.bold))
-                      // ]),
-                      // TableRow(children: [
-                      //   Text('Tuesday', textAlign: TextAlign.center),
-                      //   Text('open', textAlign: TextAlign.center),
-                      //   Text('close',
-                      //       textAlign: TextAlign.center,
-                      //       style: TextStyle(fontWeight: FontWeight.bold))
-                      // ]),
-                      // TableRow(children: [
-                      //   Text('Tuesday', textAlign: TextAlign.center),
-                      //   Text('open', textAlign: TextAlign.center),
-                      //   Text('close',
-                      //       textAlign: TextAlign.center,
-                      //       style: TextStyle(fontWeight: FontWeight.bold))
-                      // ]),
-                      // TableRow(children: [
-                      //   Text('Tuesday', textAlign: TextAlign.center),
-                      //   Text('open', textAlign: TextAlign.center),
-                      //   Text('close',
-                      //       textAlign: TextAlign.center,
-                      //       style: TextStyle(fontWeight: FontWeight.bold))
-                      // ]),
-                      // TableRow(children: [
-                      //   Text('Tuesday', textAlign: TextAlign.center),
-                      //   Text('open', textAlign: TextAlign.center),
-                      //   Text('close',
-                      //       textAlign: TextAlign.center,
-                      //       style: TextStyle(fontWeight: FontWeight.bold))
-                      // ]),
-                      // TableRow(children: [
-                      //   Text('Tuesday', textAlign: TextAlign.center),
-                      //   Text('open', textAlign: TextAlign.center),
-                      //   Text('close',
-                      //       textAlign: TextAlign.center,
-                      //       style: TextStyle(fontWeight: FontWeight.bold))
-                      // ]),
-                      // TableRow(children: [
-                        // Text('Tuesday', textAlign: TextAlign.center),
-                        // Text('open', textAlign: TextAlign.center),
-                        // Text('close',
-                        //     textAlign: TextAlign.center,
-                        //     style: TextStyle(fontWeight: FontWeight.bold))
-                      //]),
-                    ],
-                  ),
-                ],
-              ),
+                ),
+                Table(
+                  // border: TableBorder.all(),
+                  children: [
+                    TableRow(children: [
+                      Text('Monday',
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                              ////color: Colors.white,
+                              fontSize: 15,
+                              fontWeight: FontWeight.normal)),
+                      _storeDetail.mondayOpenTimeOnly != null
+                          ? Text(
+                              _storeDetail.mondayOpenTimeOnly.format(context),
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                  //color: Colors.white,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.normal))
+                          : Text('closed'),
+                      _storeDetail.mondayCloseTimeOnly != null
+                          ? Text(
+                              _storeDetail.mondayCloseTimeOnly.format(context),
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                  //color: Colors.white,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.normal))
+                          : Text('closed')
+                    ]),
+                    // TableRow(children: [
+                    //   Text('Monday',
+                    //       textAlign: TextAlign.left,
+                    //       style: TextStyle(
+                    //           //olor: Colors.white,
+                    //           fontSize: 15,
+                    //           fontWeight: FontWeight.normal)),
+                    //   Text(_storeDetail.mondayOpenTimeOnly.format(context),
+                    //       textAlign: TextAlign.left,
+                    //       style: TextStyle(
+                    //           //color: Colors.white,
+                    //           fontSize: 15,
+                    //           fontWeight: FontWeight.normal)),
+                    //   Text(_storeDetail.mondayCloseTimeOnly.format(context),
+                    //       textAlign: TextAlign.left,
+                    //       style: TextStyle(
+                    //           //color: Colors.white,
+                    //           fontSize: 15,
+                    //           fontWeight: FontWeight.normal))
+                    // ]),
+                    // TableRow(children: [
+                    //   Text('Monday',
+                    //       textAlign: TextAlign.left,
+                    //       style: TextStyle(
+                    //           //color: Colors.white,
+                    //           fontSize: 15,
+                    //           fontWeight: FontWeight.normal)),
+                    //   Text(_storeDetail.mondayOpenTimeOnly.format(context),
+                    //       textAlign: TextAlign.left,
+                    //       style: TextStyle(
+                    //           //color: Colors.white,
+                    //           fontSize: 15,
+                    //           fontWeight: FontWeight.normal)),
+                    //   Text(_storeDetail.mondayCloseTimeOnly.format(context),
+                    //       textAlign: TextAlign.left,
+                    //       style: TextStyle(
+                    //           //color: Colors.white,
+                    //           fontSize: 15,
+                    //           fontWeight: FontWeight.normal))
+                    // ]),
+                    // TableRow(children: [
+                    // Text('Monday',
+                    //     textAlign: TextAlign.left,
+                    //     style: TextStyle(
+                    //         color: Colors.white,
+                    //         fontSize: 15,
+                    //         fontWeight: FontWeight.normal)),
+                    // Text(_storeDetail.mondayOpenTimeOnly.format(context),
+                    //     textAlign: TextAlign.left,
+                    //     style: TextStyle(
+                    //         color: Colors.white,
+                    //         fontSize: 15,
+                    //         fontWeight: FontWeight.normal)),
+                    // Text(_storeDetail.mondayCloseTimeOnly.format(context),
+                    //     textAlign: TextAlign.left,
+                    //     style: TextStyle(
+                    //           color: Colors.white,
+                    //           fontSize: 15,
+                    //           fontWeight: FontWeight.normal))
+                    // ]),
+                    // TableRow(children: [
+                    //   Text('Tuesday', textAlign: TextAlign.center),
+                    //   Text('open', textAlign: TextAlign.center),
+                    //   Text('close',
+                    //       textAlign: TextAlign.center,
+                    //       style: TextStyle(fontWeight: FontWeight.bold))
+                    // ]),
+                    // TableRow(children: [
+                    //   Text('Tuesday', textAlign: TextAlign.center),
+                    //   Text('open', textAlign: TextAlign.center),
+                    //   Text('close',
+                    //       textAlign: TextAlign.center,
+                    //       style: TextStyle(fontWeight: FontWeight.bold))
+                    // ]),
+                    // TableRow(children: [
+                    //   Text('Tuesday', textAlign: TextAlign.center),
+                    //   Text('open', textAlign: TextAlign.center),
+                    //   Text('close',
+                    //       textAlign: TextAlign.center,
+                    //       style: TextStyle(fontWeight: FontWeight.bold))
+                    // ]),
+                    // TableRow(children: [
+                    //   Text('Tuesday', textAlign: TextAlign.center),
+                    //   Text('open', textAlign: TextAlign.center),
+                    //   Text('close',
+                    //       textAlign: TextAlign.center,
+                    //       style: TextStyle(fontWeight: FontWeight.bold))
+                    // ]),
+                    // TableRow(children: [
+                    //   Text('Tuesday', textAlign: TextAlign.center),
+                    //   Text('open', textAlign: TextAlign.center),
+                    //   Text('close',
+                    //       textAlign: TextAlign.center,
+                    //       style: TextStyle(fontWeight: FontWeight.bold))
+                    // ]),
+                    // TableRow(children: [
+                    //   Text('Tuesday', textAlign: TextAlign.center),
+                    //   Text('open', textAlign: TextAlign.center),
+                    //   Text('close',
+                    //       textAlign: TextAlign.center,
+                    //       style: TextStyle(fontWeight: FontWeight.bold))
+                    // ]),
+                    // TableRow(children: [
+                    //   Text('Tuesday', textAlign: TextAlign.center),
+                    //   Text('open', textAlign: TextAlign.center),
+                    //   Text('close',
+                    //       textAlign: TextAlign.center,
+                    //       style: TextStyle(fontWeight: FontWeight.bold))
+                    // ]),
+                    // TableRow(children: [
+                    //   Text('Tuesday', textAlign: TextAlign.center),
+                    //   Text('open', textAlign: TextAlign.center),
+                    //   Text('close',
+                    //       textAlign: TextAlign.center,
+                    //       style: TextStyle(fontWeight: FontWeight.bold))
+                    // ]),
+                    // TableRow(children: [
+                    //   Text('Tuesday', textAlign: TextAlign.center),
+                    //   Text('open', textAlign: TextAlign.center),
+                    //   Text('close',
+                    //       textAlign: TextAlign.center,
+                    //       style: TextStyle(fontWeight: FontWeight.bold))
+                    // ]),
+                    // TableRow(children: [
+                    // Text('Tuesday', textAlign: TextAlign.center),
+                    // Text('open', textAlign: TextAlign.center),
+                    // Text('close',
+                    //     textAlign: TextAlign.center,
+                    //     style: TextStyle(fontWeight: FontWeight.bold))
+                    //]),
+                  ],
+                ),
+              ],
             ),
-          ));
-    
+          ),
+        ));
   }
 
   // @override
