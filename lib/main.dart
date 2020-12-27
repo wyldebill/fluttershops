@@ -9,6 +9,7 @@ import 'package:mapstesting/allstores.dart';
 import 'package:mapstesting/StoreDetail.dart';
 import 'package:mapstesting/storeInfo.dart';
 import 'dart:convert';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // main is the starting method that flutter looks for when loading your app
 void main() {
@@ -274,28 +275,23 @@ class _HomeAppState extends State<HomeApp>
         // get the time and day of the week right now
         DateTime rightNow = DateTime.now();
         int dayOfTheWeekNow = rightNow.weekday;
+                    TimeOfDay timeNow = TimeOfDay.fromDateTime(rightNow);
 
         // TODO: fix this mess later
         // if it's monday (which is enum == 1, tuesday is == 2...) today,
         // then look for open and close info for monday on the StoreInfo object
         if (dayOfTheWeekNow == 1) {
-          if (storeToEvaluateForOpenOrClosed.mondayOpenTime.toString() != "") {
+          if (storeToEvaluateForOpenOrClosed.mondayOpenTimeOnly.hour != 0) {
             // this store has a monday open time, get it and compare to time right now
 
-            // what time does this store open and close on mondays...
-            TimeOfDay mondayOpenTime = TimeOfDay.fromDateTime(
-                storeToEvaluateForOpenOrClosed.mondayOpenTime);
-            TimeOfDay mondayCloseTime = TimeOfDay.fromDateTime(
-                storeToEvaluateForOpenOrClosed.mondayCloseTime);
-
             // what time is now, according to the device?
-            TimeOfDay timeNow = TimeOfDay.fromDateTime(rightNow);
+
 
             // if the timenow is **after the time the store opens...
             // and if the time now is **before the time the store closes...
-            if ((toDouble(mondayOpenTime) <= toDouble(timeNow)) &&
-                ((toDouble(mondayCloseTime) >= toDouble(timeNow)))) {
-              // we are open!
+            if ((toDouble(storeToEvaluateForOpenOrClosed.mondayOpenTimeOnly) <= toDouble(timeNow)) &&
+                ((toDouble(storeToEvaluateForOpenOrClosed.mondayCloseTimeOnly) >= toDouble(timeNow)))) {
+              // we are open, do nothing, leave the marker on the map display
             } else {
               // we are closed.  add this store marker to the list of markers to remove from the map and...
               // exit loop for this store marker, and try the next one...
@@ -307,19 +303,13 @@ class _HomeAppState extends State<HomeApp>
 
         if (dayOfTheWeekNow == 2) // tuesday
         {
-          if (storeToEvaluateForOpenOrClosed.tuesdayOpenTime.toString() != "") {
+          if (storeToEvaluateForOpenOrClosed.tuesdayOpenTimeOnly.hour != 0) {
             // this store has a monday open time, get it and compare to time right now
 
-            //DateTime mondayOpen = storeToEvaluateForOpenOrClosed.mondayOpenTime;
-            TimeOfDay tuesdayOpenTime = TimeOfDay.fromDateTime(
-                storeToEvaluateForOpenOrClosed.tuesdayOpenTime);
-            TimeOfDay tuesdayCloseTime = TimeOfDay.fromDateTime(
-                storeToEvaluateForOpenOrClosed.tuesdayCloseTime);
 
-            TimeOfDay timeNow = TimeOfDay.fromDateTime(rightNow);
 
-            if ((toDouble(tuesdayOpenTime) <= toDouble(timeNow)) &&
-                ((toDouble(tuesdayCloseTime) >= toDouble(timeNow)))) {
+            if ((toDouble(storeToEvaluateForOpenOrClosed.tuesdayOpenTimeOnly) <= toDouble(timeNow)) &&
+                ((toDouble(storeToEvaluateForOpenOrClosed.tuesdayCloseTimeOnly) >= toDouble(timeNow)))) {
               // store is open!
             } else {
               // store is closed.  add marker to list of markers to remove and exit loop for this store.
@@ -331,20 +321,14 @@ class _HomeAppState extends State<HomeApp>
 
         if (dayOfTheWeekNow == 3) // wed
         {
-          if (storeToEvaluateForOpenOrClosed.wednesdayOpenTime.toString() !=
-              "") {
+          if (storeToEvaluateForOpenOrClosed.wednesdayOpenTimeOnly.hour !=
+              0) {
             // this store has a monday open time, get it and compare to time right now
 
-            //DateTime mondayOpen = storeToEvaluateForOpenOrClosed.mondayOpenTime;
-            TimeOfDay wednesdayOpenTime = TimeOfDay.fromDateTime(
-                storeToEvaluateForOpenOrClosed.tuesdayOpenTime);
-            TimeOfDay wednesdayCloseTime = TimeOfDay.fromDateTime(
-                storeToEvaluateForOpenOrClosed.tuesdayCloseTime);
 
-            TimeOfDay timeNow = TimeOfDay.fromDateTime(rightNow);
 
-            if ((toDouble(wednesdayOpenTime) <= toDouble(timeNow)) &&
-                ((toDouble(wednesdayCloseTime) >= toDouble(timeNow)))) {
+            if ((toDouble(storeToEvaluateForOpenOrClosed.wednesdayOpenTimeOnly) <= toDouble(timeNow)) &&
+                ((toDouble(storeToEvaluateForOpenOrClosed.wednesdayCloseTimeOnly) >= toDouble(timeNow)))) {
               // store is open!
             } else {
               // store is closed.  add marker to list of markers to remove and exit loop for this store.
@@ -356,20 +340,16 @@ class _HomeAppState extends State<HomeApp>
 
         if (dayOfTheWeekNow == 4) // thursday
         {
-          if (storeToEvaluateForOpenOrClosed.thursdayOpenTime.toString() !=
-              "") {
+          if (storeToEvaluateForOpenOrClosed.thursdayOpenTimeOnly.hour != 0) {
             // this store has a monday open time, get it and compare to time right now
 
-            //DateTime mondayOpen = storeToEvaluateForOpenOrClosed.mondayOpenTime;
-            TimeOfDay thursdayOpenTime = TimeOfDay.fromDateTime(
-                storeToEvaluateForOpenOrClosed.tuesdayOpenTime);
-            TimeOfDay thursdayCloseTime = TimeOfDay.fromDateTime(
-                storeToEvaluateForOpenOrClosed.tuesdayCloseTime);
 
-            TimeOfDay timeNow = TimeOfDay.fromDateTime(rightNow);
+          
 
-            if ((toDouble(thursdayOpenTime) <= toDouble(timeNow)) &&
-                ((toDouble(thursdayCloseTime) >= toDouble(timeNow)))) {
+ 
+
+            if ((toDouble(storeToEvaluateForOpenOrClosed.thursdayOpenTimeOnly) <= toDouble(timeNow)) &&
+                ((toDouble(storeToEvaluateForOpenOrClosed.thursdayCloseTimeOnly) >= toDouble(timeNow)))) {
               // store is open!
             } else {
               // store is closed.  add marker to list of markers to remove and exit loop for this store.
@@ -381,19 +361,14 @@ class _HomeAppState extends State<HomeApp>
 
         if (dayOfTheWeekNow == 5) // friday
         {
-          if (storeToEvaluateForOpenOrClosed.fridayOpenTime.toString() != "") {
+          if (storeToEvaluateForOpenOrClosed.fridayOpenTimeOnly.hour != 0) {
             // this store has a monday open time, get it and compare to time right now
 
-            //DateTime mondayOpen = storeToEvaluateForOpenOrClosed.mondayOpenTime;
-            TimeOfDay fridayOpenTime = TimeOfDay.fromDateTime(
-                storeToEvaluateForOpenOrClosed.tuesdayOpenTime);
-            TimeOfDay fridayCloseTime = TimeOfDay.fromDateTime(
-                storeToEvaluateForOpenOrClosed.tuesdayCloseTime);
 
-            TimeOfDay timeNow = TimeOfDay.fromDateTime(rightNow);
 
-            if ((toDouble(fridayOpenTime) <= toDouble(timeNow)) &&
-                ((toDouble(fridayCloseTime) >= toDouble(timeNow)))) {
+
+            if ((toDouble(storeToEvaluateForOpenOrClosed.fridayOpenTimeOnly) <= toDouble(timeNow)) &&
+                ((toDouble(storeToEvaluateForOpenOrClosed.fridayCloseTimeOnly) >= toDouble(timeNow)))) {
               // store is open!
             } else {
               // store is closed.  add marker to list of markers to remove and exit loop for this store.
@@ -405,20 +380,14 @@ class _HomeAppState extends State<HomeApp>
 
         if (dayOfTheWeekNow == 6) // saturday
         {
-          if (storeToEvaluateForOpenOrClosed.saturdayOpenTime.toString() !=
-              "") {
+          if (storeToEvaluateForOpenOrClosed.saturdayOpenTimeOnly.hour != 0) {
             // this store has a monday open time, get it and compare to time right now
 
-            //DateTime mondayOpen = storeToEvaluateForOpenOrClosed.mondayOpenTime;
-            TimeOfDay saturdayOpenTime = TimeOfDay.fromDateTime(
-                storeToEvaluateForOpenOrClosed.tuesdayOpenTime);
-            TimeOfDay saturdayCloseTime = TimeOfDay.fromDateTime(
-                storeToEvaluateForOpenOrClosed.tuesdayCloseTime);
+          
+ 
 
-            TimeOfDay timeNow = TimeOfDay.fromDateTime(rightNow);
-
-            if ((toDouble(saturdayOpenTime) <= toDouble(timeNow)) &&
-                ((toDouble(saturdayCloseTime) >= toDouble(timeNow)))) {
+            if ((toDouble(storeToEvaluateForOpenOrClosed.saturdayOpenTimeOnly) <= toDouble(timeNow)) &&
+                ((toDouble(storeToEvaluateForOpenOrClosed.saturdayCloseTimeOnly) >= toDouble(timeNow)))) {
               // store is open!
             } else {
               // store is closed.  add marker to list of markers to remove and exit loop for this store.
@@ -430,19 +399,15 @@ class _HomeAppState extends State<HomeApp>
 
         if (dayOfTheWeekNow == 7) // sunday
         {
-          if (storeToEvaluateForOpenOrClosed.sundayOpenTime.toString() != "") {
+          if (storeToEvaluateForOpenOrClosed.sundayOpenTimeOnly.hour != 0) {
             // this store has a monday open time, get it and compare to time right now
 
-            //DateTime mondayOpen = storeToEvaluateForOpenOrClosed.mondayOpenTime;
-            TimeOfDay sundayOpenTime = TimeOfDay.fromDateTime(
-                storeToEvaluateForOpenOrClosed.tuesdayOpenTime);
-            TimeOfDay sundayCloseTime = TimeOfDay.fromDateTime(
-                storeToEvaluateForOpenOrClosed.tuesdayCloseTime);
+         
 
-            TimeOfDay timeNow = TimeOfDay.fromDateTime(rightNow);
+      
 
-            if ((toDouble(sundayOpenTime) <= toDouble(timeNow)) &&
-                ((toDouble(sundayCloseTime) >= toDouble(timeNow)))) {
+            if ((toDouble(storeToEvaluateForOpenOrClosed.sundayOpenTimeOnly) <= toDouble(timeNow)) &&
+                ((toDouble(storeToEvaluateForOpenOrClosed.sundayCloseTimeOnly) >= toDouble(timeNow)))) {
               // store is open!
             } else {
               // store is closed.  add marker to list of markers to remove and exit loop for this store.
@@ -452,29 +417,13 @@ class _HomeAppState extends State<HomeApp>
           }
         }
 
-        //DateTime parsedDt = (listOfStores.stores[1].mondayOpenTime);
-        //DateTime rightNow = DateTime.now();
-        //print(rightNow.weekday);
-
-        // print(parsedDt.year); // 4
-        // print(parsedDt.weekday); // 4
-        // print(parsedDt.month); // 4
-        // print(parsedDt.day); // 2
-        // print(parsedDt.hour); // 15
-        // print(parsedDt.minute); // 21
-        // print(parsedDt.second); // 49
-
-        // for now, I'll just turn off all but 3 markers.
-        // later I'll put info in the Marker itself with store opening date/times
-        // *****************************************************************************************
-        // so I can test showing/hiding markers. remove this later
-        // *****************************************************************************
-        if ((marker.markerId.value == 'Now and Again') ||
-            (marker.markerId.value == 'A Wreath of Franklin')) {
-          print('keeping this one' + marker.markerId.value);
-        } else {
-          markersToRemove.add(marker);
-        }
+    
+        // if ((marker.markerId.value == 'Now and Again') ||
+        //     (marker.markerId.value == 'A Wreath of Franklin')) {
+        //   print('keeping this one' + marker.markerId.value);
+        // } else {
+        //   markersToRemove.add(marker);
+        // }
       }
 
       // remove the markers in the markersToRemove list from the markers list...
@@ -528,7 +477,8 @@ class _HomeAppState extends State<HomeApp>
           alignment: Alignment.topLeft,
           child: ToggleButtons(
             children: <Widget>[
-              Icon(Icons.remove_shopping_cart), // just one toggle button...
+             // Icon(Icons.remove_shopping_cart), // just one toggle button...
+             FaIcon(FontAwesomeIcons.storeAltSlash)
             ],
             onPressed: (int index) {
               // if you press it, we change the state of the button and that calls filterstoremarkerstoonly~.

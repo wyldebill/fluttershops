@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mapstesting/storeInfo.dart';
 
+
 class StoreDetail extends StatelessWidget {
   StoreInfo _storeDetail;
   StoreDetail(StoreInfo store) {
@@ -10,7 +11,7 @@ class StoreDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.pink, // TODO: use themeing instead
+       // backgroundColor: Colors.pink, // TODO: use themeing instead
         appBar: AppBar(
           title: Text(_storeDetail.name),
         ),
@@ -30,13 +31,13 @@ class StoreDetail extends StatelessWidget {
                       width: double.infinity,
                       fit: BoxFit.fitWidth,
                     ),
-                    Divider(),
+                    Divider(color: Colors.white),
                     Row(
                       // i wanted 2 columns, storename and distance
                       children: [
                         Text(_storeDetail.name,
                             style: TextStyle(
-                                color: Colors.white,
+                                //color: Colors.white,
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold)),
                         // Text('         175 Ft',   // TODO: fix alignment hack here
@@ -51,16 +52,16 @@ class StoreDetail extends StatelessWidget {
                       //store tag name
                       _storeDetail.tagline,
                       style: TextStyle(
-                          color: Colors.white,
+                          //color: Colors.white,
                           fontSize: 20,
                           fontWeight: FontWeight.normal),
                     ),
-                    Divider(),
+                  Divider(color: Colors.white),
                     Text(
                       //store website
                       _storeDetail.website,
                       style: TextStyle(
-                          color: Colors.white,
+                          //color: Colors.white,
                           fontSize: 15,
                           fontWeight: FontWeight.normal),
                     ),
@@ -68,18 +69,18 @@ class StoreDetail extends StatelessWidget {
                       //store facebook link
                       'Facebook link ?',
                       style: TextStyle(
-                          color: Colors.white,
+                          //color: Colors.white,
                           fontSize: 15,
                           fontWeight: FontWeight.normal),
                     ),
-                    Divider(),
+                   Divider(color: Colors.white),
 
                     // todo: need a occasional marker/indicator too?
 
                     Text(
                       'Hours: ',
                       style: TextStyle(
-                          color: Colors.white,
+                          //color: Colors.white,
                           fontSize: 20,
                           fontWeight: FontWeight.bold),
                     ),
@@ -91,7 +92,7 @@ class StoreDetail extends StatelessWidget {
                             Text('Monday',
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
-                                    color: Colors.white,
+                                    //color: Colors.white,
                                     fontSize: 15,
                                     fontWeight: FontWeight.normal)),
                             Text(
@@ -101,7 +102,7 @@ class StoreDetail extends StatelessWidget {
                                         .format(context),
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
-                                    color: Colors.white,
+                                    //color: Colors.white,
                                     fontSize: 15,
                                     fontWeight: FontWeight.normal)),
                             Text(
@@ -111,7 +112,7 @@ class StoreDetail extends StatelessWidget {
                                         .format(context),
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
-                                    color: Colors.white,
+                                   // color: Colors.white,
                                     fontSize: 15,
                                     fontWeight: FontWeight.normal))
                           ]),
@@ -119,7 +120,7 @@ class StoreDetail extends StatelessWidget {
                             Text('Tuesday',
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
-                                    color: Colors.white,
+                                    //color: Colors.white,
                                     fontSize: 15,
                                     fontWeight: FontWeight.normal)),
                              Text(
@@ -129,7 +130,7 @@ class StoreDetail extends StatelessWidget {
                                         .format(context),
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
-                                    color: Colors.white,
+                                    //color: Colors.white,
                                     fontSize: 15,
                                     fontWeight: FontWeight.normal)),
                             Text(
@@ -139,7 +140,7 @@ class StoreDetail extends StatelessWidget {
                                         .format(context),
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
-                                    color: Colors.white,
+                                    //color: Colors.white,
                                     fontSize: 15,
                                     fontWeight: FontWeight.normal))
                           ]),
@@ -147,7 +148,7 @@ class StoreDetail extends StatelessWidget {
                             Text('Wednesday',
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
-                                    color: Colors.white,
+                                    //color: Colors.white,
                                     fontSize: 15,
                                     fontWeight: FontWeight.normal)),
                             Text(
@@ -157,7 +158,7 @@ class StoreDetail extends StatelessWidget {
                                         .format(context),
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
-                                    color: Colors.white,
+                                   // color: Colors.white,
                                     fontSize: 15,
                                     fontWeight: FontWeight.normal)),
                             Text(
@@ -167,7 +168,7 @@ class StoreDetail extends StatelessWidget {
                                         .format(context),
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
-                                    color: Colors.white,
+                                    //color: Colors.white,
                                     fontSize: 15,
                                     fontWeight: FontWeight.normal))
                           ]),
@@ -175,7 +176,7 @@ class StoreDetail extends StatelessWidget {
                             Text('Thursday',
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
-                                    color: Colors.white,
+                                    //color: Colors.white,
                                     fontSize: 15,
                                     fontWeight: FontWeight.normal)),
                              Text(
@@ -185,7 +186,7 @@ class StoreDetail extends StatelessWidget {
                                         .format(context),
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
-                                    color: Colors.white,
+                                    //color: Colors.white,
                                     fontSize: 15,
                                     fontWeight: FontWeight.normal)),
                             Text(
@@ -195,7 +196,7 @@ class StoreDetail extends StatelessWidget {
                                         .format(context),
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
-                                    color: Colors.white,
+                                    //color: Colors.white,
                                     fontSize: 15,
                                     fontWeight: FontWeight.normal))
                           ]),
@@ -203,7 +204,7 @@ class StoreDetail extends StatelessWidget {
                             Text('Friday',
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
-                                    color: Colors.white,
+                                    //color: Colors.white,
                                     fontSize: 15,
                                     fontWeight: FontWeight.normal)),
                          Text(
@@ -213,7 +214,7 @@ class StoreDetail extends StatelessWidget {
                                         .format(context),
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
-                                    color: Colors.white,
+                                    //color: Colors.white,
                                     fontSize: 15,
                                     fontWeight: FontWeight.normal)),
                             Text(
@@ -223,7 +224,7 @@ class StoreDetail extends StatelessWidget {
                                         .format(context),
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
-                                    color: Colors.white,
+                                    //color: Colors.white,
                                     fontSize: 15,
                                     fontWeight: FontWeight.normal))
                           ]),
@@ -231,7 +232,7 @@ class StoreDetail extends StatelessWidget {
                             Text('Saturday',
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
-                                    color: Colors.white,
+                                    //color: Colors.white,
                                     fontSize: 15,
                                     fontWeight: FontWeight.normal)),
                            Text(
@@ -241,7 +242,7 @@ class StoreDetail extends StatelessWidget {
                                         .format(context),
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
-                                    color: Colors.white,
+                                    //color: Colors.white,
                                     fontSize: 15,
                                     fontWeight: FontWeight.normal)),
                             Text(
@@ -251,7 +252,7 @@ class StoreDetail extends StatelessWidget {
                                         .format(context),
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
-                                    color: Colors.white,
+                                    //color: Colors.white,
                                     fontSize: 15,
                                     fontWeight: FontWeight.normal))
                           ]),
@@ -259,14 +260,14 @@ class StoreDetail extends StatelessWidget {
                             Text('Sunday',
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
-                                    color: Colors.white,
+                                    //color: Colors.white,
                                     fontSize: 15,
                                     fontWeight: FontWeight.normal)),
                             Text(
                                 _storeDetail.sundayOpenTimeOnly.format(context),
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
-                                    color: Colors.white,
+                                    //color: Colors.white,
                                     fontSize: 15,
                                     fontWeight: FontWeight.normal)),
                             Text(
@@ -274,7 +275,7 @@ class StoreDetail extends StatelessWidget {
                                     .format(context),
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
-                                    color: Colors.white,
+                                    //color: Colors.white,
                                     fontSize: 15,
                                     fontWeight: FontWeight.normal))
                           ]),
@@ -349,7 +350,7 @@ class StoreDetail extends StatelessWidget {
                           //     style: TextStyle(fontWeight: FontWeight.bold))
                           //]),
                         ]),
-                                  Divider(),
+                            Divider(color: Colors.white),
                     Image.asset(
                       // hero image of storefront
 
