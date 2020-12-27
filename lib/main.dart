@@ -10,8 +10,6 @@ import 'package:mapstesting/StoreDetail.dart';
 import 'package:mapstesting/storeInfo.dart';
 import 'dart:convert';
 
-import 'package:mapstesting/storemodel.dart';
-
 // main is the starting method that flutter looks for when loading your app
 void main() {
   // poor mans splashscreen, is there a better way to do this in flutter?
@@ -26,8 +24,9 @@ class zMyApp extends StatelessWidget {
     return MaterialApp(
       title: "Buffalo", //?? what is this even for?
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.pink,
       ),
+      //colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.pink)),
 
       // we will have 2 options in this app. the map display and the listview display
       home: DefaultTabController(
@@ -464,7 +463,6 @@ class _HomeAppState extends State<HomeApp>
         // print(parsedDt.hour); // 15
         // print(parsedDt.minute); // 21
         // print(parsedDt.second); // 49
-
 
         // for now, I'll just turn off all but 3 markers.
         // later I'll put info in the Marker itself with store opening date/times

@@ -1,4 +1,5 @@
-[{
+[
+    {
         "id": "biggsandcompany",
         "name": "Biggs and Company",
         "tagline": "Rustic Industrial furniture and custom designed home decor",
@@ -6,7 +7,7 @@
         "distance": "145ft",
         "latitude": "45.172144",
         "longitude": "-93.874352",
-        "description": "Welcome to Biggs and Company",
+        "description": "Welcome to Biggs and Company.   Need to add a few more lines of text to this to see how it renders and wraps if needed.  Last line.",
         "website": "www.biggsandcompany.com",
         "phone": "320-402-2009",
         "mondayHour": 0,
@@ -58,7 +59,6 @@
         "description": "Welcome to The Porch. Description here.",
         "website": "www.theporch.com",
         "phone": "763-684-1254",
-
         "mondayOpenTime": null,
         "tuesdayOpenTime": null,
         "wednesdayOpenTime": null,
@@ -73,8 +73,6 @@
         "fridayCloseTime": "2012-04-23T17:00:00.000Z",
         "saturdayCloseTime": "2012-04-23T17:00:00.000Z",
         "sundayCloseTime": "2012-04-23T16:00:00.000Z"
-
-
     },
     {
         "id": "lillians",
@@ -87,7 +85,6 @@
         "description": "Welcome to Lillians. Description here.",
         "website": "www.lillians.com",
         "phone": "763-221-3493",
-
         "mondayOpenTime": null,
         "tuesdayOpenTime": null,
         "wednesdayOpenTime": null,
@@ -102,8 +99,6 @@
         "fridayCloseTime": "2012-04-23T17:00:00.000Z",
         "saturdayCloseTime": "2012-04-23T17:00:00.000Z",
         "sundayCloseTime": null
-
-
     },
     {
         "id": "rusticarbor",
@@ -116,7 +111,6 @@
         "description": "Welcome to Rustic Arbor. Description here.",
         "website": "www.rusticarbor.com",
         "phone": "763-867-5309",
-
         "mondayOpenTime": null,
         "tuesdayOpenTime": null,
         "wednesdayOpenTime": null,
@@ -131,8 +125,6 @@
         "fridayCloseTime": "2012-04-23T16:00:00.000Z",
         "saturdayCloseTime": "2012-04-23T16:00:00.000Z",
         "sundayCloseTime": null
-
-
     },
     {
         "id": "jtbhomefurniture",
@@ -145,7 +137,6 @@
         "description": "Welcome to JTB Home Furniture. Description here.",
         "website": "www.jtbhomefurniture.com",
         "phone": "833-234-4100",
-
         "mondayOpenTime": null,
         "tuesdayOpenTime": null,
         "wednesdayOpenTime": null,
@@ -160,8 +151,6 @@
         "fridayCloseTime": "2012-04-23T16:00:00.000Z",
         "saturdayCloseTime": "2012-04-23T16:00:00.000Z",
         "sundayCloseTime": null
-
-
     },
     {
         "id": "awreathoffrankline",
@@ -174,7 +163,6 @@
         "description": "A Wreath of Franklin",
         "website": "www.wreathfanklin.com",
         "phone": "999-999-9999",
-
         "mondayOpenTime": null,
         "tuesdayOpenTime": null,
         "wednesdayOpenTime": null,
@@ -189,8 +177,6 @@
         "fridayCloseTime": "2012-04-23T16:00:00.000Z",
         "saturdayCloseTime": "2012-04-23T16:00:00.000Z",
         "sundayCloseTime": null
-
-
     },
     {
         "id": "Buffalo Rock Winery",
@@ -203,7 +189,6 @@
         "description": "Buffalo Rock Winery",
         "website": "www.buffalorock.com",
         "phone": "999-999-9999",
-
         "mondayOpenTime": null,
         "tuesdayOpenTime": "2012-04-23T08:00:00.000Z",
         "wednesdayOpenTime": null,
@@ -230,7 +215,6 @@
         "description": "Welcome to Now and Again",
         "website": "www.nowagain.com",
         "phone": "999-999-9999",
-
         "mondayOpenTime": null,
         "tuesdayOpenTime": "2012-04-23T11:00:00.000Z",
         "wednesdayOpenTime": null,
@@ -245,8 +229,5 @@
         "fridayCloseTime": "2012-04-23T16:00:00.000Z",
         "saturdayCloseTime": "2012-04-23T16:00:00.000Z",
         "sundayCloseTime": null
-
-
     }
-
 ]

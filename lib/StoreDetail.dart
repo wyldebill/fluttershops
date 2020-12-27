@@ -10,7 +10,7 @@ class StoreDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.blue, // TODO: use themeing instead
+        backgroundColor: Colors.pink, // TODO: use themeing instead
         appBar: AppBar(
           title: Text(_storeDetail.name),
         ),
@@ -26,6 +26,7 @@ class StoreDetail extends StatelessWidget {
                       // hero image of storefront
 
                      _storeDetail.imageName,
+                     height: 200,
                       width: double.infinity,
                       fit: BoxFit.fitWidth,
                     ),

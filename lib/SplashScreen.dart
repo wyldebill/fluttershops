@@ -13,7 +13,7 @@ class SplashScreenWidget extends StatelessWidget {
     return MaterialApp(
       title: 'Splash Screen',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.pink,
       ),
       home: SplashScreen(),
       debugShowCheckedModeBanner: false,

@@ -46,8 +46,10 @@ class StoreInfo {
     this.description,
     this.website,
     this.phone,
+    this.mondayHour,
+    this.mondayMinute,
     //this.daysOfTheWeekStoreIsOpen,
-    this.mondayOpenTime,
+    // this.mondayOpenTime,
     this.mondayOpenTimeOnly,
     this.tuesdayOpenTimeOnly,
     this.tuesdayCloseTimeOnly,
@@ -88,6 +90,8 @@ class StoreInfo {
   String website;
   String phone;
   //List<DaysOfTheWeekStoreIsOpen> daysOfTheWeekStoreIsOpen;
+  int mondayHour;
+  int mondayMinute;
   TimeOfDay mondayOpenTimeOnly;
   TimeOfDay mondayCloseTimeOnly;
 
@@ -187,8 +191,8 @@ class StoreInfo {
             hour: int.parse("${json["sundayCloseHour"] ?? '0'}"),
             minute: int.parse("${json["sundayCloseMinute"] ?? '0'}")),
 
-        mondayOpenTime: DateTime.parse(
-            json["mondayOpenTime"] ?? "2012-04-23T23:59:00.000Z"),
+        // mondayOpenTime: DateTime.parse(
+        //     json["mondayOpenTime"] ?? "2012-04-23T23:59:00.000Z"),
         tuesdayOpenTime: DateTime.parse(
             json["tuesdayOpenTime"] ?? "2012-04-23T23:59:00.000Z"),
         wednesdayOpenTime: DateTime.parse(
