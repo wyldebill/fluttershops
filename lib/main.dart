@@ -33,25 +33,27 @@ class zMyApp extends StatelessWidget {
       home: DefaultTabController(
         length: 2,
         child: Scaffold(
-          appBar: AppBar(
-            title: new Text('Buffalo Retail Group'),
-            bottom: TabBar(
-              tabs: [
-                Tab(icon: Icon(Icons.list)),
-                Tab(icon: Icon(Icons.map)),
-              ],
+            appBar: AppBar(
+              title: new Text('Buffalo Retail Group'),
+              bottom: TabBar(
+                tabs: [
+        Tab(icon: Icon(Icons.list)),
+        Tab(icon: Icon(Icons.map)),
+                ],
+              ),
+            ),
+            body: SafeArea(
+              child: TabBarView(
+                physics: NeverScrollableScrollPhysics(),
+                children: [
+        // each tab needs an entry here
+        AllStores2(), // listview
+
+        HomeApp(), // map
+                ],
+              ),
             ),
           ),
-          body: TabBarView(
-            physics: NeverScrollableScrollPhysics(),
-            children: [
-              // each tab needs an entry here
-              AllStores2(), // listview
-
-              HomeApp(), // map
-            ],
-          ),
-        ),
       ),
     );
   }

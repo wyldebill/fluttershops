@@ -57,7 +57,7 @@ flutter:
     - assets/mapstyle/minimal.json
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
-    - assets/images/welcome.jpg
+    - assets/images/
     - assets/storeInfoDataJSON.json
   # also https://www.iconsgenerator.com/Home/AppIcons and https://www.removealphachannel.com/
     
