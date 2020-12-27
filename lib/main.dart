@@ -19,6 +19,35 @@ void main() {
 
 // this the main app, loaded after the splash screen is completed.
 class zMyApp extends StatelessWidget {
+
+  final makeBottom = Container(
+      height: 55.0,
+      child: BottomAppBar(
+        color: Colors.pink,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            IconButton(
+              icon: Icon(Icons.home, color: Colors.white),
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: Icon(Icons.blur_on, color: Colors.white),
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: Icon(Icons.hotel, color: Colors.white),
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: Icon(Icons.account_box, color: Colors.white),
+              onPressed: () {},
+            )
+          ],
+        ),
+      ),
+    );
+
   @override
   Widget build(BuildContext context) {
     // material app has a title and home property
@@ -42,6 +71,7 @@ class zMyApp extends StatelessWidget {
                 ],
               ),
             ),
+            bottomNavigationBar: makeBottom,
             body: SafeArea(
               child: TabBarView(
                 physics: NeverScrollableScrollPhysics(),
