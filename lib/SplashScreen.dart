@@ -42,7 +42,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(
         Duration(seconds: 4),
         () => Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => zMyApp())));
+            context, MaterialPageRoute(builder: (context) => MyApp())));
   }
 
   // read the list of stores json in the assets folder

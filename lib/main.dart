@@ -5,7 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:location_permissions/location_permissions.dart';
 import 'package:mapstesting/SplashScreen.dart';
-import 'package:mapstesting/allstores.dart';
+import 'package:mapstesting/ListOfAllStores.dart';
 import 'package:mapstesting/StoreDetail.dart';
 import 'package:mapstesting/storeInfo.dart';
 import 'dart:convert';
@@ -18,7 +18,7 @@ void main() {
 }
 
 // this the main app, loaded after the splash screen is completed.
-class zMyApp extends StatelessWidget {
+class MyApp extends StatelessWidget {
 
   final makeBottom = Container(
       height: 55.0,
@@ -71,15 +71,15 @@ class zMyApp extends StatelessWidget {
                 ],
               ),
             ),
-            bottomNavigationBar: makeBottom,
+            //bottomNavigationBar: makeBottom,
             body: SafeArea(
               child: TabBarView(
                 physics: NeverScrollableScrollPhysics(),
                 children: [
         // each tab needs an entry here
-        AllStores2(), // listview
+        ListOfAllStores(), // listview
 
-        HomeApp(), // map
+        MapView(), // map
                 ],
               ),
             ),
@@ -90,12 +90,12 @@ class zMyApp extends StatelessWidget {
 }
 
 // homeapp is the 'map' view part of this app. it hosts a google map display with markers
-class HomeApp extends StatefulWidget {
+class MapView extends StatefulWidget {
   @override
-  _HomeAppState createState() => _HomeAppState();
+  _MapViewState createState() => _MapViewState();
 }
 
-class _HomeAppState extends State<HomeApp>
+class _MapViewState extends State<MapView>
     with AutomaticKeepAliveClientMixin //  this will preserve state in each tab.
 // WidgetsBindingObserver, detects foreground/backgrounding of app.  https://medium.com/flutter-community/flutter-lifecycle-for-android-and-ios-developers-8f532307e0c7
 
@@ -284,10 +284,15 @@ class _HomeAppState extends State<HomeApp>
   }
 
   // pressing the shopping cart button on the ui, causes this method to be called
-  void filterStoreMarkersToOnlyWhatsOpen(bool filterClosedShops) {
+  void filterStoreMarkersToOnlyWhatsOpen(bool filterClosedShops, BuildContext context) {
     Set<Marker> markersToRemove = {};
 
     if (filterClosedShops == true) {
+      Scaffold.of(context).showSnackBar(SnackBar(
+      content: Text("Removed shops that are currently closed."),
+    ));
+
+
       for (Marker marker in _markers) {
         // TODO:  need to figure out how to look at the store list
         //        find the day/hours of operation
@@ -518,9 +523,9 @@ class _HomeAppState extends State<HomeApp>
                 _selection[index] = !_selection[index];
 
                 if (_selection[index] == true) {
-                  filterStoreMarkersToOnlyWhatsOpen(true);
+                  filterStoreMarkersToOnlyWhatsOpen(true, context);
                 } else {
-                  filterStoreMarkersToOnlyWhatsOpen(false);
+                  filterStoreMarkersToOnlyWhatsOpen(false, context);
                 }
               });
             },

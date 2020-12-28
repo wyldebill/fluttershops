@@ -38,7 +38,7 @@ class StoreDetail extends StatelessWidget {
                         Text(_storeDetail.name,
                             style: TextStyle(
                                 //color: Colors.white,
-                                fontSize: 24,
+                                fontSize: 18,
                                 fontWeight: FontWeight.bold)),
                         // Text('         175 Ft',   // TODO: fix alignment hack here
                         //     textAlign: TextAlign.right,
@@ -53,7 +53,7 @@ class StoreDetail extends StatelessWidget {
                       _storeDetail.tagline,
                       style: TextStyle(
                           //color: Colors.white,
-                          fontSize: 20,
+                          fontSize: 15,
                           fontWeight: FontWeight.normal),
                     ),
                   Divider(color: Colors.white),
@@ -81,7 +81,7 @@ class StoreDetail extends StatelessWidget {
                       'Hours: ',
                       style: TextStyle(
                           //color: Colors.white,
-                          fontSize: 20,
+                          fontSize: 18,
                           fontWeight: FontWeight.bold),
                     ),
                     Table(
