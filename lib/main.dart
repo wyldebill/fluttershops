@@ -116,7 +116,8 @@ class _MapViewState extends State<MapView>
   Set<Marker> _originalMarkers = {};
 
   // TODO: for now, static start location of Buffalo.
-  static const LatLng _center = const LatLng(45.1719084, -93.8746941);
+  static const LatLng _center = const LatLng(45.15812515923391, -93.83586411377073);
+  
   String _mapStyle;
 
   @override
@@ -491,6 +492,7 @@ class _MapViewState extends State<MapView>
     //http://flutterdevs.com/blog/google-maps-in-flutter/
     return Stack(children: <Widget>[
       GoogleMap(
+        
         myLocationButtonEnabled:
             true, // the target-looking button that puts the blue dot on the map indicating your position
         myLocationEnabled:
@@ -500,7 +502,7 @@ class _MapViewState extends State<MapView>
             _markers), // the red dots indicating buffalo retail group stores on the map
         initialCameraPosition: CameraPosition(
           target: _center,
-          zoom: 10.0,
+          zoom: 12.0,
         ),
       ),
 
