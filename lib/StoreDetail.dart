@@ -263,16 +263,21 @@ class StoreDetail extends StatelessWidget {
                                     //color: Colors.white,
                                     fontSize: 15,
                                     fontWeight: FontWeight.normal)),
-                            Text(
-                                _storeDetail.sundayOpenTimeOnly.format(context),
+                           Text(
+                                _storeDetail.sundayOpenTimeOnly.hour == 0
+                                    ? "Closed"
+                                    : _storeDetail.sundayOpenTimeOnly
+                                        .format(context),
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
                                     //color: Colors.white,
                                     fontSize: 15,
                                     fontWeight: FontWeight.normal)),
                             Text(
-                                _storeDetail.sundayCloseTimeOnly
-                                    .format(context),
+                                _storeDetail.sundayOpenTimeOnly.hour == 0
+                                    ? "Closed"
+                                    : _storeDetail.sundayCloseTimeOnly
+                                        .format(context),
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
                                     //color: Colors.white,
