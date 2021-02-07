@@ -89,6 +89,6 @@ class _SplashScreenState extends State<SplashScreen> {
     return Container(
         //color: Colors.white,
         //child: FlutterLogo(size: MediaQuery.of(context).size.height));
-        child: Image.asset('assets/images/welcome.jpg'));
+        child: Image.asset('assets/images/2874_R1NUIEpPUyAwNzAtNDc.jpg'));
   }
 }

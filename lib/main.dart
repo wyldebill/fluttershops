@@ -11,6 +11,8 @@ import 'package:mapstesting/storeInfo.dart';
 import 'dart:convert';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'package:mapstesting/HelpView.dart';
+
 // main is the starting method that flutter looks for when loading your app
 
 // todo: give credit for icon from 
@@ -28,7 +30,7 @@ class MyApp extends StatelessWidget {
   final makeBottom = Container(
       height: 55.0,
       child: BottomAppBar(
-        color: Colors.pink,
+        color: Colors.purple,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
@@ -65,7 +67,7 @@ class MyApp extends StatelessWidget {
 
       // we will have 2 options in this app. the map display and the listview display
       home: DefaultTabController(
-        length: 2,
+        length: 3,
         child: Scaffold(
             appBar: AppBar(
               title: new Text('Buffalo Retail Group'),
@@ -73,6 +75,7 @@ class MyApp extends StatelessWidget {
                 tabs: [
         Tab(icon: Icon(Icons.list)),
         Tab(icon: Icon(Icons.map)),
+        Tab(icon: Icon(Icons.help_center))
                 ],
               ),
             ),
@@ -85,6 +88,7 @@ class MyApp extends StatelessWidget {
         ListOfAllStores(), // listview
 
         MapView(), // map
+        HelpView(),
                 ],
               ),
             ),
