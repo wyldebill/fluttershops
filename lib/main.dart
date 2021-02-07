@@ -12,6 +12,11 @@ import 'dart:convert';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // main is the starting method that flutter looks for when loading your app
+
+// todo: give credit for icon from 
+// https://www.vecteezy.com/vector-art/552281-geo-location-pin-vector-icon
+
+
 void main() {
   // poor mans splashscreen, is there a better way to do this in flutter?
   runApp(SplashScreenWidget());
