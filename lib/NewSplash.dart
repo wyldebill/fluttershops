@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mapstesting/main.dart';
+import 'package:buffaloretailgroupmap/main.dart';
 import 'package:splashscreen/splashscreen.dart';
 
 class NewSplash extends StatefulWidget {

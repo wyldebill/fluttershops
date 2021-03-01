@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mapstesting/storeInfo.dart';
-import 'package:mapstesting/StoreDetail.dart';
+import 'package:buffaloretailgroupmap/storeInfo.dart';
+import 'package:buffaloretailgroupmap/StoreDetail.dart';
 import 'package:flutter/services.dart'
     show rootBundle; // TODO: what is rootbundle??
 import 'dart:convert';

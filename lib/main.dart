@@ -4,15 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:location_permissions/location_permissions.dart';
-import 'package:mapstesting/SplashScreen.dart'; // todo: what does the package: keyword do?
-import 'package:mapstesting/NewSplash.dart';
-import 'package:mapstesting/ListOfAllStores.dart';
-import 'package:mapstesting/StoreDetail.dart';
-import 'package:mapstesting/storeInfo.dart';
+import 'package:buffaloretailgroupmap/NewSplash.dart';
+import 'package:buffaloretailgroupmap/ListOfAllStores.dart';
+import 'package:buffaloretailgroupmap/StoreDetail.dart';
+import 'package:buffaloretailgroupmap/storeInfo.dart';
 import 'dart:convert';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'package:mapstesting/HelpView.dart';
+import 'package:buffaloretailgroupmap/HelpView.dart';
 
 // todo: give credit for icon from
 // https://www.vecteezy.com/vector-art/552281-geo-location-pin-vector-icon

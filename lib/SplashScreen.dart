@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:mapstesting/main.dart';
+import 'package:buffaloretailgroupmap/main.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:mapstesting/storeInfo.dart';
+import 'package:buffaloretailgroupmap/storeInfo.dart';
 import 'dart:convert';
 
 // using a full screen widget, that displays an image for (4) seconds and then loads another different widget. 

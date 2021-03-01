@@ -1,4 +1,4 @@
-# mapstesting
+# buffaloretailgroupmap
 
 This is to be a maps app for Buffalo stores, shops, retail, whatever.
 
