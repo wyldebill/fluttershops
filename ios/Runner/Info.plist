@@ -25,7 +25,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>MAPS_API_KEY</key>
-	<string>$(MAPS_API_KEY)</string>
+	<string>$(googlemapsapikeyios)</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This app needs access to location when open.</string>
 	<key>UILaunchStoryboardName</key>

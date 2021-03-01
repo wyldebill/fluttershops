@@ -1,10 +1,11 @@
 import 'dart:async';
-import 'dart:io' show Platform;
+import 'dart:io' show Platform; // todo: what does the show keyword do?
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:location_permissions/location_permissions.dart';
-import 'package:mapstesting/SplashScreen.dart';
+import 'package:mapstesting/SplashScreen.dart'; // todo: what does the package: keyword do?
+import 'package:mapstesting/NewSplash.dart';
 import 'package:mapstesting/ListOfAllStores.dart';
 import 'package:mapstesting/StoreDetail.dart';
 import 'package:mapstesting/storeInfo.dart';
@@ -13,48 +14,15 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:mapstesting/HelpView.dart';
 
-// main is the starting method that flutter looks for when loading your app
-
-// todo: give credit for icon from 
+// todo: give credit for icon from
 // https://www.vecteezy.com/vector-art/552281-geo-location-pin-vector-icon
 
-
 void main() {
-  // poor mans splashscreen, is there a better way to do this in flutter?
-  runApp(SplashScreenWidget());
+  runApp(NewSplash());
 }
 
 // this the main app, loaded after the splash screen is completed.
 class MyApp extends StatelessWidget {
-
-  final makeBottom = Container(
-      height: 55.0,
-      child: BottomAppBar(
-        color: Colors.purple,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            IconButton(
-              icon: Icon(Icons.home, color: Colors.white),
-              onPressed: () {},
-            ),
-            IconButton(
-              icon: Icon(Icons.blur_on, color: Colors.white),
-              onPressed: () {},
-            ),
-            IconButton(
-              icon: Icon(Icons.hotel, color: Colors.white),
-              onPressed: () {},
-            ),
-            IconButton(
-              icon: Icon(Icons.account_box, color: Colors.white),
-              onPressed: () {},
-            )
-          ],
-        ),
-      ),
-    );
-
   @override
   Widget build(BuildContext context) {
     // material app has a title and home property
@@ -69,30 +37,29 @@ class MyApp extends StatelessWidget {
       home: DefaultTabController(
         length: 3,
         child: Scaffold(
-            appBar: AppBar(
-              title: new Text('Buffalo Retail Group'),
-              bottom: TabBar(
-                tabs: [
-        Tab(icon: Icon(Icons.list)),
-        Tab(icon: Icon(Icons.map)),
-        Tab(icon: Icon(Icons.help_center))
-                ],
-              ),
-            ),
-            //bottomNavigationBar: makeBottom,
-            body: SafeArea(
-              child: TabBarView(
-                physics: NeverScrollableScrollPhysics(),
-                children: [
-        // each tab needs an entry here
-        ListOfAllStores(), // listview
-
-        MapView(), // map
-        HelpView(),
-                ],
-              ),
+          appBar: AppBar(
+            title: new Text('Buffalo Retail Group'),
+            bottom: TabBar(
+              tabs: [
+                Tab(icon: Icon(Icons.list)),
+                Tab(icon: Icon(Icons.map)),
+                Tab(icon: Icon(Icons.help_center))
+              ],
             ),
           ),
+          //bottomNavigationBar: makeBottom,
+          body: SafeArea(
+            child: TabBarView(
+              physics: NeverScrollableScrollPhysics(),
+              children: [
+                // each tab needs an entry here
+                ListOfAllStores(), // listview
+                MapView(), // map
+                HelpView(),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -125,8 +92,9 @@ class _MapViewState extends State<MapView>
   Set<Marker> _originalMarkers = {};
 
   // TODO: for now, static start location of Buffalo.
-  static const LatLng _center = const LatLng(45.15812515923391, -93.83586411377073);
-  
+  static const LatLng _center =
+      const LatLng(45.15812515923391, -93.83586411377073);
+
   String _mapStyle;
 
   @override
@@ -198,7 +166,6 @@ class _MapViewState extends State<MapView>
     super.initState();
 
     loadStore().then((value) {
-      // TODO: is loadstore also called in the splashscreen.dart code?? remove it from splashscreen?
       listOfStores = value.stores;
 
       // flutter will be tracking changes to the state, which is the listOfStores, and redraw dependent widgets when it detects changes.
@@ -294,14 +261,14 @@ class _MapViewState extends State<MapView>
   }
 
   // pressing the shopping cart button on the ui, causes this method to be called
-  void filterStoreMarkersToOnlyWhatsOpen(bool filterClosedShops, BuildContext context) {
+  void filterStoreMarkersToOnlyWhatsOpen(
+      bool filterClosedShops, BuildContext context) {
     Set<Marker> markersToRemove = {};
 
     if (filterClosedShops == true) {
       Scaffold.of(context).showSnackBar(SnackBar(
-      content: Text("Removed shops that are currently closed."),
-    ));
-
+        content: Text("Removed shops that are currently closed."),
+      ));
 
       for (Marker marker in _markers) {
         // TODO:  need to figure out how to look at the store list
@@ -320,22 +287,26 @@ class _MapViewState extends State<MapView>
         // get the time and day of the week right now
         DateTime rightNow = DateTime.now();
         int dayOfTheWeekNow = rightNow.weekday;
-                    TimeOfDay timeNow = TimeOfDay.fromDateTime(rightNow);
+        TimeOfDay timeNow = TimeOfDay.fromDateTime(rightNow);
 
         // TODO: fix this mess later
         // if it's monday (which is enum == 1, tuesday is == 2...) today,
         // then look for open and close info for monday on the StoreInfo object
         if (dayOfTheWeekNow == 1) {
+          // if the open time is for anyday is set to 0, that means the store is closed that day.
+          // just remove the marker straightaway
           if (storeToEvaluateForOpenOrClosed.mondayOpenTimeOnly.hour != 0) {
             // this store has a monday open time, get it and compare to time right now
 
             // what time is now, according to the device?
 
-
             // if the timenow is **after the time the store opens...
             // and if the time now is **before the time the store closes...
-            if ((toDouble(storeToEvaluateForOpenOrClosed.mondayOpenTimeOnly) <= toDouble(timeNow)) &&
-                ((toDouble(storeToEvaluateForOpenOrClosed.mondayCloseTimeOnly) >= toDouble(timeNow)))) {
+            if ((toDouble(storeToEvaluateForOpenOrClosed.mondayOpenTimeOnly) <=
+                    toDouble(timeNow)) &&
+                ((toDouble(
+                        storeToEvaluateForOpenOrClosed.mondayCloseTimeOnly) >=
+                    toDouble(timeNow)))) {
               // we are open, do nothing, leave the marker on the map display
             } else {
               // we are closed.  add this store marker to the list of markers to remove from the map and...
@@ -344,17 +315,20 @@ class _MapViewState extends State<MapView>
               continue;
             }
           }
+        } else {
+          markersToRemove.add(marker);
+          continue;
         }
-
         if (dayOfTheWeekNow == 2) // tuesday
         {
           if (storeToEvaluateForOpenOrClosed.tuesdayOpenTimeOnly.hour != 0) {
             // this store has a monday open time, get it and compare to time right now
 
-
-
-            if ((toDouble(storeToEvaluateForOpenOrClosed.tuesdayOpenTimeOnly) <= toDouble(timeNow)) &&
-                ((toDouble(storeToEvaluateForOpenOrClosed.tuesdayCloseTimeOnly) >= toDouble(timeNow)))) {
+            if ((toDouble(storeToEvaluateForOpenOrClosed.tuesdayOpenTimeOnly) <=
+                    toDouble(timeNow)) &&
+                ((toDouble(
+                        storeToEvaluateForOpenOrClosed.tuesdayCloseTimeOnly) >=
+                    toDouble(timeNow)))) {
               // store is open!
             } else {
               // store is closed.  add marker to list of markers to remove and exit loop for this store.
@@ -362,18 +336,22 @@ class _MapViewState extends State<MapView>
               continue;
             }
           }
+        } else {
+          markersToRemove.add(marker);
+          continue;
         }
 
         if (dayOfTheWeekNow == 3) // wed
         {
-          if (storeToEvaluateForOpenOrClosed.wednesdayOpenTimeOnly.hour !=
-              0) {
+          if (storeToEvaluateForOpenOrClosed.wednesdayOpenTimeOnly.hour != 0) {
             // this store has a monday open time, get it and compare to time right now
 
-
-
-            if ((toDouble(storeToEvaluateForOpenOrClosed.wednesdayOpenTimeOnly) <= toDouble(timeNow)) &&
-                ((toDouble(storeToEvaluateForOpenOrClosed.wednesdayCloseTimeOnly) >= toDouble(timeNow)))) {
+            if ((toDouble(
+                        storeToEvaluateForOpenOrClosed.wednesdayOpenTimeOnly) <=
+                    toDouble(timeNow)) &&
+                ((toDouble(storeToEvaluateForOpenOrClosed
+                        .wednesdayCloseTimeOnly) >=
+                    toDouble(timeNow)))) {
               // store is open!
             } else {
               // store is closed.  add marker to list of markers to remove and exit loop for this store.
@@ -381,6 +359,9 @@ class _MapViewState extends State<MapView>
               continue;
             }
           }
+        } else {
+          markersToRemove.add(marker);
+          continue;
         }
 
         if (dayOfTheWeekNow == 4) // thursday
@@ -388,13 +369,12 @@ class _MapViewState extends State<MapView>
           if (storeToEvaluateForOpenOrClosed.thursdayOpenTimeOnly.hour != 0) {
             // this store has a monday open time, get it and compare to time right now
 
-
-          
-
- 
-
-            if ((toDouble(storeToEvaluateForOpenOrClosed.thursdayOpenTimeOnly) <= toDouble(timeNow)) &&
-                ((toDouble(storeToEvaluateForOpenOrClosed.thursdayCloseTimeOnly) >= toDouble(timeNow)))) {
+            if ((toDouble(
+                        storeToEvaluateForOpenOrClosed.thursdayOpenTimeOnly) <=
+                    toDouble(timeNow)) &&
+                ((toDouble(
+                        storeToEvaluateForOpenOrClosed.thursdayCloseTimeOnly) >=
+                    toDouble(timeNow)))) {
               // store is open!
             } else {
               // store is closed.  add marker to list of markers to remove and exit loop for this store.
@@ -402,18 +382,20 @@ class _MapViewState extends State<MapView>
               continue;
             }
           }
+        } else {
+          markersToRemove.add(marker);
+          continue;
         }
-
         if (dayOfTheWeekNow == 5) // friday
         {
           if (storeToEvaluateForOpenOrClosed.fridayOpenTimeOnly.hour != 0) {
             // this store has a monday open time, get it and compare to time right now
 
-
-
-
-            if ((toDouble(storeToEvaluateForOpenOrClosed.fridayOpenTimeOnly) <= toDouble(timeNow)) &&
-                ((toDouble(storeToEvaluateForOpenOrClosed.fridayCloseTimeOnly) >= toDouble(timeNow)))) {
+            if ((toDouble(storeToEvaluateForOpenOrClosed.fridayOpenTimeOnly) <=
+                    toDouble(timeNow)) &&
+                ((toDouble(
+                        storeToEvaluateForOpenOrClosed.fridayCloseTimeOnly) >=
+                    toDouble(timeNow)))) {
               // store is open!
             } else {
               // store is closed.  add marker to list of markers to remove and exit loop for this store.
@@ -421,18 +403,21 @@ class _MapViewState extends State<MapView>
               continue;
             }
           }
+        } else {
+          markersToRemove.add(marker);
+          continue;
         }
-
         if (dayOfTheWeekNow == 6) // saturday
         {
           if (storeToEvaluateForOpenOrClosed.saturdayOpenTimeOnly.hour != 0) {
             // this store has a monday open time, get it and compare to time right now
 
-          
- 
-
-            if ((toDouble(storeToEvaluateForOpenOrClosed.saturdayOpenTimeOnly) <= toDouble(timeNow)) &&
-                ((toDouble(storeToEvaluateForOpenOrClosed.saturdayCloseTimeOnly) >= toDouble(timeNow)))) {
+            if ((toDouble(
+                        storeToEvaluateForOpenOrClosed.saturdayOpenTimeOnly) <=
+                    toDouble(timeNow)) &&
+                ((toDouble(
+                        storeToEvaluateForOpenOrClosed.saturdayCloseTimeOnly) >=
+                    toDouble(timeNow)))) {
               // store is open!
             } else {
               // store is closed.  add marker to list of markers to remove and exit loop for this store.
@@ -440,6 +425,9 @@ class _MapViewState extends State<MapView>
               continue;
             }
           }
+        } else {
+          markersToRemove.add(marker);
+          continue;
         }
 
         if (dayOfTheWeekNow == 7) // sunday
@@ -447,22 +435,23 @@ class _MapViewState extends State<MapView>
           if (storeToEvaluateForOpenOrClosed.sundayOpenTimeOnly.hour != 0) {
             // this store has a monday open time, get it and compare to time right now
 
-         
-
-      
-
-            if ((toDouble(storeToEvaluateForOpenOrClosed.sundayOpenTimeOnly) <= toDouble(timeNow)) &&
-                ((toDouble(storeToEvaluateForOpenOrClosed.sundayCloseTimeOnly) >= toDouble(timeNow)))) {
+            if ((toDouble(storeToEvaluateForOpenOrClosed.sundayOpenTimeOnly) <=
+                    toDouble(timeNow)) &&
+                ((toDouble(
+                        storeToEvaluateForOpenOrClosed.sundayCloseTimeOnly) >=
+                    toDouble(timeNow)))) {
               // store is open!
             } else {
               // store is closed.  add marker to list of markers to remove and exit loop for this store.
               markersToRemove.add(marker);
               continue;
             }
+          } else {
+            markersToRemove.add(marker);
+            continue;
           }
         }
 
-    
         // if ((marker.markerId.value == 'Now and Again') ||
         //     (marker.markerId.value == 'A Wreath of Franklin')) {
         //   print('keeping this one' + marker.markerId.value);
@@ -501,7 +490,6 @@ class _MapViewState extends State<MapView>
     //http://flutterdevs.com/blog/google-maps-in-flutter/
     return Stack(children: <Widget>[
       GoogleMap(
-        
         myLocationButtonEnabled:
             true, // the target-looking button that puts the blue dot on the map indicating your position
         myLocationEnabled:
@@ -523,8 +511,8 @@ class _MapViewState extends State<MapView>
           alignment: Alignment.topLeft,
           child: ToggleButtons(
             children: <Widget>[
-             // Icon(Icons.remove_shopping_cart), // just one toggle button...
-             FaIcon(FontAwesomeIcons.storeAltSlash)
+              // Icon(Icons.remove_shopping_cart), // just one toggle button...
+              FaIcon(FontAwesomeIcons.storeAltSlash)
             ],
             onPressed: (int index) {
               // if you press it, we change the state of the button and that calls filterstoremarkerstoonly~.
