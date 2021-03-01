@@ -33,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
 
     // TODO: I don't think I am handling this future/async correctly, call with await instead?
-    loadStore().then((value) => null);
+    //loadStore().then((value) => null);
 
     // poor man splash screen
     // https://www.geeksforgeeks.org/splash-screen-in-flutter/

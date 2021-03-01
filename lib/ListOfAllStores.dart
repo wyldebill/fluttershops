@@ -28,16 +28,20 @@ class _StoreListState extends State<ListOfAllStores>
     loadStore().then((value) {
       listOfStores = value.stores;
       setState(() {
-        listOfStores.forEach((StoreInfo store) {});
+        listOfStores.forEach((StoreInfo store) {
+
+        });
       });
     });
+
+
   }
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return ListView.builder(     // TODO: this needs to be a futurebuilder
         //padding: const EdgeInsets.all(10),
-        itemCount: listOfStores.length,  // this listview has a static number of items in it
+        itemCount: listOfStores == null ? 0 : listOfStores.length,  // this listview has a static number of items in it
         itemBuilder: (BuildContext context, int index) {
           StoreInfo storeToShow = listOfStores[index];
           
