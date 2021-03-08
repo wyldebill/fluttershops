@@ -44,7 +44,7 @@ class StoreInfo {
     this.latitude,
     this.longitude,
     this.description,
-    this.website,
+  //  this.website,
     this.phone,
     this.mondayHour,
     this.mondayMinute,
@@ -87,7 +87,7 @@ class StoreInfo {
   String latitude;
   String longitude;
   String description;
-  String website;
+ // String website;
   String phone;
   //List<DaysOfTheWeekStoreIsOpen> daysOfTheWeekStoreIsOpen;
   int mondayHour;
@@ -136,7 +136,7 @@ class StoreInfo {
         latitude: json["latitude"],
         longitude: json["longitude"],
         description: json["description"],
-        website: json["website"],
+      //  website: json["website"],
         phone: json["phone"],
 
         // daysOfTheWeekStoreIsOpen: List<DaysOfTheWeekStoreIsOpen>.from(
@@ -229,7 +229,7 @@ class StoreInfo {
         "latitude": latitude,
         "longitude": longitude,
         "description": description,
-        "website": website,
+     //   "website": website,
         "phone": phone,
         // "daysOfTheWeekStoreIsOpen":
         //     List<dynamic>.from(daysOfTheWeekStoreIsOpen.map((x) => x.toJson())),
