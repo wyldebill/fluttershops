@@ -4,6 +4,7 @@
 
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class StoresList {
@@ -79,6 +80,7 @@ class StoreInfo {
     this.sundayCloseTime,
   });
 
+ /*final*/  DocumentReference reference;
   String id;
   String name;
   String tagline;
@@ -248,6 +250,18 @@ class StoreInfo {
         "saturdayCloseTime": saturdayCloseTime.toIso8601String(),
         "sundayCloseTime": sundayCloseTime.toIso8601String(),
       };
+
+
+
+ StoreInfo.fromMap(Map<String, dynamic> map, {this.reference})
+     : assert(map['name'] != null),
+       assert(map['tagline'] != null),
+       id = map['id'],
+       name = map['name'],
+       tagline = map['tagline'];
+
+ StoreInfo.fromSnapshot(DocumentSnapshot snapshot)
+     : this.fromMap(snapshot.data, reference: snapshot.reference);
 }
 
 /* class DaysOfTheWeekStoreIsOpen {
