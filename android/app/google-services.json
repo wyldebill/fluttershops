@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "735637018628",
+    "project_id": "brgfirebase",
+    "storage_bucket": "brgfirebase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:735637018628:android:accec2e52cc8bb47167d51",
+        "android_client_info": {
+          "package_name": "com.v3.buffaloretailgroupmap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "735637018628-pfmntjm52dpp95lohnmp6vmgs86pkfed.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYFK05pLTqGnAqpUvNaEJxp82YtXVq3nw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "735637018628-pfmntjm52dpp95lohnmp6vmgs86pkfed.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "735637018628-gf98lbj6s6g1gbih60i9sk833pkgq1gn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.buffaloretailgroupmaps"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -13,6 +13,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:buffaloretailgroupmap/HelpView.dart';
 
+import 'FireStoreTest.dart';
+
 // todo: give credit for icon from
 // https://www.vecteezy.com/vector-art/552281-geo-location-pin-vector-icon
 
@@ -34,15 +36,17 @@ class MyApp extends StatelessWidget {
 
       // we will have 2 options in this app. the map display and the listview display
       home: DefaultTabController(
-        length: 3,
+        length: 4,
         child: Scaffold(
           appBar: AppBar(
             title: new Text('Buffalo Retail Group'),
             bottom: TabBar(
               tabs: [
+                
                 Tab(icon: Icon(Icons.list)),
                 Tab(icon: Icon(Icons.map)),
-                Tab(icon: Icon(Icons.help_center))
+                Tab(icon: Icon(Icons.help_center)),
+                Tab(icon: Icon(Icons.local_fire_department_sharp)),
               ],
             ),
           ),
@@ -51,10 +55,12 @@ class MyApp extends StatelessWidget {
             child: TabBarView(
               physics: NeverScrollableScrollPhysics(),
               children: [
+                
                 // each tab needs an entry here
                 ListOfAllStores(), // listview
                 MapView(), // map
                 HelpView(),
+                FireStoreTest(),
               ],
             ),
           ),
