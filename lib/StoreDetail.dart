@@ -56,23 +56,23 @@ class StoreDetail extends StatelessWidget {
                           fontSize: 15,
                           fontWeight: FontWeight.normal),
                     ),
-                  Divider(color: Colors.white),
-                    Text(
-                      //store website
-                      _storeDetail.website,
-                      style: TextStyle(
-                          //color: Colors.white,
-                          fontSize: 15,
-                          fontWeight: FontWeight.normal),
-                    ),
-                    Text(
-                      //store facebook link
-                      'Facebook link ?',
-                      style: TextStyle(
-                          //color: Colors.white,
-                          fontSize: 15,
-                          fontWeight: FontWeight.normal),
-                    ),
+                  // Divider(color: Colors.white),
+                  //   Text(
+                  //     //store website
+                  //     _storeDetail.website,
+                  //     style: TextStyle(
+                  //         //color: Colors.white,
+                  //         fontSize: 15,
+                  //         fontWeight: FontWeight.normal),
+                  //   ),
+                    // Text(
+                    //   //store facebook link
+                    //   'Facebook link ?',
+                    //   style: TextStyle(
+                    //       //color: Colors.white,
+                    //       fontSize: 15,
+                    //       fontWeight: FontWeight.normal),
+                    // ),
                    Divider(color: Colors.white),
 
                     // todo: need a occasional marker/indicator too?
