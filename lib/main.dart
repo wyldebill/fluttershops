@@ -15,17 +15,16 @@ import 'package:buffaloretailgroupmap/HelpView.dart';
 
 import 'FireStoreTest.dart';
 
-// todo: give credit for icon from
-// https://www.vecteezy.com/vector-art/552281-geo-location-pin-vector-icon
 
 void main() {
   runApp(NewSplash());
 }
 
-// this the main app, loaded after the splash screen is completed.
+// this is the main app, loaded after the splash screen is completed.
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
     // material app has a title and home property
     return MaterialApp(
       title: "Buffalo", //?? what is this even for?
@@ -34,10 +33,12 @@ class MyApp extends StatelessWidget {
       ),
       //colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.pink)),
 
-      // we will have 2 options in this app. the map display and the listview display
+      // we will have 2 main options/tabs in this app. the map display and the listview display
       home: DefaultTabController(
         length: 4,
         child: Scaffold(
+
+          // scaffold has a appbar and a body
           appBar: AppBar(
             title: new Text('Buffalo Retail Group'),
             bottom: TabBar(
@@ -51,6 +52,8 @@ class MyApp extends StatelessWidget {
             ),
           ),
           //bottomNavigationBar: makeBottom,
+
+          // safearea is for iphones with notch
           body: SafeArea(
             child: TabBarView(
               physics: NeverScrollableScrollPhysics(),
@@ -61,6 +64,7 @@ class MyApp extends StatelessWidget {
                 MapView(), // map
                 HelpView(),
                 FireStoreTest(),
+                
               ],
             ),
           ),
@@ -116,7 +120,7 @@ class _MapViewState extends State<MapView>
   // using this dialog to tell user about gps, location services status. they may need to turn it on manually.
   void _showAlertDialog(String message) {
     // set up the button
-    Widget okButton = FlatButton(
+    Widget okButton = TextButton(
       child: Text('Ok'),
       onPressed: () {
         Navigator.pop(_myBuildContext);
@@ -176,7 +180,9 @@ class _MapViewState extends State<MapView>
       // flutter will be tracking changes to the state, which is the listOfStores, and redraw dependent widgets when it detects changes.
       setState(() {
         listOfStores.forEach((StoreInfo store) {
+
           _markers.add(Marker(
+
               markerId: MarkerId(store.id),
               position: LatLng(
                   double.parse(store.latitude), double.parse(store.longitude)),
@@ -184,6 +190,7 @@ class _MapViewState extends State<MapView>
                   // infowindow is what is displayed when user taps a marker on the map
                   title: store.name,
                   snippet: store.tagline,
+
                   onTap: () {
                     // tapping the infowindow will navigate to the detail page for the marker/store
                     Navigator.push(
@@ -202,10 +209,7 @@ class _MapViewState extends State<MapView>
       });
     });
 
-    // _getThingsOnStartup().then((value){
-    //   print('Async done');
-    // });
-
+   
     // let's do some checkups here
     // is the device location service enabled?
     //_checkDeviceLocationServiceStatus().then((value) => null);
@@ -248,21 +252,7 @@ class _MapViewState extends State<MapView>
     final jsonResponse = json.decode(jsonString);
     StoresList listOfStores = StoresList.fromJson(jsonResponse);
     return listOfStores;
-    //StoreInfo store = new StoreInfo.fromJson(jsonResponse);
-
-    //DateTime parsedDt = (listOfStores.stores[1].mondayOpenTime);
-    //DateTime rightNow = DateTime.now();
-    //print(rightNow.weekday);
-
-    // print(parsedDt.year); // 4
-    // print(parsedDt.weekday); // 4
-    // print(parsedDt.month); // 4
-    // print(parsedDt.day); // 2
-    // print(parsedDt.hour); // 15
-    // print(parsedDt.minute); // 21
-    // print(parsedDt.second); // 49
-
-    //print(listOfStores.stores[1].name);
+   
   }
 
   // pressing the shopping cart button on the ui, causes this method to be called
@@ -271,9 +261,7 @@ class _MapViewState extends State<MapView>
     Set<Marker> markersToRemove = {};
 
     if (filterClosedShops == true) {
-      Scaffold.of(context).showSnackBar(SnackBar(
-        content: Text("Removed shops that are currently closed."),
-      ));
+    
 
       for (Marker marker in _markers) {
         // TODO:  need to figure out how to look at the store list
@@ -457,12 +445,7 @@ class _MapViewState extends State<MapView>
           }
         }
 
-        // if ((marker.markerId.value == 'Now and Again') ||
-        //     (marker.markerId.value == 'A Wreath of Franklin')) {
-        //   print('keeping this one' + marker.markerId.value);
-        // } else {
-        //   markersToRemove.add(marker);
-        // }
+       
       }
 
       // remove the markers in the markersToRemove list from the markers list...
@@ -473,6 +456,11 @@ class _MapViewState extends State<MapView>
           _markers.remove(element);
         });
       });
+
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text("Removed shops that are currently closed."),
+
+      ));
     } else {
       // user wants to see all stores even those that are closed right now.  this is the defaul state of the map markers.
       setState(() {

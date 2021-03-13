@@ -26,7 +26,8 @@ class StoreDetail extends StatelessWidget {
                     Image.asset(
                       // hero image of storefront
 
-                     _storeDetail.imageName,
+                     //_storeDetail.imageName,
+                     'biggs.jpeg',
                      height: 200,
                       width: double.infinity,
                       fit: BoxFit.fitWidth,
