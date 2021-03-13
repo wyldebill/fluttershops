@@ -88,6 +88,10 @@ class StoreDetail extends StatelessWidget {
 
                         // border: TableBorder.all(),
                         children: [
+
+                          // each row of store hours has 3 child widgets
+                          // <day of week> <Open time/Closed>  <Close time/Closed>
+
                           TableRow(children: [
                             Text('Monday',
                                 textAlign: TextAlign.left,
@@ -96,6 +100,10 @@ class StoreDetail extends StatelessWidget {
                                     fontSize: 15,
                                     fontWeight: FontWeight.normal)),
                             Text(
+
+                              //  taking a shortcut here
+                              // if the hour is 0, i know the time is illegal - store is closed.  
+                              // i don't check the minutes if the hour is 0.  
                                 _storeDetail.mondayOpenTimeOnly.hour == 0
                                     ? "Closed"
                                     : _storeDetail.mondayOpenTimeOnly
