@@ -67,7 +67,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
 
     // man I hate parsing dates in any language....
-    DateTime parsedDt = (listOfStores.stores[1].mondayOpenTime);
+   // DateTime parsedDt = (listOfStores.stores[1].mondayOpenTime);
     
     // examples of date/time parsing in dart
     //DateTime rightNow = DateTime.now();
