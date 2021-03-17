@@ -12,11 +12,7 @@ class _FireStoreTestState extends State<FireStoreTest> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-
-      // streambuilder needs a stream to listen to for changes....
       stream: Firestore.instance.collection('stores').snapshots(),
-
-      // streambuilder, automatically provides the 'data' from the stream in the snapshot variable
       builder: (context, snapshot) {
 
      // no data yet, display a progress indicator
@@ -29,7 +25,6 @@ class _FireStoreTestState extends State<FireStoreTest> {
     // also should watch for error in the stream
     if (snapshot.hasError)
     {
-      return Center(child: SizedBox(width: 300, height: 300, child: Text('Error')));
     }
 
     // we have data in the snapshot, let's rebuild the ui!
