@@ -22,7 +22,18 @@ class StoresList {
     // now for each store in the array of stores, call the StoreInfo.fromJson
     // to hyrdrate a StoreInfo object...
     // then call to list on the results
-    newStoresList = json.map((s) => StoreInfo.fromJson(s)).toList();
+
+
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // fix this later.  what named ctor to use here?    newStoresList = json.map((s) => StoreInfo.fromJson(s)).toList();
+
+
+
+
+
+
 
     // the StoresList is really a thin wrapper around a list<> of StoreInfo
     return new StoresList(
@@ -31,7 +42,7 @@ class StoresList {
   }
 }
 
-StoreInfo storeInfoFromJson(String str) => StoreInfo.fromJson(json.decode(str));
+//StoreInfo storeInfoFromJson(String str) => StoreInfo.fromJson(json.decode(str));
 
 String storeInfoToJson(StoreInfo data) => json.encode(data.toJson());
 
@@ -100,70 +111,70 @@ class StoreInfo {
   TimeOfDay sundayCloseTimeOnly;
 
 
-  factory StoreInfo.fromJson(Map<String, dynamic> json) => StoreInfo(
-        id: json["id"],
-        name: json["name"],
-        tagline: json["tagline"],
-        imageName: "assets/images/" + json["imageName"],
-        distance: json["distance"],
-        latitude: json["latitude"],
-        longitude: json["longitude"],
-        description: json["description"],
-      //  website: json["website"],
-        phone: json["phone"],
+  // factory StoreInfo.fromJson(Map<String, dynamic> json) => StoreInfo(
+  //       id: json["id"],
+  //       name: json["name"],
+  //       tagline: json["tagline"],
+  //       imageName: "assets/images/" + json["imageName"],
+  //       distance: json["distance"],
+  //       latitude: json["latitude"],
+  //       longitude: json["longitude"],
+  //       description: json["description"],
+  //     //  website: json["website"],
+  //       phone: json["phone"],
 
        
-        mondayOpenTimeOnly: TimeOfDay(
-            hour: int.parse("${json["mondayHour"] ?? '0'}"),
-            minute: int.parse("${json["mondayMinute"] ?? '0'}")),
-        mondayCloseTimeOnly: TimeOfDay(
-            hour: int.parse("${json["mondayCloseHour"] ?? '0'}"),
-            minute: int.parse("${json["mondayCloseMinute"] ?? '0'}")),
+  //       mondayOpenTimeOnly: TimeOfDay(
+  //           hour:map["mondayHour"] ?? 0,
+  //           minute:map["mondayMinute"] ?? 0);
+  //       mondayCloseTimeOnly: TimeOfDay(
+  //           hour:map["mondayCloseHour"] ?? 0,
+  //           minute:map["mondayCloseMinute"] ?? 0);
 
-        tuesdayOpenTimeOnly: TimeOfDay(
-            hour: int.parse("${json["tuesdayHour"] ?? '0'}"),
-            minute: int.parse("${json["tuesdayMinute"] ?? '0'}")),
-        tuesdayCloseTimeOnly: TimeOfDay(
-            hour: int.parse("${json["tuesdayCloseHour"] ?? '0'}"),
-            minute: int.parse("${json["tuesdayCloseMinute"] ?? '0'}")),
+  //       tuesdayOpenTimeOnly: TimeOfDay(
+  //           hour:map["tuesdayHour"] ?? 0,
+  //           minute:map["tuesdayMinute"] ?? 0);
+  //       tuesdayCloseTimeOnly: TimeOfDay(
+  //           hour:map["tuesdayCloseHour"] ?? 0,
+  //           minute:map["tuesdayCloseMinute"] ?? 0);
 
-        wednesdayOpenTimeOnly: TimeOfDay(
-            hour: int.parse("${json["wednesdayHour"] ?? '0'}"),
-            minute: int.parse("${json["wednesdayMinute"] ?? '0'}")),
-        wednesdayCloseTimeOnly: TimeOfDay(
-            hour: int.parse("${json["wednesdayCloseHour"] ?? '0'}"),
-            minute: int.parse("${json["wednesdayCloseMinute"] ?? '0'}")),
+  //       wednesdayOpenTimeOnly: TimeOfDay(
+  //           hour:map["wednesdayHour"] ?? 0,
+  //           minute:map["wednesdayMinute"] ?? 0);
+  //       wednesdayCloseTimeOnly: TimeOfDay(
+  //           hour:map["wednesdayCloseHour"] ?? 0,
+  //           minute:map["wednesdayCloseMinute"] ?? 0);
 
-        thursdayOpenTimeOnly: TimeOfDay(
-            hour: int.parse("${json["thursdayHour"] ?? '0'}"),
-            minute: int.parse("${json["thursdayMinute"] ?? '0'}")),
-        thursdayCloseTimeOnly: TimeOfDay(
-            hour: int.parse("${json["thursdayCloseHour"] ?? '0'}"),
-            minute: int.parse("${json["thursdayCloseMinute"] ?? '0'}")),
+  //       thursdayOpenTimeOnly: TimeOfDay(
+  //           hour:map["thursdayHour"] ?? 0,
+  //           minute:map["thursdayMinute"] ?? 0);
+  //       thursdayCloseTimeOnly: TimeOfDay(
+  //           hour:map["thursdayCloseHour"] ?? 0,
+  //           minute:map["thursdayCloseMinute"] ?? 0);
 
-        fridayOpenTimeOnly: TimeOfDay(
-            hour: int.parse("${json["fridayHour"] ?? '0'}"),
-            minute: int.parse("${json["fridayMinute"] ?? '0'}")),
-        fridayCloseTimeOnly: TimeOfDay(
-            hour: int.parse("${json["fridayCloseHour"] ?? '0'}"),
-            minute: int.parse("${json["fridayCloseMinute"] ?? '0'}")),
+  //       fridayOpenTimeOnly: TimeOfDay(
+  //           hour:map["fridayHour"] ?? 0,
+  //           minute:map["fridayMinute"] ?? 0);
+  //       fridayCloseTimeOnly: TimeOfDay(
+  //           hour:map["fridayCloseHour"] ?? 0,
+  //           minute:map["fridayCloseMinute"] ?? 0);
 
-        saturdayOpenTimeOnly: TimeOfDay(
-            hour: int.parse("${json["saturdayHour"] ?? '0'}"),
-            minute: int.parse("${json["saturdayMinute"] ?? '0'}")),
-        saturdayCloseTimeOnly: TimeOfDay(
-            hour: int.parse("${json["saturdayCloseHour"] ?? '0'}"),
-            minute: int.parse("${json["saturdayCloseMinute"] ?? '0'}")),
+  //       saturdayOpenTimeOnly: TimeOfDay(
+  //           hour:map["saturdayHour"] ?? 0,
+  //           minute:map["saturdayMinute"] ?? 0);
+  //       saturdayCloseTimeOnly: TimeOfDay(
+  //           hour:map["saturdayCloseHour"] ?? 0,
+  //           minute:map["saturdayCloseMinute"] ?? 0);
 
-        sundayOpenTimeOnly: TimeOfDay(
-            hour: int.parse("${json["sundayHour"] ?? '0'}"),
-            minute: int.parse("${json["sundayMinute"] ?? '0'}")),
-        sundayCloseTimeOnly: TimeOfDay(
-            hour: int.parse("${json["sundayCloseHour"] ?? '0'}"),
-            minute: int.parse("${json["sundayCloseMinute"] ?? '0'}")),
+  //       sundayOpenTimeOnly: TimeOfDay(
+  //           hour:map["sundayHour"] ?? 0,
+  //           minute:map["sundayMinute"] ?? 0);
+  //       sundayCloseTimeOnly: TimeOfDay(
+  //           hour:map["sundayCloseHour"] ?? 0,
+  //           minute:map["sundayCloseMinute"] ?? 0);
 
     
-      );
+  //     );
 
   Map<String, dynamic> toJson() => {
         "id": id,
@@ -180,15 +191,66 @@ class StoreInfo {
 
 
 
- StoreInfo.fromMap(Map<String, dynamic> map, {this.reference})
-     : assert(map['name'] != null),
-       assert(map['tagline'] != null),
-       id = map['id'],
-       name = map['name'],
+ StoreInfo.fromMap(Map<String, dynamic> map,/*  {this.reference} */)
+    {
+       id = map['id'];
+       name = map['name'];
        tagline = map['tagline'];
+       
+       
+        mondayOpenTimeOnly= TimeOfDay(
+            hour: map["mondayHour"] ?? 0,
+            minute: map["mondayMinute"] ?? 0);
+
+        mondayCloseTimeOnly= TimeOfDay(
+            hour: map["mondayCloseHour"] ?? 0,
+            minute: map["mondayCloseMinute"] ?? 0);
+
+        tuesdayOpenTimeOnly= TimeOfDay(
+            hour: map["tuesdayHour"] ?? 0,
+            minute: map["tuesdayMinute"] ?? 0);
+        tuesdayCloseTimeOnly= TimeOfDay(
+            hour: map["tuesdayCloseHour"] ?? 0,
+            minute: map["tuesdayCloseMinute"] ?? 0);
+
+        wednesdayOpenTimeOnly= TimeOfDay(
+            hour: map["wednesdayHour"] ?? 0,
+            minute:map["wednesdayMinute"] ?? 0);
+        wednesdayCloseTimeOnly= TimeOfDay(
+            hour:map["wednesdayCloseHour"] ?? 0,
+            minute:map["wednesdayCloseMinute"] ?? 0);
+
+        thursdayOpenTimeOnly= TimeOfDay(
+            hour:map["thursdayHour"] ?? 0,
+            minute:map["thursdayMinute"] ?? 0);
+        thursdayCloseTimeOnly= TimeOfDay(
+            hour:map["thursdayCloseHour"] ?? 0,
+            minute:map["thursdayCloseMinute"] ?? 0);
+
+        fridayOpenTimeOnly= TimeOfDay(
+            hour:map["fridayHour"] ?? 0,
+            minute:map["fridayMinute"] ?? 0);
+        fridayCloseTimeOnly= TimeOfDay(
+            hour:map["fridayCloseHour"] ?? 0,
+            minute:map["fridayCloseMinute"] ?? 0);
+
+        saturdayOpenTimeOnly= TimeOfDay(
+            hour:map["saturdayHour"] ?? 0,
+            minute:map["saturdayMinute"] ?? 0);
+        saturdayCloseTimeOnly= TimeOfDay(
+            hour:map["saturdayCloseHour"] ?? 0,
+            minute:map["saturdayCloseMinute"] ?? 0);
+
+        sundayOpenTimeOnly= TimeOfDay(
+            hour:map["sundayHour"] ?? 0,
+            minute:map["sundayMinute"] ?? 0);
+        sundayCloseTimeOnly= TimeOfDay(
+            hour:map["sundayCloseHour"] ?? 0,
+            minute:map["sundayCloseMinute"] ?? 0);
+}
 
  StoreInfo.fromSnapshot(DocumentSnapshot snapshot)
-     : this.fromMap(snapshot.data, reference: snapshot.reference);
+     : this.fromMap(snapshot.data/* , reference: snapshot.reference */);
 }
 
 

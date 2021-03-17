@@ -26,14 +26,14 @@ class _StoreListState extends State<ListOfAllStores>
   void initState() {
     super.initState();
 
-    loadStore().then((value) {
-      listOfStores = value.stores;
-      setState(() {
-        listOfStores.forEach((StoreInfo store) {
+    // loadStore().then((value) {
+    //   listOfStores = value.stores;
+    //   setState(() {
+    //     listOfStores.forEach((StoreInfo store) {
 
-        });
-      });
-    });
+    //     });
+    //   });
+    // });
 
 
   }
@@ -41,6 +41,8 @@ class _StoreListState extends State<ListOfAllStores>
   @override
   Widget build(BuildContext context)
   {
+    super.build(context);
+    
     return StreamBuilder<QuerySnapshot>(
       stream: Firestore.instance.collection('stores').snapshots(),
       builder: (context, snapshot) {
@@ -69,15 +71,16 @@ class _StoreListState extends State<ListOfAllStores>
   Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
     final record = StoreInfo.fromSnapshot(data);
 
-     return Padding(
-     key: ValueKey(record.id),
-     padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-     child: Container(
-       decoration: BoxDecoration(
-         border: Border.all(color: Colors.grey),
-         borderRadius: BorderRadius.circular(5.0),
-       ),
-       child: ListTile(
+     return //Padding(
+     //key: ValueKey(record.id),
+    // padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 0.0),
+    //  child: Container(
+    //    decoration: BoxDecoration(
+    //      border: Border.all(color: Colors.grey),
+    //      borderRadius: BorderRadius.circular(5.0),
+    //    ),
+       //child: 
+       ListTile(
          title: Text(record.name),
          trailing: Text(record.tagline.toString()),
          onTap: () {
@@ -89,9 +92,9 @@ class _StoreListState extends State<ListOfAllStores>
                     ));
          }
          //onTap: () => record.reference.updateData({'votes': record.votes + 1}),
-       ),
-     ),
-   );
+       //),
+     );
+   
   }
   // Widget build(BuildContext context) {
   //   return ListView.builder(     // TODO: this needs to be a futurebuilder
