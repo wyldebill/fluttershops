@@ -18,13 +18,13 @@ class _FireStoreTestState extends State<FireStoreTest> {
      // no data yet, display a progress indicator
      if (!snapshot.hasData) {
        print('no data yet...');
-      return CircularProgressIndicator();
+      return Center(child: 
+        SizedBox( width: 100, height: 100, child: CircularProgressIndicator()));
      }
 
     // also should watch for error in the stream
     if (snapshot.hasError)
     {
-
     }
 
     // we have data in the snapshot, let's rebuild the ui!

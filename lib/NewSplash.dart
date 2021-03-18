@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:buffaloretailgroupmap/main.dart';
 import 'package:splashscreen/splashscreen.dart';
 
+
+// this is a splashscreen using the dart splashscreen package, but it doesn't do anyting while it 'loads'.
+// it should load things as it displays the spinner
 class NewSplash extends StatefulWidget {
   @override
   _NewSplashState createState() => new _NewSplashState();
@@ -29,20 +32,3 @@ class _NewSplashState extends State<NewSplash> {
     );
   }
 }
-
-// class AfterSplash extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return new Scaffold(
-//       appBar: new AppBar(
-//           title: new Text("Welcome In SplashScreen Package"),
-//           automaticallyImplyLeading: false),
-//       body: new Center(
-//         child: new Text(
-//           "Done!",
-//           style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 30.0),
-//         ),
-//       ),
-//     );
-//   }
-// }
