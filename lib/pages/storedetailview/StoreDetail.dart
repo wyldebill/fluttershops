@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:buffaloretailgroupmap/storeInfo.dart';
+import 'package:buffaloretailgroupmap/models/storeInfo.dart';
 
 
 class StoreDetail extends StatelessWidget {

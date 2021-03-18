@@ -1,80 +1,16 @@
-import 'dart:async';
-import 'dart:io' show Platform; // todo: what does the show keyword do?
-import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:flutter/services.dart' show rootBundle;
-import 'package:location_permissions/location_permissions.dart';
-import 'package:buffaloretailgroupmap/NewSplash.dart';
-import 'package:buffaloretailgroupmap/ListOfAllStores.dart';
-import 'package:buffaloretailgroupmap/StoreDetail.dart';
-import 'package:buffaloretailgroupmap/storeInfo.dart';
+
 import 'dart:convert';
+
+import 'package:buffaloretailgroupmap/models/storeInfo.dart';
+import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location_permissions/location_permissions.dart';
+import 'dart:io' show Platform;
+import 'package:flutter/services.dart' show rootBundle;  // todo: what does the show keyword do?
 
-import 'package:buffaloretailgroupmap/HelpView.dart';
+import '../storedetailview/StoreDetail.dart'; 
 
-import 'FireStoreTest.dart';
-
-
-void main() {
-  runApp(NewSplash());
-}
-
-// this is the main app, loaded after the splash screen is completed.
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-
-    // material app has a title and home property
-    return MaterialApp(
-      title: "Buffalo", //?? what is this even for?
-      theme: ThemeData(
-        primarySwatch: Colors.pink,
-      ),
-      //colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.pink)),
-
-      // we will have 2 main options/tabs in this app. the map display and the listview display
-      home: DefaultTabController(
-        length: 4,
-        child: Scaffold(
-
-          // scaffold has a appbar and a body
-          appBar: AppBar(
-            title: new Text('Buffalo Retail Group'),
-            bottom: TabBar(
-              tabs: [
-                
-                Tab(icon: Icon(Icons.list)),
-                Tab(icon: Icon(Icons.map)),
-                Tab(icon: Icon(Icons.help_center)),
-                Tab(icon: Icon(Icons.local_fire_department_sharp)),
-              ],
-            ),
-          ),
-          //bottomNavigationBar: makeBottom,
-
-          // safearea is for iphones with notch
-          body: SafeArea(
-            child: TabBarView(
-              physics: NeverScrollableScrollPhysics(),
-              children: [
-                
-                // each tab needs an entry here
-                ListOfAllStores(), // listview
-                MapView(), // map
-                HelpView(),
-                FireStoreTest(),
-                
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-// homeapp is the 'map' view part of this app. it hosts a google map display with markers
 class MapView extends StatefulWidget {
   @override
   _MapViewState createState() => _MapViewState();

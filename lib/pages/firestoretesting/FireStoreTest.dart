@@ -1,4 +1,4 @@
-import 'package:buffaloretailgroupmap/storeInfo.dart';
+import 'package:buffaloretailgroupmap/models/storeInfo.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
