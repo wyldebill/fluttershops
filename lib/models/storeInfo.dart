@@ -197,6 +197,8 @@ class StoreInfo {
        id = map['id'];
        name = map['name'];
        tagline = map['tagline'];
+       latitude = map['latitude'].toString();  // TODO: fix this and let it be a double
+       longitude = map['longitude'].toString();
        
        
         mondayOpenTimeOnly= TimeOfDay(

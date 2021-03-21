@@ -19,8 +19,8 @@ void main() {
     expect(find.text('Buffalo Retail Group'), findsOneWidget);
     expect(find.text('Biggs and Company'), findsNothing);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.map));
+    // Tap the '+' icon and trigger a frame. ilcsas00!
+    
     await tester.pump();
 
     // Verify that our counter has incremented.
