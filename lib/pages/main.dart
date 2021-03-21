@@ -6,7 +6,7 @@ import 'package:buffaloretailgroupmap/pages/allstoreslist/ListOfAllStores.dart';
 
 import 'package:buffaloretailgroupmap/pages/about/HelpView.dart';
 
-import 'pages/firestoretesting/FireStoreTest.dart';
+import 'firestoretesting/FireStoreTest.dart';
 
 
 void main() {
