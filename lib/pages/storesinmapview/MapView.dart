@@ -53,7 +53,7 @@ void _buildMarkers(BuildContext context, List<DocumentSnapshot> data ) {
             
              _markers.add(Marker(
 
-              markerId: MarkerId(snapshot.documentID),
+              markerId: MarkerId(snapshot.id),
               //position: LatLng(store.latitude, store.longitude),
               position: LatLng(
                   double.parse(store.latitude), double.parse(store.longitude)),
@@ -450,7 +450,7 @@ Widget build(BuildContext context) {
   _myBuildContext = context;
 
   return StreamBuilder<QuerySnapshot>(
-    stream:  Firestore.instance.collection('stores').snapshots(),
+    stream:  FirebaseFirestore.instance.collection('stores').snapshots(),
     builder: (context, snapshot) {
 
       //have to setup the markers before we render
@@ -463,7 +463,7 @@ Widget build(BuildContext context) {
         }
 
       
-        List<DocumentSnapshot> markersData = snapshot.data.documents;
+        List<DocumentSnapshot> markersData = snapshot.data.docs;
 
           _buildMarkers(context, markersData);
 

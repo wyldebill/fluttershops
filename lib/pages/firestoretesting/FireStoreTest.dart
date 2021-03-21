@@ -12,7 +12,7 @@ class _FireStoreTestState extends State<FireStoreTest> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: Firestore.instance.collection('stores').snapshots(),
+      stream: FirebaseFirestore.instance.collection('stores').snapshots(),
       builder: (context, snapshot) {
 
      // no data yet, display a progress indicator

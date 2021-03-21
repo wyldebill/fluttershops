@@ -5,6 +5,7 @@ import 'package:buffaloretailgroupmap/pages/storedetailview/StoreDetail.dart';
 import 'package:flutter/services.dart'
     show rootBundle; // TODO: what is rootbundle??
 import 'dart:convert';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class ListOfAllStores extends StatefulWidget {
   @override
@@ -24,6 +25,9 @@ class _StoreListState extends State<ListOfAllStores>
 
   @override
   void initState() {
+    firebase_storage.FirebaseStorage storage =
+  firebase_storage.FirebaseStorage.instance;
+
     super.initState();
 
     // loadStore().then((value) {
@@ -44,7 +48,7 @@ class _StoreListState extends State<ListOfAllStores>
     super.build(context);
     
     return StreamBuilder<QuerySnapshot>(
-      stream: Firestore.instance.collection('stores').snapshots(),
+      stream: FirebaseFirestore.instance.collection('stores').snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return CircularProgressIndicator();
@@ -55,7 +59,7 @@ class _StoreListState extends State<ListOfAllStores>
         }
 
       
-        return _buildList(context, snapshot.data.documents);
+        return _buildList(context, snapshot.data.docs);
         
       }
     );
