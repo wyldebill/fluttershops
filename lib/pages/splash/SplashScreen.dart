@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:buffaloretailgroupmap/pages/main.dart';
+import 'package:buffaloretailgroupmap/main.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:buffaloretailgroupmap/models/storeInfo.dart';
 import 'dart:convert';

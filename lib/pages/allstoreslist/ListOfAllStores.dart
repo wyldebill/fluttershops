@@ -82,7 +82,8 @@ class _StoreListState extends State<ListOfAllStores>
        //child: 
        ListTile(
          title: Text(record.name),
-         trailing: Text(record.tagline.toString()),
+         subtitle: Text(record.tagline.toString()),
+         trailing: Icon(Icons.keyboard_arrow_right),
          onTap: () {
            Navigator.push(
                     context,
