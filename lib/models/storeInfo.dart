@@ -6,6 +6,7 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class StoresList {
   final List<StoreInfo> stores;
@@ -199,8 +200,16 @@ class StoreInfo {
        tagline = map['tagline'];
        latitude = map['latitude'].toString();  // TODO: fix this and let it be a double
        longitude = map['longitude'].toString();
-       
-       
+
+      firebase_storage.FirebaseStorage storage = firebase_storage.FirebaseStorage.instance;
+      var imageUrl;
+      storage.ref('images/lucky.jpg').getDownloadURL().then((value) { 
+
+        // TODO: as of now, all the days of the week logic is wrapped in the then.  
+        // need to make the getdownloadurl a real async await call instead.
+        imageUrl = value;
+        description = imageUrl;
+
         mondayOpenTimeOnly= TimeOfDay(
             hour: map["mondayHour"] ?? 0,
             minute: map["mondayMinute"] ?? 0);
@@ -250,6 +259,7 @@ class StoreInfo {
         sundayCloseTimeOnly= TimeOfDay(
             hour:map["sundayCloseHour"] ?? 0,
             minute:map["sundayCloseMinute"] ?? 0);
+      });
 }
 
  StoreInfo.fromSnapshot(DocumentSnapshot snapshot)

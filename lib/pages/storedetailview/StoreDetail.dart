@@ -10,6 +10,7 @@ class StoreDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(_storeDetail.description);
     return Scaffold(
        // backgroundColor: Colors.pink, // TODO: use themeing instead
         appBar: AppBar(
@@ -23,15 +24,48 @@ class StoreDetail extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Image.asset(
-                      // hero image of storefront
-
-                     //_storeDetail.imageName,
-                     'assets/images/welcome.jpg',
-                     height: 200,
-                      width: double.infinity,
-                      fit: BoxFit.fitWidth,
+Container(
+        color: Colors.white,
+        padding: EdgeInsets.all(16),
+        child: Image.network(
+          _storeDetail.description,
+         // 'https://firebasestorage.googleapis.com/v0/b/brgfirebase.appspot.com/o/images%2Flucky.jpg?alt=media&token=9817b5bd-38b7-4492-9993-31ca6c956d2d',
+          frameBuilder: (BuildContext context, Widget child, int frame,
+                  bool wasSynchronouslyLoaded) =>
+              wasSynchronouslyLoaded
+                  ? child
+                  : AnimatedOpacity(
+                      child: child,
+                      opacity: frame == null ? 0 : 1,
+                      duration: const Duration(seconds: 2),
+                      curve: Curves.easeOut,
                     ),
+          loadingBuilder: (context, child, progress) => progress == null
+              ? child
+              : LinearProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.red),
+                ),
+          errorBuilder:
+              (BuildContext context, Object exception, StackTrace stackTrace) =>
+                  Text('Failed to load image'),
+                  
+        ),
+      ),
+
+                    // Image.network( _storeDetail.description,    //TODO:  using the description field, fix this
+                    //  height: 200,
+                    //    width: double.infinity,
+                    //    fit: BoxFit.fitWidth,
+                    //  ),
+                    // Image.asset(
+                    //   // hero image of storefront
+
+                    //  //_storeDetail.imageName,
+                    //  'assets/images/welcome.jpg',
+                    //  height: 200,
+                    //   width: double.infinity,
+                    //   fit: BoxFit.fitWidth,
+                    // ),
                     Divider(color: Colors.white),
                     Row(
                       // i wanted 2 columns, storename and distance

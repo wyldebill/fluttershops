@@ -5,7 +5,6 @@ import 'package:buffaloretailgroupmap/pages/storedetailview/StoreDetail.dart';
 import 'package:flutter/services.dart'
     show rootBundle; // TODO: what is rootbundle??
 import 'dart:convert';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class ListOfAllStores extends StatefulWidget {
   @override
@@ -25,9 +24,6 @@ class _StoreListState extends State<ListOfAllStores>
 
   @override
   void initState() {
-    firebase_storage.FirebaseStorage storage =
-  firebase_storage.FirebaseStorage.instance;
-
     super.initState();
 
     // loadStore().then((value) {
