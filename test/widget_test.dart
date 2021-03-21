@@ -8,20 +8,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:buffaloretailgroupmap/main.dart';
+import 'package:buffaloretailgroupmap/pages/main.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    //await tester.pumpWidget(zMyApp());
+    await tester.pumpWidget(MyApp());
 
     // Verify that our counter starts at 0.
-   // expect(find.text('Buffalo Retail Group'), findsOneWidget);
-   // expect(find.text('Biggs and Company'), findsNothing);
+    expect(find.text('Buffalo Retail Group'), findsOneWidget);
+    expect(find.text('Biggs and Company'), findsNothing);
 
-    // Tap the '+' icon and trigger a frame.
-   // await tester.tap(find.byIcon(Icons.map));
-  //  await tester.pump();
+    // Tap the '+' icon and trigger a frame. ilcsas00!
+    
+    await tester.pump();
 
     // Verify that our counter has incremented.
    // expect(find.text('distance'), findsOneWidget);
