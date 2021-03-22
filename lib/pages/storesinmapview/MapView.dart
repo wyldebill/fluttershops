@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 import 'package:buffaloretailgroupmap/models/storeInfo.dart';
@@ -6,11 +5,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location_permissions/location_permissions.dart';
-import 'dart:io' show Platform;
-import 'package:flutter/services.dart' show rootBundle;  // todo: what does the show keyword do?
 
-import '../storedetailview/StoreDetail.dart'; 
+import 'dart:io' show Platform;
+import 'package:flutter/services.dart'
+    show rootBundle; // todo: what does the show keyword do?
+
+import '../storedetailview/StoreDetail.dart';
 
 class MapView extends StatefulWidget {
   @override
@@ -46,35 +46,30 @@ class _MapViewState extends State<MapView>
   @override
   bool get wantKeepAlive => true;
 
-void _buildMarkers(BuildContext context, List<DocumentSnapshot> data ) {
+  void _buildMarkers(BuildContext context, List<DocumentSnapshot> data) {
+    for (DocumentSnapshot snapshot in data) {
+      StoreInfo store = StoreInfo.fromSnapshot(snapshot);
 
-        for(  DocumentSnapshot snapshot in data) { 
-             StoreInfo store = StoreInfo.fromSnapshot(snapshot);
-            
-             _markers.add(Marker(
+      _markers.add(Marker(
+          markerId: MarkerId(snapshot.id),
+          //position: LatLng(store.latitude, store.longitude),
+          position: LatLng(
+              double.parse(store.latitude), double.parse(store.longitude)),
+          infoWindow: InfoWindow(
+              // infowindow is what is displayed when user taps a marker on the map
+              title: store.name,
+              snippet: store.tagline,
+              onTap: () {
+                // tapping the infowindow will navigate to the detail page for the marker/store
+                Navigator.push(
+                    _myBuildContext,
+                    MaterialPageRoute(
+                        builder: (context) => StoreDetail(store)));
+              }),
+          icon: BitmapDescriptor.defaultMarker));
+    }
+  }
 
-              markerId: MarkerId(snapshot.id),
-              //position: LatLng(store.latitude, store.longitude),
-              position: LatLng(
-                  double.parse(store.latitude), double.parse(store.longitude)),
-              infoWindow: InfoWindow(
-                  // infowindow is what is displayed when user taps a marker on the map
-                  title: store.name,
-                  snippet: store.tagline,
-
-                  onTap: () {
-                    // tapping the infowindow will navigate to the detail page for the marker/store
-                    Navigator.push(
-                        _myBuildContext,
-                        MaterialPageRoute(
-                            builder: (context) => StoreDetail(store)));
-                  }),
-              icon: BitmapDescriptor.defaultMarker));
-        }
-        
-        
-}
-  
   void _onMapCreated(GoogleMapController controller) {
     controller.setMapStyle(
         _mapStyle); // this sets up the 'stripped down' google map. only minimum amount of detail on the map (dentist office won't show up)
@@ -112,29 +107,29 @@ void _buildMarkers(BuildContext context, List<DocumentSnapshot> data ) {
 
   // check for location services at the **device** level.  ie is the gps radio switched on?
   // TODO: right now this is not being used, I am ass-uming that we have the permssions/gps stuff we need.  but, they could turn it off on us....
-  Future _checkDeviceLocationServiceStatus() async {
-    ServiceStatus status = await LocationPermissions().checkServiceStatus();
+  // Future _checkDeviceLocationServiceStatus() async {
+  //   ServiceStatus status = await LocationPermissions().checkServiceStatus();
 
-    // location services for the device (and all apps) is switched off
-    if (status == ServiceStatus.disabled) {
-      // if on android, show a dialog asking why we want location services enabled?
-      if (Platform.isAndroid) {
-        await LocationPermissions().shouldShowRequestPermissionRationale(
-            permissionLevel: LocationPermissionLevel.locationWhenInUse);
-      } else {
-        _showAlertDialog('Turn on LocationServices on your device');
-        //bool isOpened = await LocationPermissions().openAppSettings();
-      }
-    }
+  //   // location services for the device (and all apps) is switched off
+  //   if (status == ServiceStatus.disabled) {
+  //     // if on android, show a dialog asking why we want location services enabled?
+  //     if (Platform.isAndroid) {
+  //       await LocationPermissions().shouldShowRequestPermissionRationale(
+  //           permissionLevel: LocationPermissionLevel.locationWhenInUse);
+  //     } else {
+  //       _showAlertDialog('Turn on LocationServices on your device');
+  //       //bool isOpened = await LocationPermissions().openAppSettings();
+  //     }
+  //   }
 
-    if (status == ServiceStatus.enabled) {
-      // TODO: I think this could be removed - we have locationservices?
-    }
+  //   if (status == ServiceStatus.enabled) {
+  //     // TODO: I think this could be removed - we have locationservices?
+  //   }
 
-    // not applicable, this device doesn't have location services? it's a TV?
-    // unknown, we cannot get info on device location services at all
-    if (status == ServiceStatus.unknown) {}
-  }
+  //   // not applicable, this device doesn't have location services? it's a TV?
+  //   // unknown, we cannot get info on device location services at all
+  //   if (status == ServiceStatus.unknown) {}
+  // }
 
   @override
   void initState() {
@@ -218,7 +213,6 @@ void _buildMarkers(BuildContext context, List<DocumentSnapshot> data ) {
     final jsonResponse = json.decode(jsonString);
     StoresList listOfStores = StoresList.fromJson(jsonResponse);
     return listOfStores;
-   
   }
 
   // pressing the shopping cart button on the ui, causes this method to be called
@@ -227,8 +221,6 @@ void _buildMarkers(BuildContext context, List<DocumentSnapshot> data ) {
     Set<Marker> markersToRemove = {};
 
     if (filterClosedShops == true) {
-    
-
       for (Marker marker in _markers) {
         // TODO:  need to figure out how to look at the store list
         //        find the day/hours of operation
@@ -410,8 +402,6 @@ void _buildMarkers(BuildContext context, List<DocumentSnapshot> data ) {
             continue;
           }
         }
-
-       
       }
 
       // remove the markers in the markersToRemove list from the markers list...
@@ -424,8 +414,7 @@ void _buildMarkers(BuildContext context, List<DocumentSnapshot> data ) {
       });
 
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text("Removed shops that are currently closed."),
-
+        content: Text("Removed shops that are currently closed."),
       ));
     } else {
       // user wants to see all stores even those that are closed right now.  this is the defaul state of the map markers.
@@ -440,95 +429,81 @@ void _buildMarkers(BuildContext context, List<DocumentSnapshot> data ) {
 
   double toDouble(TimeOfDay myTime) => myTime.hour + myTime.minute / 60.0;
 
+  @override
+  Widget build(BuildContext context) {
+    _myBuildContext = context;
 
-        
-  
+    return StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance.collection('stores').snapshots(),
+        builder: (context, snapshot) {
+          //have to setup the markers before we render
+          if (!snapshot.hasData) {
+            return CircularProgressIndicator();
+          }
 
+          if (snapshot.hasError) {}
 
-@override
-Widget build(BuildContext context) {
-  _myBuildContext = context;
-
-  return StreamBuilder<QuerySnapshot>(
-    stream:  FirebaseFirestore.instance.collection('stores').snapshots(),
-    builder: (context, snapshot) {
-
-      //have to setup the markers before we render
-       if (!snapshot.hasData) {
-          return CircularProgressIndicator();
-        }
-
-        if (snapshot.hasError) {
-
-        }
-
-      
-        List<DocumentSnapshot> markersData = snapshot.data.docs;
+          List<DocumentSnapshot> markersData = snapshot.data.docs;
 
           _buildMarkers(context, markersData);
 
+          return Stack(children: <Widget>[
+            GoogleMap(
+              myLocationButtonEnabled:
+                  true, // the target-looking button that puts the blue dot on the map indicating your position
+              myLocationEnabled:
+                  true, // the permission to find your location, different than the button above!
+              onMapCreated: _onMapCreated,
+              markers: Set<Marker>.of(
+                  _markers), // the red dots indicating buffalo retail group stores on the map
+              initialCameraPosition: CameraPosition(
+                target: _center,
+                zoom: 12.0,
+              ),
+            ),
 
-     return Stack(children: <Widget>[
-      GoogleMap(
-        myLocationButtonEnabled:
-            true, // the target-looking button that puts the blue dot on the map indicating your position
-        myLocationEnabled:
-            true, // the permission to find your location, different than the button above!
-        onMapCreated: _onMapCreated,
-        markers: Set<Marker>.of(
-            _markers), // the red dots indicating buffalo retail group stores on the map
-        initialCameraPosition: CameraPosition(
-          target: _center,
-          zoom: 12.0,
-        ),
-      ),
+            // TODO: i don't understand layout yet. not messing with this since it works. but i'm just putting the 'show me open/closed stores' button on top
+            // of the map widget
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: ToggleButtons(
+                  children: <Widget>[
+                    // Icon(Icons.remove_shopping_cart), // just one toggle button...
+                    FaIcon(FontAwesomeIcons.storeAltSlash)
+                  ],
+                  onPressed: (int index) {
+                    // if you press it, we change the state of the button and that calls filterstoremarkerstoonly~.
+                    // TODO: test this without wrapping in a setstate as filterstoremarkerstoonly~ will call setstate itself.
+                    setState(() {
+                      // toggle the button visually to on or off...
+                      _selection[index] = !_selection[index];
 
-      // TODO: i don't understand layout yet. not messing with this since it works. but i'm just putting the 'show me open/closed stores' button on top
-      // of the map widget
-      Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Align(
-          alignment: Alignment.topLeft,
-          child: ToggleButtons(
-            children: <Widget>[
-              // Icon(Icons.remove_shopping_cart), // just one toggle button...
-              FaIcon(FontAwesomeIcons.storeAltSlash)
-            ],
-            onPressed: (int index) {
-              // if you press it, we change the state of the button and that calls filterstoremarkerstoonly~.
-              // TODO: test this without wrapping in a setstate as filterstoremarkerstoonly~ will call setstate itself.
-              setState(() {
-                // toggle the button visually to on or off...
-                _selection[index] = !_selection[index];
+                      if (_selection[index] == true) {
+                        filterStoreMarkersToOnlyWhatsOpen(true, context);
+                      } else {
+                        filterStoreMarkersToOnlyWhatsOpen(false, context);
+                      }
+                    });
+                  },
+                  isSelected: _selection,
+                ),
 
-                if (_selection[index] == true) {
-                  filterStoreMarkersToOnlyWhatsOpen(true, context);
-                } else {
-                  filterStoreMarkersToOnlyWhatsOpen(false, context);
-                }
-              });
-            },
-            isSelected: _selection,
-          ),
-
-          /*FloatingActionButton(
+                /*FloatingActionButton(
             // the toggle for only showing stores open right NOW
             onPressed: () => filterStoreMarkersToOnlyWhatsOpen(),
             materialTapTargetSize: MaterialTapTargetSize.padded,
             //backgroundColor: Colors.green,
             child: const Icon(Icons.schedule, size: 36.0),
           ),*/
-        ),
-      ),
-    ]
-    );    
-});
+              ),
+            ),
+          ]);
+        });
+  }
 
-
-}
-
-
- /*  @override
+  /*  @override
   Widget build(BuildContext context) {
     _myBuildContext = context;
 
@@ -589,4 +564,4 @@ Widget build(BuildContext context) {
       ),
     ]);
   }*/
-} 
+}
