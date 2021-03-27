@@ -25,6 +25,7 @@ dependencies:
     sdk: flutter
     #https://firebase.flutter.dev/docs/migration/
   firebase_core: ^1.0.1
+  firebase_image: ^1.0.1
   #firebase_core: "^0.7.0"
   #firebase_storage: "^7.0.0"
   firebase_storage: ^8.0.0

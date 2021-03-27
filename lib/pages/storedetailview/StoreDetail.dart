@@ -1,6 +1,6 @@
+import 'package:firebase_image/firebase_image.dart';
 import 'package:flutter/material.dart';
 import 'package:buffaloretailgroupmap/models/storeInfo.dart';
-
 
 class StoreDetail extends StatelessWidget {
   StoreInfo _storeDetail;
@@ -12,7 +12,7 @@ class StoreDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     print(_storeDetail.description);
     return Scaffold(
-       // backgroundColor: Colors.pink, // TODO: use themeing instead
+        // backgroundColor: Colors.pink, // TODO: use themeing instead
         appBar: AppBar(
           title: Text(_storeDetail.name),
         ),
@@ -24,33 +24,35 @@ class StoreDetail extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-Container(
-        color: Colors.white,
-        padding: EdgeInsets.all(16),
-        child: Image.network(
-          _storeDetail.description,
-         // 'https://firebasestorage.googleapis.com/v0/b/brgfirebase.appspot.com/o/images%2Flucky.jpg?alt=media&token=9817b5bd-38b7-4492-9993-31ca6c956d2d',
-          frameBuilder: (BuildContext context, Widget child, int frame,
-                  bool wasSynchronouslyLoaded) =>
-              wasSynchronouslyLoaded
-                  ? child
-                  : AnimatedOpacity(
-                      child: child,
-                      opacity: frame == null ? 0 : 1,
-                      duration: const Duration(seconds: 2),
-                      curve: Curves.easeOut,
+                    Container(
+                      color: Colors.white,
+                      padding: EdgeInsets.all(16),
+                      child: Image.network(
+                        // logo image here
+                        _storeDetail.description,
+                        // 'https://firebasestorage.googleapis.com/v0/b/brgfirebase.appspot.com/o/images%2Flucky.jpg?alt=media&token=9817b5bd-38b7-4492-9993-31ca6c956d2d',
+                        frameBuilder: (BuildContext context, Widget child,
+                                int frame, bool wasSynchronouslyLoaded) =>
+                            wasSynchronouslyLoaded
+                                ? child
+                                : AnimatedOpacity(
+                                    child: child,
+                                    opacity: frame == null ? 0 : 1,
+                                    duration: const Duration(seconds: 2),
+                                    curve: Curves.easeOut,
+                                  ),
+                        loadingBuilder: (context, child, progress) =>
+                            progress == null
+                                ? child
+                                : LinearProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                        Colors.red),
+                                  ),
+                        errorBuilder: (BuildContext context, Object exception,
+                                StackTrace stackTrace) =>
+                            Text('Failed to load image'),
+                      ),
                     ),
-          loadingBuilder: (context, child, progress) => progress == null
-              ? child
-              : LinearProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.red),
-                ),
-          errorBuilder:
-              (BuildContext context, Object exception, StackTrace stackTrace) =>
-                  Text('Failed to load image'),
-                  
-        ),
-      ),
 
                     // Image.network( _storeDetail.description,    //TODO:  using the description field, fix this
                     //  height: 200,
@@ -91,15 +93,15 @@ Container(
                           fontSize: 15,
                           fontWeight: FontWeight.normal),
                     ),
-                  // Divider(color: Colors.white),
-                  //   Text(
-                  //     //store website
-                  //     _storeDetail.website,
-                  //     style: TextStyle(
-                  //         //color: Colors.white,
-                  //         fontSize: 15,
-                  //         fontWeight: FontWeight.normal),
-                  //   ),
+                    // Divider(color: Colors.white),
+                    //   Text(
+                    //     //store website
+                    //     _storeDetail.website,
+                    //     style: TextStyle(
+                    //         //color: Colors.white,
+                    //         fontSize: 15,
+                    //         fontWeight: FontWeight.normal),
+                    //   ),
                     // Text(
                     //   //store facebook link
                     //   'Facebook link ?',
@@ -108,7 +110,7 @@ Container(
                     //       fontSize: 15,
                     //       fontWeight: FontWeight.normal),
                     // ),
-                   Divider(color: Colors.white),
+                    Divider(color: Colors.white),
 
                     // todo: need a occasional marker/indicator too?
 
@@ -123,7 +125,6 @@ Container(
 
                         // border: TableBorder.all(),
                         children: [
-
                           // each row of store hours has 3 child widgets
                           // <day of week> <Open time/Closed>  <Close time/Closed>
 
@@ -136,9 +137,9 @@ Container(
                                     fontWeight: FontWeight.normal)),
                             Text(
 
-                              //  taking a shortcut here
-                              // if the hour is 0, i know the time is illegal - store is closed.  
-                              // i don't check the minutes if the hour is 0.  
+                                //  taking a shortcut here
+                                // if the hour is 0, i know the time is illegal - store is closed.
+                                // i don't check the minutes if the hour is 0.
                                 _storeDetail.mondayOpenTimeOnly.hour == 0
                                     ? "Closed"
                                     : _storeDetail.mondayOpenTimeOnly
@@ -155,7 +156,7 @@ Container(
                                         .format(context),
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
-                                   // color: Colors.white,
+                                    // color: Colors.white,
                                     fontSize: 15,
                                     fontWeight: FontWeight.normal))
                           ]),
@@ -166,7 +167,7 @@ Container(
                                     //color: Colors.white,
                                     fontSize: 15,
                                     fontWeight: FontWeight.normal)),
-                             Text(
+                            Text(
                                 _storeDetail.tuesdayOpenTimeOnly.hour == 0
                                     ? "Closed"
                                     : _storeDetail.tuesdayOpenTimeOnly
@@ -201,7 +202,7 @@ Container(
                                         .format(context),
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
-                                   // color: Colors.white,
+                                    // color: Colors.white,
                                     fontSize: 15,
                                     fontWeight: FontWeight.normal)),
                             Text(
@@ -222,7 +223,7 @@ Container(
                                     //color: Colors.white,
                                     fontSize: 15,
                                     fontWeight: FontWeight.normal)),
-                             Text(
+                            Text(
                                 _storeDetail.thursdayOpenTimeOnly.hour == 0
                                     ? "Closed"
                                     : _storeDetail.thursdayOpenTimeOnly
@@ -250,7 +251,7 @@ Container(
                                     //color: Colors.white,
                                     fontSize: 15,
                                     fontWeight: FontWeight.normal)),
-                         Text(
+                            Text(
                                 _storeDetail.fridayOpenTimeOnly.hour == 0
                                     ? "Closed"
                                     : _storeDetail.fridayOpenTimeOnly
@@ -278,7 +279,7 @@ Container(
                                     //color: Colors.white,
                                     fontSize: 15,
                                     fontWeight: FontWeight.normal)),
-                           Text(
+                            Text(
                                 _storeDetail.saturdayOpenTimeOnly.hour == 0
                                     ? "Closed"
                                     : _storeDetail.saturdayOpenTimeOnly
@@ -306,7 +307,7 @@ Container(
                                     //color: Colors.white,
                                     fontSize: 15,
                                     fontWeight: FontWeight.normal)),
-                           Text(
+                            Text(
                                 _storeDetail.sundayOpenTimeOnly.hour == 0
                                     ? "Closed"
                                     : _storeDetail.sundayOpenTimeOnly
@@ -398,16 +399,22 @@ Container(
                           //     style: TextStyle(fontWeight: FontWeight.bold))
                           //]),
                         ]),
-                            Divider(color: Colors.white),
-                    Image.asset(
-                      // hero image of storefront
-
-                      'assets/images/welcome.jpg',
+                    Divider(color: Colors.white),
+                    Image(
+                      image: FirebaseImage(
+                          'gs://brgfirebase.appspot.com/images/lucky.jpg',
+                          shouldCache:
+                              true, // The image should be cached (default: True)
+                          maxSizeBytes:
+                              3000 * 1000, // 3MB max file size (default: 2.5MB)
+                          cacheRefreshStrategy: CacheRefreshStrategy
+                              .BY_METADATA_DATE // Switch off update checking
+                          ),
                       width: double.infinity,
                       fit: BoxFit.fitWidth,
                     ),
                     Image.asset(
-                      // hero image of storefront
+                      // store front image 2
 
                       'assets/images/welcome.jpg',
                       width: double.infinity,
