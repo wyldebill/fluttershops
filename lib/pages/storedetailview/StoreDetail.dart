@@ -413,7 +413,7 @@ class StoreDetail extends StatelessWidget {
                     Divider(color: Colors.white),
                     Image(
                       image: FirebaseImage(
-                          _storeDetail.imageName,
+                          _storeDetail.image1,
                           shouldCache:
                               true, // The image should be cached (default: True)
                           maxSizeBytes:
@@ -424,13 +424,13 @@ class StoreDetail extends StatelessWidget {
                       width: double.infinity,
                       fit: BoxFit.fitWidth,
                     ),
-                    Image.asset(
-                      // store front image 2
+                    // Image.asset(
+                    //   // store front image 2
 
-                      _storeDetail.imageName,
-                      width: double.infinity,
-                      fit: BoxFit.fitWidth,
-                    ),
+                    //   _storeDetail.imageName,
+                    //   width: double.infinity,
+                    //   fit: BoxFit.fitWidth,
+                    // ),
                   ],
                 )
               ],
