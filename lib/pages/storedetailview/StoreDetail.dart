@@ -27,31 +27,42 @@ class StoreDetail extends StatelessWidget {
                     Container(
                       color: Colors.white,
                       padding: EdgeInsets.all(16),
-                      child: Image.network(
-                        // logo image here
-                        _storeDetail.description,
-                        // 'https://firebasestorage.googleapis.com/v0/b/brgfirebase.appspot.com/o/images%2Flucky.jpg?alt=media&token=9817b5bd-38b7-4492-9993-31ca6c956d2d',
-                        frameBuilder: (BuildContext context, Widget child,
-                                int frame, bool wasSynchronouslyLoaded) =>
-                            wasSynchronouslyLoaded
-                                ? child
-                                : AnimatedOpacity(
-                                    child: child,
-                                    opacity: frame == null ? 0 : 1,
-                                    duration: const Duration(seconds: 2),
-                                    curve: Curves.easeOut,
-                                  ),
-                        loadingBuilder: (context, child, progress) =>
-                            progress == null
-                                ? child
-                                : LinearProgressIndicator(
-                                    valueColor: AlwaysStoppedAnimation<Color>(
-                                        Colors.red),
-                                  ),
-                        errorBuilder: (BuildContext context, Object exception,
-                                StackTrace stackTrace) =>
-                            Text('Failed to load image'),
-                      ),
+                      child: Image(
+        image: FirebaseImage(
+          _storeDetail.imageName,
+          shouldCache: true, // The image should be cached (default: True)
+          maxSizeBytes: 3000 * 1000, // 3MB max file size (default: 2.5MB)
+          cacheRefreshStrategy: CacheRefreshStrategy.BY_METADATA_DATE // Switch off update checking
+        ),
+         width: double.infinity,
+                      fit: BoxFit.fitWidth,
+      ),
+                       
+                       //Image.network(
+                      //   // logo image here
+                      //   _storeDetail.description,
+                      //   // 'https://firebasestorage.googleapis.com/v0/b/brgfirebase.appspot.com/o/images%2Flucky.jpg?alt=media&token=9817b5bd-38b7-4492-9993-31ca6c956d2d',
+                      //   frameBuilder: (BuildContext context, Widget child,
+                      //           int frame, bool wasSynchronouslyLoaded) =>
+                      //       wasSynchronouslyLoaded
+                      //           ? child
+                      //           : AnimatedOpacity(
+                      //               child: child,
+                      //               opacity: frame == null ? 0 : 1,
+                      //               duration: const Duration(seconds: 2),
+                      //               curve: Curves.easeOut,
+                      //             ),
+                      //   loadingBuilder: (context, child, progress) =>
+                      //       progress == null
+                      //           ? child
+                      //           : LinearProgressIndicator(
+                      //               valueColor: AlwaysStoppedAnimation<Color>(
+                      //                   Colors.red),
+                      //             ),
+                      //   errorBuilder: (BuildContext context, Object exception,
+                      //           StackTrace stackTrace) =>
+                      //       Text('Failed to load image'),
+                      // ),
                     ),
 
                     // Image.network( _storeDetail.description,    //TODO:  using the description field, fix this
@@ -402,7 +413,7 @@ class StoreDetail extends StatelessWidget {
                     Divider(color: Colors.white),
                     Image(
                       image: FirebaseImage(
-                          'gs://brgfirebase.appspot.com/images/lucky.jpg',
+                          _storeDetail.imageName,
                           shouldCache:
                               true, // The image should be cached (default: True)
                           maxSizeBytes:
@@ -416,7 +427,7 @@ class StoreDetail extends StatelessWidget {
                     Image.asset(
                       // store front image 2
 
-                      'assets/images/welcome.jpg',
+                      _storeDetail.imageName,
                       width: double.infinity,
                       fit: BoxFit.fitWidth,
                     ),
