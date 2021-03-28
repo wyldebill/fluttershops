@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import 'dart:io' show Platform;
+//import 'dart:io' show Platform;
 import 'package:flutter/services.dart'
     show rootBundle; // todo: what does the show keyword do?
 
@@ -173,27 +173,27 @@ class _MapViewState extends State<MapView>
    
     // let's do some checkups here
     // is the device location service enabled?
-    //_checkDeviceLocationServiceStatus().then((value) => null);
+    _checkDeviceLocationServiceStatus().then((value) => null);
 
     // check for location services permissions for this app.
     // // and ask for them if we
     // // don't have them yet, or
 
-    // LocationPermissions()
-    //     .requestPermissions(
-    //         permissionLevel: LocationPermissionLevel.locationWhenInUse)
-    //     .then((PermissionStatus status) {
-    //   if (status == PermissionStatus.denied) {
-    //     _showAlertDialog(
-    //         'This app needs Location Services/Location permission to work.');
+    LocationPermissions()
+        .requestPermissions(
+            permissionLevel: LocationPermissionLevel.locationWhenInUse)
+        .then((PermissionStatus status) {
+      if (status == PermissionStatus.denied) {
+        _showAlertDialog(
+            'This app needs Location Services/Location permission to work.');
 
-    //bool isOpened = await LocationPermissions().openAppSettings();
-    // Future<bool> settingsOpened = LocationPermissions().openAppSettings();
-    // settingsOpened.then((resp) {
-    // don't need to do anything?
-    //});
-    //}
-    // });
+    bool isOpened = await LocationPermissions().openAppSettings();
+    Future<bool> settingsOpened = LocationPermissions().openAppSettings();
+    settingsOpened.then((resp) {
+    don't need to do anything?
+    });
+    }
+    });
 */
     // i have a custom leaned out map style. no distracting features, minimal.
     // onmapcreated will use this string to set the google map detail.
