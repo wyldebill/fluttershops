@@ -40,7 +40,7 @@ Widget build(BuildContext context) {
            return MaterialApp(
       title: "Buffalo", //?? what is this even for?
       theme: ThemeData(
-        primarySwatch: Colors.pink,
+        primarySwatch: Colors.teal,
       ),
       //colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.pink)),
 
