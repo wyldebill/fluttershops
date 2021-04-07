@@ -1,15 +1,11 @@
 import 'dart:convert';
-
 import 'package:buffaloretailgroupmap/models/storeInfo.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
-//import 'dart:io' show Platform;
 import 'package:flutter/services.dart'
     show rootBundle; // todo: what does the show keyword do?
-
 import '../storedetailview/StoreDetail.dart';
 
 class MapView extends StatefulWidget {
@@ -47,18 +43,24 @@ class _MapViewState extends State<MapView>
   bool get wantKeepAlive => true;
 
   void _buildMarkers(BuildContext context, List<DocumentSnapshot> data) {
+    
     for (DocumentSnapshot snapshot in data) {
+
+      // build a storeinfo object from the raw firebase storage snapshot.
       StoreInfo store = StoreInfo.fromSnapshot(snapshot);
 
+      // now use the strong typed storeinfo to build the map marker
       _markers.add(Marker(
           markerId: MarkerId(snapshot.id),
-          //position: LatLng(store.latitude, store.longitude),
           position: LatLng(
               double.parse(store.latitude), double.parse(store.longitude)),
+
+
           infoWindow: InfoWindow(
               // infowindow is what is displayed when user taps a marker on the map
               title: store.name,
               snippet: store.tagline,
+
               onTap: () {
                 // tapping the infowindow will navigate to the detail page for the marker/store
                 Navigator.push(
@@ -134,6 +136,12 @@ class _MapViewState extends State<MapView>
   @override
   void initState() {
     super.initState();
+    // i have a custom leaned out map style. no distracting features, minimal.
+    // onmapcreated will use this string to set the google map detail.
+    // // TODO: putting an async call inside a sync method doesn't feel right, but no solid examples
+    rootBundle.loadString('assets/mapstyle/minimal.json').then((string) {
+      _mapStyle = string;
+    });
 /*
     loadStore().then((value) {
       listOfStores = value.stores;
@@ -195,11 +203,7 @@ class _MapViewState extends State<MapView>
     }
     });
 */
-    // i have a custom leaned out map style. no distracting features, minimal.
-    // onmapcreated will use this string to set the google map detail.
-    rootBundle.loadString('assets/mapstyle/minimal.json').then((string) {
-      _mapStyle = string;
-    });
+
   }
 
   // read the list of stores json in the assets folder
