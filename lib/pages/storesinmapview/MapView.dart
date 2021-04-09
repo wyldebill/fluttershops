@@ -25,7 +25,7 @@ class _MapViewState extends State<MapView>
   // really only tracks is the button 'selected' and only showing open stores, or not.
   List<bool> _selection = List.generate(1, (_) => false);
 
-  List<StoreInfo> listOfStores;
+  List<StoreInfo> listOfStores = <StoreInfo>[];
 
   // TODO: i have to figure out the Completer(), Future and .complete() relationship soon!
   //Completer<GoogleMapController> _controller = Completer();
@@ -43,14 +43,17 @@ class _MapViewState extends State<MapView>
   bool get wantKeepAlive => true;
 
   void _buildMarkers(BuildContext context, List<DocumentSnapshot> data) {
+    listOfStores.clear();
+
     
     for (DocumentSnapshot snapshot in data) {
 
       // build a storeinfo object from the raw firebase storage snapshot.
       StoreInfo store = StoreInfo.fromSnapshot(snapshot);
-
+      listOfStores.add(store);
       // now use the strong typed storeinfo to build the map marker
       _markers.add(Marker(
+          alpha: 1.0, //true ? 1.0: 0.65,
           markerId: MarkerId(snapshot.id),
           position: LatLng(
               double.parse(store.latitude), double.parse(store.longitude)),
@@ -68,10 +71,183 @@ class _MapViewState extends State<MapView>
                     MaterialPageRoute(
                         builder: (context) => StoreDetail(store)));
               }),
-          icon: BitmapDescriptor.defaultMarker));
+          icon: _isStoreOpen(store) ? BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen) :
+          BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed)));
     }
   }
 
+  bool _isStoreOpen(StoreInfo storeToEvaluateForOpenOrClosed)
+  {
+
+     // get the time and day of the week right now
+        DateTime rightNow = DateTime.now();
+        int dayOfTheWeekNow = rightNow.weekday;
+        TimeOfDay timeNow = TimeOfDay.fromDateTime(rightNow);
+
+
+            // TODO: fix this mess later
+        // if it's monday (which is enum == 1, tuesday is == 2...) today,
+        // then look for open and close info for monday on the StoreInfo object
+        if (dayOfTheWeekNow == 1) {
+          // if the open time is for anyday is set to 0, that means the store is closed that day.
+          // just remove the marker straightaway
+          if (storeToEvaluateForOpenOrClosed.mondayOpenTimeOnly.hour != 0) {
+            // this store has a monday open time, get it and compare to time right now
+
+            // what time is now, according to the device?
+
+            // if the timenow is **after the time the store opens...
+            // and if the time now is **before the time the store closes...
+            if ((toDouble(storeToEvaluateForOpenOrClosed.mondayOpenTimeOnly) <=
+                    toDouble(timeNow)) &&
+                ((toDouble(
+                        storeToEvaluateForOpenOrClosed.mondayCloseTimeOnly) >=
+                    toDouble(timeNow)))) {
+                      return true;
+              // we are open, do nothing, leave the marker on the map display
+            } else {
+              // we are closed.  add this store marker to the list of markers to remove from the map and...
+              // exit loop for this store marker, and try the next one...
+              return false;
+            }
+          }
+          return false;
+        } 
+          
+        
+        
+        if (dayOfTheWeekNow == 2) // tuesday
+        {
+          if (storeToEvaluateForOpenOrClosed.tuesdayOpenTimeOnly.hour != 0) {
+            // this store has a monday open time, get it and compare to time right now
+
+            if ((toDouble(storeToEvaluateForOpenOrClosed.tuesdayOpenTimeOnly) <=
+                    toDouble(timeNow)) &&
+                ((toDouble(
+                        storeToEvaluateForOpenOrClosed.tuesdayCloseTimeOnly) >=
+                    toDouble(timeNow)))) {
+                 return true;
+              // we are open, do nothing, leave the marker on the map display
+            } else {
+              // we are closed.  add this store marker to the list of markers to remove from the map and...
+              // exit loop for this store marker, and try the next one...
+              return false;
+            }
+          }
+          return false;
+        } 
+
+        if (dayOfTheWeekNow == 3) // wed
+        {
+          if (storeToEvaluateForOpenOrClosed.wednesdayOpenTimeOnly.hour != 0) {
+            // this store has a monday open time, get it and compare to time right now
+
+            if ((toDouble(
+                        storeToEvaluateForOpenOrClosed.wednesdayOpenTimeOnly) <=
+                    toDouble(timeNow)) &&
+                ((toDouble(storeToEvaluateForOpenOrClosed
+                        .wednesdayCloseTimeOnly) >=
+                    toDouble(timeNow)))) {
+                 return true;
+              // we are open, do nothing, leave the marker on the map display
+            } else {
+              // we are closed.  add this store marker to the list of markers to remove from the map and...
+              // exit loop for this store marker, and try the next one...
+              return false;
+            }
+          }
+          return false;
+        } 
+
+        if (dayOfTheWeekNow == 4) // thursday
+        {
+          if (storeToEvaluateForOpenOrClosed.thursdayOpenTimeOnly.hour != 0) 
+          {
+            // this store has a monday open time, get it and compare to time right now
+
+            if ((toDouble(
+                        storeToEvaluateForOpenOrClosed.thursdayOpenTimeOnly) <=
+                    toDouble(timeNow)) &&
+                ((toDouble(
+                        storeToEvaluateForOpenOrClosed.thursdayCloseTimeOnly) >=
+                    toDouble(timeNow)))) {
+                 return true;
+              // we are open, do nothing, leave the marker on the map display
+            } else {
+              // we are closed.  add this store marker to the list of markers to remove from the map and...
+              // exit loop for this store marker, and try the next one...
+              return false;
+            }
+          }
+          return false;
+        } 
+        if (dayOfTheWeekNow == 5) // friday
+        {
+          if (storeToEvaluateForOpenOrClosed.fridayOpenTimeOnly.hour != 0) {
+            // this store has a monday open time, get it and compare to time right now
+
+            if ((toDouble(storeToEvaluateForOpenOrClosed.fridayOpenTimeOnly) <=
+                    toDouble(timeNow)) &&
+                ((toDouble(
+                        storeToEvaluateForOpenOrClosed.fridayCloseTimeOnly) >=
+                    toDouble(timeNow)))) {
+                 return true;
+              // we are open, do nothing, leave the marker on the map display
+            } else {
+              // we are closed.  add this store marker to the list of markers to remove from the map and...
+              // exit loop for this store marker, and try the next one...
+              return false;
+            }
+          }
+          return false;
+        } 
+        if (dayOfTheWeekNow == 6) // saturday
+        {
+          if (storeToEvaluateForOpenOrClosed.saturdayOpenTimeOnly.hour != 0) {
+            // this store has a monday open time, get it and compare to time right now
+
+            if ((toDouble(
+                        storeToEvaluateForOpenOrClosed.saturdayOpenTimeOnly) <=
+                    toDouble(timeNow)) &&
+                ((toDouble(
+                        storeToEvaluateForOpenOrClosed.saturdayCloseTimeOnly) >=
+                    toDouble(timeNow)))) {
+                 return true;
+              // we are open, do nothing, leave the marker on the map display
+            } else {
+              // we are closed.  add this store marker to the list of markers to remove from the map and...
+              // exit loop for this store marker, and try the next one...
+              return false;
+            }
+          }
+          return false;
+        } 
+
+        if (dayOfTheWeekNow == 7) // sunday
+        {
+          if (storeToEvaluateForOpenOrClosed.sundayOpenTimeOnly.hour != 0) {
+            // this store has a monday open time, get it and compare to time right now
+
+            if ((toDouble(storeToEvaluateForOpenOrClosed.sundayOpenTimeOnly) <=
+                    toDouble(timeNow)) &&
+                ((toDouble(
+                        storeToEvaluateForOpenOrClosed.sundayCloseTimeOnly) >=
+                    toDouble(timeNow)))) {
+                 return true;
+              // we are open, do nothing, leave the marker on the map display
+            } else {
+              // we are closed.  add this store marker to the list of markers to remove from the map and...
+              // exit loop for this store marker, and try the next one...
+              return false;
+            }
+          }
+          return false;
+        } 
+
+        return false; // just to satisfy compiler
+  
+  }
+  
   void _onMapCreated(GoogleMapController controller) {
     controller.setMapStyle(
         _mapStyle); // this sets up the 'stripped down' google map. only minimum amount of detail on the map (dentist office won't show up)
@@ -233,8 +409,11 @@ class _MapViewState extends State<MapView>
         //           the current day is open, then check against the open and close time and use the datetime.before() and after()
 
         // find the store in the listOfStores and get it's id
+        
+
+        // the damn list of stores in firebase/json source file starts at 1, list's are zero based.
         int index = listOfStores
-            .indexWhere((element) => element.id == marker.markerId.value);
+           .indexWhere((element) => element.id == (int.parse(marker.markerId.value)+1).toString()) ;
 
         // use the id to get the StoreInfo
         StoreInfo storeToEvaluateForOpenOrClosed = listOfStores[index];
@@ -270,9 +449,8 @@ class _MapViewState extends State<MapView>
               continue;
             }
           }
-        } else {
-          markersToRemove.add(marker);
-          continue;
+          
+        
         }
         if (dayOfTheWeekNow == 2) // tuesday
         {
@@ -291,10 +469,7 @@ class _MapViewState extends State<MapView>
               continue;
             }
           }
-        } else {
-          markersToRemove.add(marker);
-          continue;
-        }
+        } 
 
         if (dayOfTheWeekNow == 3) // wed
         {
@@ -314,10 +489,7 @@ class _MapViewState extends State<MapView>
               continue;
             }
           }
-        } else {
-          markersToRemove.add(marker);
-          continue;
-        }
+        } 
 
         if (dayOfTheWeekNow == 4) // thursday
         {
@@ -337,10 +509,7 @@ class _MapViewState extends State<MapView>
               continue;
             }
           }
-        } else {
-          markersToRemove.add(marker);
-          continue;
-        }
+        } 
         if (dayOfTheWeekNow == 5) // friday
         {
           if (storeToEvaluateForOpenOrClosed.fridayOpenTimeOnly.hour != 0) {
@@ -358,10 +527,7 @@ class _MapViewState extends State<MapView>
               continue;
             }
           }
-        } else {
-          markersToRemove.add(marker);
-          continue;
-        }
+        } 
         if (dayOfTheWeekNow == 6) // saturday
         {
           if (storeToEvaluateForOpenOrClosed.saturdayOpenTimeOnly.hour != 0) {
@@ -380,10 +546,7 @@ class _MapViewState extends State<MapView>
               continue;
             }
           }
-        } else {
-          markersToRemove.add(marker);
-          continue;
-        }
+        } 
 
         if (dayOfTheWeekNow == 7) // sunday
         {
@@ -401,10 +564,7 @@ class _MapViewState extends State<MapView>
               markersToRemove.add(marker);
               continue;
             }
-          } else {
-            markersToRemove.add(marker);
-            continue;
-          }
+          } 
         }
       }
 
