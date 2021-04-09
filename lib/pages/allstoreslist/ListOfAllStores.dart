@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:buffaloretailgroupmap/models/storeInfo.dart';
 import 'package:buffaloretailgroupmap/pages/storedetailview/StoreDetail.dart';
@@ -82,12 +83,12 @@ class _StoreListState extends State<ListOfAllStores>
        //child: 
        ListTile(
          title: Text(record.name),
-         subtitle: Text(record.tagline.toString()),
+         //subtitle: Text(record.tagline.toString()),
          trailing: Icon(Icons.keyboard_arrow_right),
          onTap: () {
            Navigator.push(
                     context,
-                    MaterialPageRoute(
+                    CupertinoPageRoute(
                       //builder: (context) => StoreDetail(StoreInfo()),
                       builder: (context) => StoreDetail(record)
                     ));
