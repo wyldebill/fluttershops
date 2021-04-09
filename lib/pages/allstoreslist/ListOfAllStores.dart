@@ -44,7 +44,7 @@ class _StoreListState extends State<ListOfAllStores>
     super.build(context);
     
     return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance.collection('stores').snapshots(),
+      stream: FirebaseFirestore.instance.collection('stores').orderBy('name', descending: false).snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return CircularProgressIndicator();
