@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:buffaloretailgroupmap/models/storeInfo.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -65,7 +66,7 @@ class _MapViewState extends State<MapView>
                 // tapping the infowindow will navigate to the detail page for the marker/store
                 Navigator.push(
                     _myBuildContext,
-                    MaterialPageRoute(
+                    CupertinoPageRoute(//MaterialPageRoute(
                         builder: (context) => StoreDetail(store)));
               }),
           icon: BitmapDescriptor.defaultMarker));
@@ -468,41 +469,41 @@ class _MapViewState extends State<MapView>
 
             // TODO: i don't understand layout yet. not messing with this since it works. but i'm just putting the 'show me open/closed stores' button on top
             // of the map widget
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Align(
-                alignment: Alignment.topLeft,
-                child: ToggleButtons(
-                  children: <Widget>[
-                    // Icon(Icons.remove_shopping_cart), // just one toggle button...
-                    FaIcon(FontAwesomeIcons.storeAltSlash)
-                  ],
-                  onPressed: (int index) {
-                    // if you press it, we change the state of the button and that calls filterstoremarkerstoonly~.
-                    // TODO: test this without wrapping in a setstate as filterstoremarkerstoonly~ will call setstate itself.
-                    setState(() {
-                      // toggle the button visually to on or off...
-                      _selection[index] = !_selection[index];
+          //   Padding(
+          //     padding: const EdgeInsets.all(15.0),
+          //     child: Align(
+          //       alignment: Alignment.topLeft,
+          //       child: ToggleButtons(
+          //         children: <Widget>[
+          //           // Icon(Icons.remove_shopping_cart), // just one toggle button...
+          //           FaIcon(FontAwesomeIcons.storeAltSlash)
+          //         ],
+          //         onPressed: (int index) {
+          //           // if you press it, we change the state of the button and that calls filterstoremarkerstoonly~.
+          //           // TODO: test this without wrapping in a setstate as filterstoremarkerstoonly~ will call setstate itself.
+          //           setState(() {
+          //             // toggle the button visually to on or off...
+          //             _selection[index] = !_selection[index];
 
-                      if (_selection[index] == true) {
-                        filterStoreMarkersToOnlyWhatsOpen(true, context);
-                      } else {
-                        filterStoreMarkersToOnlyWhatsOpen(false, context);
-                      }
-                    });
-                  },
-                  isSelected: _selection,
-                ),
+          //             if (_selection[index] == true) {
+          //               filterStoreMarkersToOnlyWhatsOpen(true, context);
+          //             } else {
+          //               filterStoreMarkersToOnlyWhatsOpen(false, context);
+          //             }
+          //           });
+          //         },
+          //         isSelected: _selection,
+          //       ),
 
-                /*FloatingActionButton(
-            // the toggle for only showing stores open right NOW
-            onPressed: () => filterStoreMarkersToOnlyWhatsOpen(),
-            materialTapTargetSize: MaterialTapTargetSize.padded,
-            //backgroundColor: Colors.green,
-            child: const Icon(Icons.schedule, size: 36.0),
-          ),*/
-              ),
-            ),
+          //       /*FloatingActionButton(
+          //   // the toggle for only showing stores open right NOW
+          //   onPressed: () => filterStoreMarkersToOnlyWhatsOpen(),
+          //   materialTapTargetSize: MaterialTapTargetSize.padded,
+          //   //backgroundColor: Colors.green,
+          //   child: const Icon(Icons.schedule, size: 36.0),
+          // ),*/
+          //     ),
+          //   ),
           ]);
         });
   }
