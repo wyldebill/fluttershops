@@ -2,6 +2,8 @@ import 'package:firebase_image/firebase_image.dart';
 import 'package:flutter/material.dart';
 import 'package:buffaloretailgroupmap/models/storeInfo.dart';
 
+import '../ImageWidgetPlaceholder.dart';
+
 class StoreDetail extends StatelessWidget {
   StoreInfo _storeDetail;
   StoreDetail(StoreInfo store) {
@@ -27,15 +29,26 @@ class StoreDetail extends StatelessWidget {
                     Container(
                       color: Colors.white,
                       padding: EdgeInsets.all(16),
-                      child: Image(
+                      child:  ImageWidgetPlaceholder(placeholder: Center(
+              child: CircularProgressIndicator(
+                // value: loadingProgress.expectedTotalBytes != null
+                //    ? loadingProgress.cumulativeBytesLoaded /
+                //        loadingProgress.expectedTotalBytes
+                //    : null,
+              ),
+            ),
+   
+              
+
+
         image: FirebaseImage(
           _storeDetail.imageName,
           shouldCache: true, // The image should be cached (default: True)
           maxSizeBytes: 3000 * 1000, // 3MB max file size (default: 2.5MB)
-          cacheRefreshStrategy: CacheRefreshStrategy.BY_METADATA_DATE // Switch off update checking
+          cacheRefreshStrategy: CacheRefreshStrategy.BY_METADATA_DATE // Switch off update checking        
         ),
-         width: double.infinity,
-                      fit: BoxFit.fitWidth,
+         
+       
       ),
                        
                        //Image.network(
@@ -339,80 +352,21 @@ class StoreDetail extends StatelessWidget {
                                     fontSize: 15,
                                     fontWeight: FontWeight.normal))
                           ]),
-                          // TableRow(children: [
-                          //   Text('Tuesday', textAlign: TextAlign.center),
-                          //   Text('open', textAlign: TextAlign.center),
-                          //   Text('close',
-                          //       textAlign: TextAlign.center,
-                          //       style: TextStyle(fontWeight: FontWeight.bold))
-                          // ]),
-                          // TableRow(children: [
-                          //   Text('Tuesday', textAlign: TextAlign.center),
-                          //   Text('open', textAlign: TextAlign.center),
-                          //   Text('close',
-                          //       textAlign: TextAlign.center,
-                          //       style: TextStyle(fontWeight: FontWeight.bold))
-                          // ]),
-                          // TableRow(children: [
-                          //   Text('Tuesday', textAlign: TextAlign.center),
-                          //   Text('open', textAlign: TextAlign.center),
-                          //   Text('close',
-                          //       textAlign: TextAlign.center,
-                          //       style: TextStyle(fontWeight: FontWeight.bold))
-                          // ]),
-                          // TableRow(children: [
-                          //   Text('Tuesday', textAlign: TextAlign.center),
-                          //   Text('open', textAlign: TextAlign.center),
-                          //   Text('close',
-                          //       textAlign: TextAlign.center,
-                          //       style: TextStyle(fontWeight: FontWeight.bold))
-                          // ]),
-                          // TableRow(children: [
-                          //   Text('Tuesday', textAlign: TextAlign.center),
-                          //   Text('open', textAlign: TextAlign.center),
-                          //   Text('close',
-                          //       textAlign: TextAlign.center,
-                          //       style: TextStyle(fontWeight: FontWeight.bold))
-                          // ]),
-                          // TableRow(children: [
-                          //   Text('Tuesday', textAlign: TextAlign.center),
-                          //   Text('open', textAlign: TextAlign.center),
-                          //   Text('close',
-                          //       textAlign: TextAlign.center,
-                          //       style: TextStyle(fontWeight: FontWeight.bold))
-                          // ]),
-                          // TableRow(children: [
-                          //   Text('Tuesday', textAlign: TextAlign.center),
-                          //   Text('open', textAlign: TextAlign.center),
-                          //   Text('close',
-                          //       textAlign: TextAlign.center,
-                          //       style: TextStyle(fontWeight: FontWeight.bold))
-                          // ]),
-                          // TableRow(children: [
-                          //   Text('Tuesday', textAlign: TextAlign.center),
-                          //   Text('open', textAlign: TextAlign.center),
-                          //   Text('close',
-                          //       textAlign: TextAlign.center,
-                          //       style: TextStyle(fontWeight: FontWeight.bold))
-                          // ]),
-                          // TableRow(children: [
-                          //   Text('Tuesday', textAlign: TextAlign.center),
-                          //   Text('open', textAlign: TextAlign.center),
-                          //   Text('close',
-                          //       textAlign: TextAlign.center,
-                          //       style: TextStyle(fontWeight: FontWeight.bold))
-                          // ]),
-                          // TableRow(children: [
-                          // Text('Tuesday', textAlign: TextAlign.center),
-                          // Text('open', textAlign: TextAlign.center),
-                          // Text('close',
-                          //     textAlign: TextAlign.center,
-                          //     style: TextStyle(fontWeight: FontWeight.bold))
-                          //]),
+                         
                         ]),
-                    Divider(color: Colors.white),
-                    Image(
-                      image: FirebaseImage(
+                    Divider(color: Colors.teal),               
+
+ ImageWidgetPlaceholder(placeholder: Center(
+              child: CircularProgressIndicator(
+                // value: loadingProgress.expectedTotalBytes != null
+                //    ? loadingProgress.cumulativeBytesLoaded /
+                //        loadingProgress.expectedTotalBytes
+                //    : null,
+              ),
+            ),
+   image: 
+                    
+                      FirebaseImage(
                           _storeDetail.image1,
                           shouldCache:
                               true, // The image should be cached (default: True)
@@ -421,9 +375,14 @@ class StoreDetail extends StatelessWidget {
                           cacheRefreshStrategy: CacheRefreshStrategy
                               .BY_METADATA_DATE // Switch off update checking
                           ),
-                      width: double.infinity,
-                      fit: BoxFit.fitWidth,
+                      //width: double.infinity,
+                      //fit: BoxFit.fitWidth,
                     ),
+                   
+
+
+
+
                     // Image.asset(
                     //   // store front image 2
 
