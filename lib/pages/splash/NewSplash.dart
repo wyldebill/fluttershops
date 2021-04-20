@@ -17,7 +17,7 @@ class _NewSplashState extends State<NewSplash> {
        theme: ThemeData(
         primarySwatch: Colors.teal),
       home: SplashScreen(
-          seconds: 5,
+          seconds: 2,
           navigateAfterSeconds: MyApp(),
           title:  Text(
             'Buffalo Retail Group Maps',
