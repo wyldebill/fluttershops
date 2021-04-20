@@ -27,31 +27,30 @@ class StoreDetail extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Container(
+                      width: double.infinity,
+                      //height: 250,
                       color: Colors.white,
-                      padding: EdgeInsets.all(16),
-                      child:  ImageWidgetPlaceholder(placeholder: Center(
-              child: CircularProgressIndicator(
-                // value: loadingProgress.expectedTotalBytes != null
-                //    ? loadingProgress.cumulativeBytesLoaded /
-                //        loadingProgress.expectedTotalBytes
-                //    : null,
-              ),
-            ),
-   
-              
+                      //padding: EdgeInsets.all(16),
+                      child: ImageWidgetPlaceholder(
+                        placeholder: Center(
+                          child: CircularProgressIndicator(
+                              // value: loadingProgress.expectedTotalBytes != null
+                              //    ? loadingProgress.cumulativeBytesLoaded /
+                              //        loadingProgress.expectedTotalBytes
+                              //    : null,
+                              ),
+                        ),
+                        image: FirebaseImage(_storeDetail.imageName,
+                            shouldCache:
+                                true, // The image should be cached (default: True)
+                            maxSizeBytes: 3000 *
+                                1000, // 3MB max file size (default: 2.5MB)
+                            cacheRefreshStrategy: CacheRefreshStrategy
+                                .BY_METADATA_DATE // Switch off update checking
+                            ),
+                      ),
 
-
-        image: FirebaseImage(
-          _storeDetail.imageName,
-          shouldCache: true, // The image should be cached (default: True)
-          maxSizeBytes: 3000 * 1000, // 3MB max file size (default: 2.5MB)
-          cacheRefreshStrategy: CacheRefreshStrategy.BY_METADATA_DATE // Switch off update checking        
-        ),
-         
-       
-      ),
-                       
-                       //Image.network(
+                      //Image.network(
                       //   // logo image here
                       //   _storeDetail.description,
                       //   // 'https://firebasestorage.googleapis.com/v0/b/brgfirebase.appspot.com/o/images%2Flucky.jpg?alt=media&token=9817b5bd-38b7-4492-9993-31ca6c956d2d',
@@ -96,11 +95,14 @@ class StoreDetail extends StatelessWidget {
                     Row(
                       // i wanted 2 columns, storename and distance
                       children: [
-                        Text(_storeDetail.name,
-                            style: TextStyle(
-                                //color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold)),
+                        Expanded(
+                          child: Text(_storeDetail.name,
+                              overflow: TextOverflow.fade,
+                              style: TextStyle(
+                                  //color: Colors.white,
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold)),
+                        ),
                         // Text('         175 Ft',   // TODO: fix alignment hack here
                         //     textAlign: TextAlign.right,
                         //     style: TextStyle(
@@ -111,7 +113,7 @@ class StoreDetail extends StatelessWidget {
                     ),
                     Text(
                       //store tag name
-                      _storeDetail.tagline,
+                      "",
                       style: TextStyle(
                           //color: Colors.white,
                           fontSize: 15,
@@ -352,22 +354,19 @@ class StoreDetail extends StatelessWidget {
                                     fontSize: 15,
                                     fontWeight: FontWeight.normal))
                           ]),
-                         
                         ]),
-                    Divider(color: Colors.teal),               
+                    Divider(color: Colors.white),
 
- ImageWidgetPlaceholder(placeholder: Center(
-              child: CircularProgressIndicator(
-                // value: loadingProgress.expectedTotalBytes != null
-                //    ? loadingProgress.cumulativeBytesLoaded /
-                //        loadingProgress.expectedTotalBytes
-                //    : null,
-              ),
-            ),
-   image: 
-                    
-                      FirebaseImage(
-                          _storeDetail.image1,
+                    ImageWidgetPlaceholder(
+                      placeholder: Center(
+                        child: CircularProgressIndicator(
+                            // value: loadingProgress.expectedTotalBytes != null
+                            //    ? loadingProgress.cumulativeBytesLoaded /
+                            //        loadingProgress.expectedTotalBytes
+                            //    : null,
+                            ),
+                      ),
+                      image: FirebaseImage(_storeDetail.image1,
                           shouldCache:
                               true, // The image should be cached (default: True)
                           maxSizeBytes:
@@ -378,10 +377,6 @@ class StoreDetail extends StatelessWidget {
                       //width: double.infinity,
                       //fit: BoxFit.fitWidth,
                     ),
-                   
-
-
-
 
                     // Image.asset(
                     //   // store front image 2
