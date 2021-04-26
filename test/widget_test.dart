@@ -14,11 +14,11 @@ void main() {
     // Build our app and trigger a frame.
     await tester.pumpWidget(MyApp());
 
-    // Verify that our counter starts at 0.
+    
     expect(find.text('Buffalo Retail Group'), findsOneWidget);
     expect(find.text('Biggs and Company'), findsNothing);
 
-    // Tap the '+' icon and trigger a frame. ilcsas00!
+   
     
     await tester.pump();
 

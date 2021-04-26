@@ -6,7 +6,7 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+//import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class StoresList {
   final List<StoreInfo> stores;
@@ -54,6 +54,7 @@ class StoreInfo {
     this.name,
     this.tagline,
     this.imageName,
+    this.image1,
     this.distance,
     this.latitude,
     this.longitude,
@@ -84,6 +85,7 @@ class StoreInfo {
   String name;
   String tagline;
   String imageName;
+  String image1;
   String distance;
   String latitude;
   String longitude;
@@ -117,7 +119,8 @@ class StoreInfo {
         id: map["id"],
         name: map["name"],
         tagline: map["tagline"],
-        imageName: "assets/images/" + map["imageName"],
+        imageName: map["imageName"],
+        image1: map["image1"],
         distance: map["distance"],
         latitude: map["latitude"],
         longitude: map["longitude"],
@@ -178,6 +181,7 @@ class StoreInfo {
     
       );
 
+// i don't think this is used, it's reaaaaly out of date
   Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
@@ -200,15 +204,17 @@ class StoreInfo {
        tagline = map['tagline'];
        latitude = map['latitude'].toString();  // TODO: fix this and let it be a double
        longitude = map['longitude'].toString();
+       imageName = map['imageName'];
+       image1 = map['image1'];
 
-      firebase_storage.FirebaseStorage storage = firebase_storage.FirebaseStorage.instance;
-      var imageUrl;
-      storage.ref('images/lucky.jpg').getDownloadURL().then((value) { 
+      //firebase_storage.FirebaseStorage storage = firebase_storage.FirebaseStorage.instance;
+      //var imageUrl;
+      //storage.ref('images/lucky.jpg').getDownloadURL().then((value) { 
 
         // TODO: as of now, all the days of the week logic is wrapped in the then.  
         // need to make the getdownloadurl a real async await call instead.
-        imageUrl = value;
-        description = imageUrl;
+        //imageUrl = value;
+        description = map['description'];
 
         mondayOpenTimeOnly= TimeOfDay(
             hour: map["mondayHour"] ?? 0,
@@ -259,7 +265,7 @@ class StoreInfo {
         sundayCloseTimeOnly= TimeOfDay(
             hour:map["sundayCloseHour"] ?? 0,
             minute:map["sundayCloseMinute"] ?? 0);
-      });
+      
 }
 
  StoreInfo.fromSnapshot(DocumentSnapshot snapshot)
