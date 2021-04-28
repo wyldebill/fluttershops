@@ -55,7 +55,10 @@ android {
 
 
     defaultConfig {
-        resValue "string", "maps_api_key", "$System.env.MAPS_API_KEY"
+
+        // at build time, this line creates a string named maps_api_key with the value from the env variable MAPS_API_KEY
+        // it gets the env variable value from the build settings in codemagic.io
+        resValue "string", "maps_api_key", "AIzaSyBaw6Hfca_L5EEq8BDuF21Oyi1JKGhX8Zw"
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.v3.buffaloretailgroupmap"
         minSdkVersion 21
@@ -92,6 +95,9 @@ android {
 
     buildTypes {
         release {
+            //https://stackoverflow.com/questions/46177560/failed-to-read-png-signature-file-does-not-start-with-png-signature/48590453
+            
+            crunchPngs false // or true
             file(rootProject.file('key.properties')).with { propFile ->
                 if (propFile.canRead()) {
                     // because we can read the keystore
