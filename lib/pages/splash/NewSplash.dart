@@ -15,16 +15,16 @@ class _NewSplashState extends State<NewSplash> {
   Widget build(BuildContext context) {
     return MaterialApp(
        theme: ThemeData(
-        primarySwatch: Colors.pink),
+        primarySwatch: Colors.teal),
       home: SplashScreen(
-          seconds: 5,
+          seconds: 2,
           navigateAfterSeconds: MyApp(),
           title:  Text(
             'Buffalo Retail Group Maps',
             style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0, color: Colors.white),
           ),
           //image:  Image.network('https://i.imgur.com/TyCSG9A.png'),
-          backgroundColor: Colors.pink,
+          backgroundColor: Colors.teal,
           styleTextUnderTheLoader: TextStyle(),
           photoSize: 100.0,
           loaderColor: Colors.white),
