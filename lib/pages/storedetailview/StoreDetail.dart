@@ -12,7 +12,7 @@ class StoreDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(_storeDetail.description);
+    //print(_storeDetail.description);
     return Scaffold(
         // backgroundColor: Colors.pink, // TODO: use themeing instead
         appBar: AppBar(
@@ -146,6 +146,16 @@ class StoreDetail extends StatelessWidget {
                           //color: Colors.white,
                           fontSize: 18,
                           fontWeight: FontWeight.bold),
+                    ),
+                    if (_storeDetail.occasional == true)
+                      Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Text("*Occasional Shop - Open the 1st Thursday-Sunday of each month and special events.",
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.normal)),
                     ),
                     Table(
 

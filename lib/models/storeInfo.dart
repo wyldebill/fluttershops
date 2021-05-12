@@ -59,6 +59,7 @@ class StoreInfo {
     this.latitude,
     this.longitude,
     this.description,
+    this.occasional,
   //  this.website,
     this.phone,
 
@@ -90,6 +91,7 @@ class StoreInfo {
   String latitude;
   String longitude;
   String description;
+  bool occasional;
  // String website;
   String phone;
 
@@ -125,6 +127,7 @@ class StoreInfo {
         latitude: map["latitude"],
         longitude: map["longitude"],
         description: map["description"],
+        occasional: map["occasional"],
       //  website: json["website"],
         phone: map["phone"],
 
@@ -196,7 +199,7 @@ class StoreInfo {
       };
 
 
-
+// this is the  main mapping method used in StoreInfo
  StoreInfo.fromMap(Map<String, dynamic> map,/*  {this.reference} */)
     {
        id = map['id'];
@@ -204,6 +207,7 @@ class StoreInfo {
        tagline = map['tagline'];
        latitude = map['latitude'].toString();  // TODO: fix this and let it be a double
        longitude = map['longitude'].toString();
+       occasional = map["occasionalShop"] == "false" ? false : true;
        imageName = map['imageName'];
        image1 = map['image1'];
 
