@@ -8,6 +8,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/services.dart'
     show rootBundle; // todo: what does the show keyword do?
 import '../storedetailview/StoreDetail.dart';
+import 'package:location_permissions/location_permissions.dart';
 
 class MapView extends StatefulWidget {
   @override
@@ -204,9 +205,14 @@ class _MapViewState extends State<MapView>
     }
     });
 */
+   
 
+
+
+   
   }
 
+  
   // read the list of stores json in the assets folder
   Future<String> _loadAStoresAsset() async {
     return await rootBundle.loadString('assets/storeInfoDataJSON.json');
@@ -450,63 +456,76 @@ class _MapViewState extends State<MapView>
 
           List<DocumentSnapshot> markersData = snapshot.data.docs;
 
+          // this method set's the private _marker variable to hold marker data.  
+          // markers do not have the store detail information, only minimal info.
           _buildMarkers(context, markersData);
 
-          return Stack(children: <Widget>[
-            GoogleMap(
-              myLocationButtonEnabled:
-                  true, // the target-looking button that puts the blue dot on the map indicating your position
-              myLocationEnabled:
-                  true, // the permission to find your location, different than the button above!
-              onMapCreated: _onMapCreated,
-              markers: Set<Marker>.of(
-                  _markers), // the red dots indicating buffalo retail group stores on the map
-              initialCameraPosition: CameraPosition(
-                target: _center,
-                zoom: 12.0,
-              ),
-            ),
-
-            // TODO: i don't understand layout yet. not messing with this since it works. but i'm just putting the 'show me open/closed stores' button on top
-            // of the map widget
-          //   Padding(
-          //     padding: const EdgeInsets.all(15.0),
-          //     child: Align(
-          //       alignment: Alignment.topLeft,
-          //       child: ToggleButtons(
-          //         children: <Widget>[
-          //           // Icon(Icons.remove_shopping_cart), // just one toggle button...
-          //           FaIcon(FontAwesomeIcons.storeAltSlash)
-          //         ],
-          //         onPressed: (int index) {
-          //           // if you press it, we change the state of the button and that calls filterstoremarkerstoonly~.
-          //           // TODO: test this without wrapping in a setstate as filterstoremarkerstoonly~ will call setstate itself.
-          //           setState(() {
-          //             // toggle the button visually to on or off...
-          //             _selection[index] = !_selection[index];
-
-          //             if (_selection[index] == true) {
-          //               filterStoreMarkersToOnlyWhatsOpen(true, context);
-          //             } else {
-          //               filterStoreMarkersToOnlyWhatsOpen(false, context);
-          //             }
-          //           });
-          //         },
-          //         isSelected: _selection,
-          //       ),
-
-          //       /*FloatingActionButton(
-          //   // the toggle for only showing stores open right NOW
-          //   onPressed: () => filterStoreMarkersToOnlyWhatsOpen(),
-          //   materialTapTargetSize: MaterialTapTargetSize.padded,
-          //   //backgroundColor: Colors.green,
-          //   child: const Icon(Icons.schedule, size: 36.0),
-          // ),*/
-          //     ),
-          //   ),
-          ]);
-        });
+          if (_selection[0] == true)
+          {
+            filterStoreMarkersToOnlyWhatsOpen(true, context);
+           // _markers.clear();
+           // _filterClosedStores(context, markersData);
+                      }
+                      return Stack(children: <Widget>[
+                        GoogleMap(
+                          myLocationButtonEnabled:
+                              true, // the target-looking button that puts the blue dot on the map indicating your position
+                          myLocationEnabled:
+                              true, // the permission to find your location, different than the button above!
+                          onMapCreated: _onMapCreated,
+                          markers: Set<Marker>.of(
+                              _markers), // the red dots indicating buffalo retail group stores on the map
+                          initialCameraPosition: CameraPosition(
+                            target: _center,
+                            zoom: 12.0,
+                          ),
+                        ),
+            
+                        // TODO: i don't understand layout yet. not messing with this since it works. but i'm just putting the 'show me open/closed stores' button on top
+                        // of the map widget
+                        Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Align(
+                            alignment: Alignment.topLeft,
+                            child: ToggleButtons(
+                              children: <Widget>[
+                                // Icon(Icons.remove_shopping_cart), // just one toggle button...
+                                FaIcon(FontAwesomeIcons.storeAltSlash)
+                              ],
+                              onPressed: (int index) {
+                                // if you press it, we change the state of the button and that calls filterstoremarkerstoonly~.
+                                // TODO: test this without wrapping in a setstate as filterstoremarkerstoonly~ will call setstate itself.
+                                setState(() {
+                                  // toggle the button visually to on or off...
+                                  _selection[index] = !_selection[index];
+            //_markers.clear();
+                                  // if (_selection[index] == true) {
+                                  //   filterStoreMarkersToOnlyWhatsOpen(true, context);
+                                  // } else {
+                                  //   filterStoreMarkersToOnlyWhatsOpen(false, context);
+                                  // }
+                                });
+                              },
+                              isSelected: _selection,
+                            ),
+            
+                      //       /*FloatingActionButton(
+                      //   // the toggle for only showing stores open right NOW
+                        // onPressed: () => filterStoreMarkersToOnlyWhatsOpen(),
+                        // materialTapTargetSize: MaterialTapTargetSize.padded,
+                        // //backgroundColor: Colors.green,
+                        // child: const Icon(Icons.schedule, size: 36.0),
+                     // ),*/
+                          ),
+                        ),
+                      ]);
+                    });
+              }
+            
+             
   }
 
- 
+            
+            void _filterClosedStores(BuildContext context, List<DocumentSnapshot> markersData) {
+             // _markers.clear();
 }
