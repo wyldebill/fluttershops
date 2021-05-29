@@ -6,6 +6,7 @@ import 'package:buffaloretailgroupmap/pages/storedetailview/StoreDetail.dart';
 import 'package:flutter/services.dart'
     show rootBundle; // TODO: what is rootbundle??
 import 'dart:convert';
+import 'package:location_permissions/location_permissions.dart';
 
 class ListOfAllStores extends StatefulWidget {
   @override
@@ -36,7 +37,38 @@ class _StoreListState extends State<ListOfAllStores>
     //   });
     // });
 
+ checkForLocationPermissionsGranted().then((value) => 
+   {
+     if (value == false){
+      askForLocationPermissions()
+     }
+   });
+  }
 
+  Future<bool> checkForLocationPermissionsGranted() async
+  {
+    PermissionStatus permission = await LocationPermissions().checkPermissionStatus();
+    if (permission == PermissionStatus.granted)
+      return true;
+    else
+      return false;
+  }
+
+  Future<void> askForLocationPermissions() async
+  {
+    final PermissionStatus permissionRequestResult = await LocationPermissions()
+        .requestPermissions();
+
+    // hack, to make the ui rebuild now that permissions are granted
+    if (permissionRequestResult == PermissionStatus.granted)
+    {
+          setState(() {
+        //_markers.clear();
+        
+          });
+      
+    };
+    
   }
 
   @override
