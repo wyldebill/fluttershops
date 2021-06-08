@@ -298,7 +298,7 @@ class StoreDetail extends StatelessWidget {
                                     fontSize: 15,
                                     fontWeight: FontWeight.normal)),
                             Text(
-                                _storeDetail.thursdayOpenTimeOnly.hour == 0
+                                _storeDetail.fridayCloseTimeOnly.hour == 0
                                     ? "Closed"
                                     : _storeDetail.fridayCloseTimeOnly
                                         .format(context),
