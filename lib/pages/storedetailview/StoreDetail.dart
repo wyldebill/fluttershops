@@ -2,8 +2,6 @@ import 'package:firebase_image/firebase_image.dart';
 import 'package:flutter/material.dart';
 import 'package:buffaloretailgroupmap/models/storeInfo.dart';
 
-import '../ImageWidgetPlaceholder.dart';
-
 class StoreDetail extends StatelessWidget {
   StoreInfo _storeDetail;
   StoreDetail(StoreInfo store) {
@@ -27,30 +25,20 @@ class StoreDetail extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Container(
-                      width: double.infinity,
-                      //height: 250,
                       color: Colors.white,
-                      //padding: EdgeInsets.all(16),
-                      child: ImageWidgetPlaceholder(
-                        placeholder: Center(
-                          child: CircularProgressIndicator(
-                              // value: loadingProgress.expectedTotalBytes != null
-                              //    ? loadingProgress.cumulativeBytesLoaded /
-                              //        loadingProgress.expectedTotalBytes
-                              //    : null,
-                              ),
-                        ),
-                        image: FirebaseImage(_storeDetail.imageName,
-                            shouldCache:
-                                true, // The image should be cached (default: True)
-                            maxSizeBytes: 3000 *
-                                1000, // 3MB max file size (default: 2.5MB)
-                            cacheRefreshStrategy: CacheRefreshStrategy
-                                .BY_METADATA_DATE // Switch off update checking
-                            ),
-                      ),
-
-                      //Image.network(
+                      padding: EdgeInsets.all(16),
+                      child: Image(
+        image: FirebaseImage(
+          _storeDetail.imageName,
+          shouldCache: true, // The image should be cached (default: True)
+          maxSizeBytes: 3000 * 1000, // 3MB max file size (default: 2.5MB)
+          cacheRefreshStrategy: CacheRefreshStrategy.BY_METADATA_DATE // Switch off update checking
+        ),
+         width: double.infinity,
+                      fit: BoxFit.fitWidth,
+      ),
+                       
+                       //Image.network(
                       //   // logo image here
                       //   _storeDetail.description,
                       //   // 'https://firebasestorage.googleapis.com/v0/b/brgfirebase.appspot.com/o/images%2Flucky.jpg?alt=media&token=9817b5bd-38b7-4492-9993-31ca6c956d2d',
@@ -366,17 +354,9 @@ class StoreDetail extends StatelessWidget {
                           ]),
                         ]),
                     Divider(color: Colors.white),
-
-                    ImageWidgetPlaceholder(
-                      placeholder: Center(
-                        child: CircularProgressIndicator(
-                            // value: loadingProgress.expectedTotalBytes != null
-                            //    ? loadingProgress.cumulativeBytesLoaded /
-                            //        loadingProgress.expectedTotalBytes
-                            //    : null,
-                            ),
-                      ),
-                      image: FirebaseImage(_storeDetail.image1,
+                    Image(
+                      image: FirebaseImage(
+                          _storeDetail.image1,
                           shouldCache:
                               true, // The image should be cached (default: True)
                           maxSizeBytes:
@@ -384,10 +364,9 @@ class StoreDetail extends StatelessWidget {
                           cacheRefreshStrategy: CacheRefreshStrategy
                               .BY_METADATA_DATE // Switch off update checking
                           ),
-                      //width: double.infinity,
-                      //fit: BoxFit.fitWidth,
+                      width: double.infinity,
+                      fit: BoxFit.fitWidth,
                     ),
-
                     // Image.asset(
                     //   // store front image 2
 
