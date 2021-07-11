@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:buffaloretailgroupmap/models/storeInfo.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -20,6 +21,7 @@ class _MapViewState extends State<MapView>
 
 {
   BuildContext _myBuildContext;
+  Timer _timer;
 
   // this tracks the state of the show/hide closed stores button on top of the map.
   // the list is 1 item long, so 1 button.  a ToggleButton. i don't like this much, too disconnected
@@ -46,12 +48,12 @@ class _MapViewState extends State<MapView>
   void _buildMarkers(BuildContext context, List<DocumentSnapshot> data) {
     listOfStores.clear();
 
-    
     for (DocumentSnapshot snapshot in data) {
 
       // build a storeinfo object from the raw firebase storage snapshot.
       StoreInfo store = StoreInfo.fromSnapshot(snapshot);
       listOfStores.add(store);
+
       // now use the strong typed storeinfo to build the map marker
       _markers.add(Marker(
           alpha: 1.0, //true ? 1.0: 0.65,
@@ -79,7 +81,7 @@ class _MapViewState extends State<MapView>
 
   bool _isStoreOpen(StoreInfo storeToEvaluateForOpenOrClosed)
   {
-
+     
      // get the time and day of the week right now
         DateTime rightNow = DateTime.now();
         int dayOfTheWeekNow = rightNow.weekday;
@@ -312,13 +314,30 @@ class _MapViewState extends State<MapView>
 
   @override
   void initState() {
-    super.initState();
+    // force a refresh of ui/build every 5 minutes
+    Timer _timer = Timer.periodic(Duration(minutes: 5), (Timer _) {
+            setState(() {
+        // no op
+        
+      });
+    });
+
+
     // i have a custom leaned out map style. no distracting features, minimal.
     // onmapcreated will use this string to set the google map detail.
     // // TODO: putting an async call inside a sync method doesn't feel right, but no solid examples
     rootBundle.loadString('assets/mapstyle/minimal.json').then((string) {
       _mapStyle = string;
     });
+
+    super.initState();
+  }
+
+   @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
 /*
     loadStore().then((value) {
       listOfStores = value.stores;
@@ -381,7 +400,7 @@ class _MapViewState extends State<MapView>
     });
 */
 
-  }
+  
 
   
   // read the list of stores json in the assets folder
@@ -400,6 +419,7 @@ class _MapViewState extends State<MapView>
   // pressing the shopping cart button on the ui, causes this method to be called
   void filterStoreMarkersToOnlyWhatsOpen(
       bool filterClosedShops, BuildContext context) {
+        return;
     Set<Marker> markersToRemove = {};
 
     if (filterClosedShops == true) {
@@ -576,6 +596,7 @@ class _MapViewState extends State<MapView>
       setState(() {
         markersToRemove.forEach((element) {
           _markers.remove(element);
+        
         });
       });
 
@@ -644,16 +665,16 @@ class _MapViewState extends State<MapView>
                   onPressed: (int index) {
                     // if you press it, we change the state of the button and that calls filterstoremarkerstoonly~.
                     // TODO: test this without wrapping in a setstate as filterstoremarkerstoonly~ will call setstate itself.
-                    setState(() {
-                      // toggle the button visually to on or off...
-                      _selection[index] = !_selection[index];
+                    // setState(() {
+                    //   // toggle the button visually to on or off...
+                    //   _selection[index] = !_selection[index];
 
-                      if (_selection[index] == true) {
-                        filterStoreMarkersToOnlyWhatsOpen(true, context);
-                      } else {
-                        filterStoreMarkersToOnlyWhatsOpen(false, context);
-                      }
-                    });
+                    //   if (_selection[index] == true) {
+                    //     filterStoreMarkersToOnlyWhatsOpen(true, context);
+                    //   } else {
+                    //     filterStoreMarkersToOnlyWhatsOpen(false, context);
+                    //   }
+                    // });
                   },
                   isSelected: _selection,
                 ),
