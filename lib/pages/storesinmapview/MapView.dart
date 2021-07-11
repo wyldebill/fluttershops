@@ -653,43 +653,7 @@ class _MapViewState extends State<MapView>
               ),
             ),
 
-            // TODO: i don't understand layout yet. not messing with this since it works. but i'm just putting the 'show me open/closed stores' button on top
-            // of the map widget
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Align(
-                alignment: Alignment.topLeft,
-                child: ToggleButtons(
-                  children: <Widget>[
-                    // Icon(Icons.remove_shopping_cart), // just one toggle button...
-                    FaIcon(FontAwesomeIcons.storeAltSlash)
-                  ],
-                  onPressed: (int index) {
-                    // if you press it, we change the state of the button and that calls filterstoremarkerstoonly~.
-                    // TODO: test this without wrapping in a setstate as filterstoremarkerstoonly~ will call setstate itself.
-                    // setState(() {
-                    //   // toggle the button visually to on or off...
-                    //   _selection[index] = !_selection[index];
-
-                    //   if (_selection[index] == true) {
-                    //     filterStoreMarkersToOnlyWhatsOpen(true, context);
-                    //   } else {
-                    //     filterStoreMarkersToOnlyWhatsOpen(false, context);
-                    //   }
-                    // });
-                  },
-                  isSelected: _selection,
-                ),
-
-                /*FloatingActionButton(
-            // the toggle for only showing stores open right NOW
-            onPressed: () => filterStoreMarkersToOnlyWhatsOpen(),
-            materialTapTargetSize: MaterialTapTargetSize.padded,
-            //backgroundColor: Colors.green,
-            child: const Icon(Icons.schedule, size: 36.0),
-          ),*/
-              ),
-            ),
+           
           ]);
         });
   }
