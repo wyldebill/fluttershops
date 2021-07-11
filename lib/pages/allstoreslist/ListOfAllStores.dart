@@ -122,8 +122,8 @@ class _StoreListState extends State<ListOfAllStores>
         //    ),
         //child:
         ListTile(
-            leading: _isStoreOpen(record) ?  FaIcon(FontAwesomeIcons.storeAltSlash, color: Colors.green,)
-                : FaIcon(FontAwesomeIcons.storeAltSlash, color: Colors.red,),
+            leading: _isStoreOpen(record) ?  FaIcon(FontAwesomeIcons.storeAltSlash, color: Colors.green, size: 15,)
+                : FaIcon(FontAwesomeIcons.storeAltSlash, color: Colors.red, size: 15,),
             title: Text(record.name),
             //subtitle: Text(record.tagline.toString()),
             trailing: Icon(Icons.keyboard_arrow_right),
