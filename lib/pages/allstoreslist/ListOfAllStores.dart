@@ -30,7 +30,8 @@ class _StoreListState extends State<ListOfAllStores>
 
   @override
   void initState() {
-   
+  
+    super.initState();
     // force a refresh of ui/build every 5 minutes
     Timer _timer = Timer.periodic(Duration(minutes: 5), (Timer _) {
       setState(() {
@@ -51,8 +52,6 @@ class _StoreListState extends State<ListOfAllStores>
           if (value == false) {askForLocationPermissions()}
         });
 
-         
-         super.initState();
   }
 
      @override

@@ -314,6 +314,8 @@ class _MapViewState extends State<MapView>
 
   @override
   void initState() {
+    super.initState();
+
     // force a refresh of ui/build every 5 minutes
     Timer _timer = Timer.periodic(Duration(minutes: 5), (Timer _) {
             setState(() {
@@ -330,7 +332,7 @@ class _MapViewState extends State<MapView>
       _mapStyle = string;
     });
 
-    super.initState();
+
   }
 
    @override
