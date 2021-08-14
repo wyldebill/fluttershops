@@ -1,3 +1,4 @@
+Be careful, this is in the app store now and there is no dev/test/prod env.  
 # buffaloretailgroupmap
 
 This is to be a maps app for Buffalo stores, shops, retail, whatever.
