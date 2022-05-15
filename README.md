@@ -26,7 +26,11 @@ and gradle for android.
 *If you rev the verison for ios/app store, you need to change the <CFBundleShortVersionString> in info.plist.  Once you release a version in the ios app store,and it approved you can't change.  This makes sense actually when you think about it.
 
 Most/all the cloud resources are in the Google Cloud Platform. 
-Project name in GCP: BRG Map App Google Play
+Project name: ?
+-(Google) Maps SDK for IOS
+-(Google) Maps SDK for Android
+- BRGFirebase, 'Cloud Firestore' database and regular Firestore Storage
+
 
 CI/CD
 Well, automated builds anyway. There are no automated tests for the project.  The builds are run on CodeMagic, codemagic.io.  The name of the App/build there is fluttershops.  The build is also point and click, there is no yaml file yet.  CodeMagic has some secrets, the FIREBASE_API_KEY and the Google Maps api key MAPS_API_KEY.
