@@ -25,4 +25,10 @@ and gradle for android.
 *There is no dev/test/prod kind of environment setup yet.  The data you modify in Firebase Storage/Firebase database is LIVE.  You can break the app for everyone so be careful. Or setup your environments.
 *If you rev the verison for ios/app store, you need to change the <CFBundleShortVersionString> in info.plist.  Once you release a version in the ios app store,and it approved you can't change.  This makes sense actually when you think about it.
 
+Most/all the cloud resources are in the Google Cloud Platform. 
+Project name in GCP: BRG Map App Google Play
+
+CI/CD
+Well, automated builds anyway. There are no automated tests for the project.  The builds are run on CodeMagic, codemagic.io.  The name of the App/build there is fluttershops.  The build is also point and click, there is no yaml file yet.
+
 
